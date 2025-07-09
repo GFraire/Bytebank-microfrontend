@@ -1,17 +1,21 @@
-import Head from "next/head";
 import dynamic from "next/dynamic";
-import Link from "next/link";
-
-const HomeComponent = dynamic(import("home/Home"), { ssr: false });
+import Head from "next/head";
+import React from "react";
 
 export default function Home() {
   return (
     <div>
       <Head>
-        <title>Teste</title>
+        <title>Home</title>
       </Head>
 
-      <HomeComponent />
+      <h1 className="text">Home</h1>
     </div>
   );
+}
+
+export async function getStaticProps() {
+  return {
+    props: {},
+  };
 }
