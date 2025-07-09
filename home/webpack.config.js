@@ -38,7 +38,7 @@ module.exports = {
       name: "home",
       filename: "remoteEntry.js",
       exposes: {
-        './Home': './src/bootstrap.js',
+        './Home': './src/bootstrap',
       },
       shared: {
         react: {
