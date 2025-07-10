@@ -9,11 +9,11 @@ const nextConfig = {
       new NextFederationPlugin({
         name: 'main',
         remotes: {
-          home: `home@http://localhost:3001/remoteEntry.js`,
+          dashboard: `dashboard@http://localhost:3001/remoteEntry.js`,
         },
         filename: 'static/chunks/remoteEntry.js',
         extraOptions: {
-          exposePages: true, // se estiver usando Page Routes
+          exposePages: true,
           automaticAsyncBoundary: true,
         },
         // exposes: {

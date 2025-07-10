@@ -3,4 +3,3 @@
 - Downgrade do React para versão 18 (Sem suporte para novos hooks)
 - Module Federation compatível até a versão 13 do NextJS
 - Só de usar o SSG atingiria a obrigatoriedade do SSR?
-- 

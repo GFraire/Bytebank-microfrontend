@@ -1,13 +1,13 @@
 import dynamic from "next/dynamic";
 
-const HomeComponent = dynamic(import("home/Home"), { ssr: false });
+const DashboardComponent = dynamic(import("dashboard/Dashboard"), { ssr: false });
 
 export default function Account() {
   return (
     <div>
       <h1>Account</h1>
       
-      <HomeComponent />
+      <DashboardComponent />
     </div>
   );
 }

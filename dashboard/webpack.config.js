@@ -35,10 +35,10 @@ module.exports = {
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: "home",
+      name: "dashboard",
       filename: "remoteEntry.js",
       exposes: {
-        './Home': './src/bootstrap',
+        './Dashboard': './src/bootstrap',
       },
       shared: {
         react: {
