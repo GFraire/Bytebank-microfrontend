@@ -39,3 +39,25 @@ coverage/
 
 # Turborepo
 turbo/
+
+# Additional temporary files
+.eslintcache
+.prettiercache
+
+# Build tools
+.parcel-cache/
+.webpack/
+
+# Testing tools
+.nyc_output/
+.jest/
+
+# Other development tools
+.husky/
+.lint-staged/
+
+# Local environment files
+.env.local
+
+# Cache and lock files
+*.lock
