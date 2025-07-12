@@ -1,5 +1,5 @@
 {
-  "name": "dashboard",
+  "name": "profile",
   "version": "0.1.0",
   "scripts": {
     "start": "webpack serve",
@@ -18,7 +18,7 @@
     "babel-loader": "^10.0.0",
     "html-webpack-plugin": "^5.6.3",
     "typescript": "^5.8.3",
-    "webpack": "^5.100.0",
+    "webpack": "^5.100.1",
     "webpack-cli": "^6.0.1",
     "webpack-dev-server": "^5.2.2"
   }
