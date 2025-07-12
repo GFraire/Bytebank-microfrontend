@@ -8,6 +8,10 @@ const SidebarComponent = dynamic(import("sidebar/Sidebar"), {
   ssr: false,
 });
 
+const TransactionsComponent = dynamic(import("transactions/Transactions"), {
+  ssr: false,
+});
+
 export default function Account() {
   return (
     <div>
@@ -15,6 +19,7 @@ export default function Account() {
 
       <SidebarComponent />
       <DashboardComponent />
+      <TransactionsComponent />
     </div>
   );
 }
