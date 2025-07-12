@@ -4,11 +4,11 @@ const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPl
 module.exports = {
   mode: "development",
   output: {
-    publicPath: 'http://localhost:3001/',
+    publicPath: 'http://localhost:3005/',
     filename: '[name].js',
   },
   devServer: {
-    port: 3001,
+    port: 3005,
     historyApiFallback: { index: 'index.html' },
     hot: true,
     headers: {
@@ -43,10 +43,10 @@ module.exports = {
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: "home",
+      name: "profile",
       filename: "remoteEntry.js",
       exposes: {
-        './Home': './src/bootstrap',
+        './Profile': './src/bootstrap',
       },
       shared: {
         react: {
