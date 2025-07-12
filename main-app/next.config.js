@@ -9,7 +9,7 @@ const nextConfig = {
       new NextFederationPlugin({
         name: 'main',
         remotes: {
-          dashboard: `dashboard@http://localhost:3001/remoteEntry.js`,
+          dashboard: "dashboard@http://localhost:3001/remoteEntry.js",
         },
         filename: 'static/chunks/remoteEntry.js',
         extraOptions: {
