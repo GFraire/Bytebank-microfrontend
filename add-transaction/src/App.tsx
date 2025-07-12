@@ -1,6 +1,6 @@
 import React from "react"
 
-function App() {
+function AppTransaction() {
   return (
     <>
       <h1 className="font-bold">Add transaction FUNFANDO</h1>
@@ -8,4 +8,4 @@ function App() {
   );
 }
 
-export default App;
+export default AppTransaction;
