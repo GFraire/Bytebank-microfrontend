@@ -10,6 +10,7 @@ const nextConfig = {
         name: 'main',
         remotes: {
           dashboard: "dashboard@http://localhost:3001/remoteEntry.js",
+          sidebar: "sidebar@http://localhost:3002/remoteEntry.js",
         },
         filename: 'static/chunks/remoteEntry.js',
         extraOptions: {
