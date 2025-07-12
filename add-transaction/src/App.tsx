@@ -2,7 +2,9 @@ import React from "react"
 
 function App() {
   return (
-    <h1>Add transaction</h1>
+    <>
+      <h1 className="font-bold">Add transaction FUNFANDO</h1>
+    </>
   );
 }
 
