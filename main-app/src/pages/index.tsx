@@ -1,6 +1,7 @@
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import React from "react";
+// import "../../styles/globals.css";
 
 export default function Home() {
   return (
@@ -9,7 +10,7 @@ export default function Home() {
         <title>Home</title>
       </Head>
 
-      <h1 className="text">Home</h1>
+      <h1 className="text">Home OK</h1>
     </div>
   );
 }
