@@ -12,6 +12,7 @@ const nextConfig = {
           dashboard: "dashboard@http://localhost:3001/remoteEntry.js",
           sidebar: "sidebar@http://localhost:3002/remoteEntry.js",
           transactions: "transactions@http://localhost:3003/remoteEntry.js",
+          "addTransaction": "addTransaction@http://localhost:3004/remoteEntry.js",
         },
         filename: 'static/chunks/remoteEntry.js',
         extraOptions: {

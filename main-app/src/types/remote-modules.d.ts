@@ -12,3 +12,7 @@ declare module 'transactions/Transactions' {
   const Component: React.ComponentType;
   export default Component;
 }
+declare module 'addTransaction/AddTransaction' {
+  const Component: React.ComponentType;
+  export default Component;
+}
