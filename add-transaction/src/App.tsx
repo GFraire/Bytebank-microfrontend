@@ -3,7 +3,7 @@ import React from "react"
 function AppTransaction() {
   return (
     <>
-      <h1 className="font-bold">Add transaction FUNFANDO</h1>
+      <h1 className="text-primary">Add transaction</h1>
     </>
   );
 }
