@@ -1,9 +1,7 @@
+const shared = require('../design-system/tailwind.config')
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./globals.css'],
-  theme: {
-    extend: {},
-  },
-  plugins: [],
+  ...shared,
 }
 
