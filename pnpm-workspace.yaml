@@ -1,0 +1,7 @@
+packages:
+  - 'add-transaction'
+  - 'dashboard'
+  - 'design-system'
+  - 'profile'
+  - 'sidebar'
+  - 'transactions'

@@ -1,0 +1,14 @@
+{
+  "name": "bytebank",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "dev:add-transaction": "pnpm --filter add-transaction run dev",
+    "dev:dashboard": "pnpm --filter dashboard run dev",
+    "dev:design-system": "pnpm --filter design-system run dev",
+    "dev:profile": "pnpm --filter profile run dev",
+    "dev:sidebar": "pnpm --filter sidebar run dev",
+    "dev:transactions": "pnpm --filter transactions run dev",
+    "build": "pnpm -r run build"
+  }
+}
