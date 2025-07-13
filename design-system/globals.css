@@ -1,9 +1,0 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
-/* Adicione aqui seus estilos globais personalizados */
-body {
-  font-family: 'Inter', sans-serif;
-  background-color: #b62c98;
-  color: #ffffff;
-}
