@@ -1,9 +1,11 @@
 import React from "react"
 
-function App() {
+function AppTransaction() {
   return (
-    <h1>Add transaction</h1>
+    <>
+      <h1 className="text-primary">Add transaction</h1>
+    </>
   );
 }
 
-export default App;
+export default AppTransaction;

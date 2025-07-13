@@ -8,7 +8,13 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "types": [
+      "node",
+      "webpack-env"
+    ]
   },
-  "include": ["src"]
+  "include": [
+    "src"
+  ]
 }

@@ -2,8 +2,8 @@
   "name": "transactions",
   "version": "0.1.0",
   "scripts": {
-    "start": "webpack serve",
-    "build": "react-scripts build"
+    "dev": "webpack serve --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js"
   },
   "dependencies": {
     "react": "^18.3.1",
@@ -13,13 +13,23 @@
     "@babel/core": "^7.28.0",
     "@babel/preset-react": "^7.27.1",
     "@babel/preset-typescript": "^7.27.1",
+    "@types/node": "^24.0.13",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
+    "@types/webpack-env": "^1.18.8",
+    "autoprefixer": "^10.4.21",
     "babel-loader": "^10.0.0",
+    "css-loader": "^7.1.2",
     "html-webpack-plugin": "^5.6.3",
+    "postcss": "^8.5.6",
+    "postcss-loader": "^8.1.1",
+    "postcss-preset-env": "^10.2.4",
+    "style-loader": "^4.0.0",
+    "tailwindcss": "^3.4.17",
     "typescript": "^5.8.3",
     "webpack": "^5.100.1",
     "webpack-cli": "^6.0.1",
-    "webpack-dev-server": "^5.2.2"
+    "webpack-dev-server": "^5.2.2",
+    "webpack-merge": "^6.0.1"
   }
 }

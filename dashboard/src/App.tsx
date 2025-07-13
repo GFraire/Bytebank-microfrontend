@@ -1,9 +1,11 @@
 import React from "react"
 
-function App() {
+function AppDashboard() {
   return (
-    <h1>Dashboard</h1>
+    <>
+      <h1 className="text-secondary">Dashboard FUNFANDO</h1>
+    </>
   );
 }
 
-export default App;
+export default AppDashboard;
