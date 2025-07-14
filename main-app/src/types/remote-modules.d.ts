@@ -22,3 +22,8 @@ declare module 'profile/Profile' {
   const Component: React.ComponentType;
   export default Component;
 }
+
+declare module 'designSystem/GlobalCSS' {
+  const GlobalCSS: any;
+  export default GlobalCSS;
+}

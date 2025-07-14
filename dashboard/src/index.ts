@@ -1,3 +1,2 @@
 import("./bootstrap")
-
-// import "../../design-system/src/global.css"
+import('designSystem/GlobalCSS').catch(() => console.warn('Design system CSS não carregado'))

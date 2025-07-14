@@ -14,6 +14,7 @@ const nextConfig = {
       transactions: `transactions@${BASE_URL}sidebar-kwclcppi9${BASE_URL_END}`,
       addTransaction: `addTransaction@${BASE_URL}add-transaction-ot5r2p8qh${BASE_URL_END}`,
       profile: `profile@${BASE_URL}profile-di1oy2tol${BASE_URL_END}`,
+      designSystem: `designSystem@${BASE_URL}design-system-grupo-9-fiapinhos-projects.vercel.app/remoteEntry.js`,
     };
 
     config.plugins.push(
