@@ -5,15 +5,14 @@ const nextConfig = {
   webpack: (config, options) => {
     const { isServer } = options;
     config.experiments = { topLevelAwait: true, layers: true };
-    const BASE_URL = 'https://bytebank-'
-    const BASE_URL_END = '-grupo-9-fiapinhos-projects.vercel.app/remoteEntry.js'
-    // URLs de produção dos micro frontends no Vercel
+    
     const remotes = {
-      dashboard: `dashboard@${BASE_URL}dashboard-pprfovgb6${BASE_URL_END}`,
-      sidebar: `sidebar@${BASE_URL}sidebar-kwclcppi9${BASE_URL_END}`, 
-      transactions: `transactions@${BASE_URL}sidebar-kwclcppi9${BASE_URL_END}`,
-      addTransaction: `addTransaction@${BASE_URL}add-transaction-ot5r2p8qh${BASE_URL_END}`,
-      profile: `profile@${BASE_URL}profile-di1oy2tol${BASE_URL_END}`,
+      dashboard: "dashboard@http://localhost:3001/remoteEntry.js",
+      sidebar: "sidebar@http://localhost:3002/remoteEntry.js",
+      transactions: "transactions@http://localhost:3003/remoteEntry.js",
+      "addTransaction": "addTransaction@http://localhost:3004/remoteEntry.js",
+      profile: "profile@http://localhost:3005/remoteEntry.js",
+      designSystem: "designSystem@http://localhost:4000/remoteEntry.js",
     };
 
     config.plugins.push(
