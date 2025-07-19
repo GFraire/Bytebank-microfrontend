@@ -30,9 +30,9 @@ module.exports = {
     new ModuleFederationPlugin({
       name: "designSystem",
       filename: "remoteEntry.js",
-      // exposes: {
-      // './Components': './src/components/',
-      // },
+      exposes: {
+        './GlobalCSS': './src/index.ts',
+      },
       shared: {
         react: { singleton: true, requiredVersion: '18.3.1', },
         "react-dom": { singleton: true, requiredVersion: '18.3.1', },
