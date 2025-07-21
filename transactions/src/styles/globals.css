@@ -16,7 +16,7 @@
     @apply flex flex-col items-start justify-start gap-4 min-w-40;
 
     .mes-group {
-      @apply text-green font-semibold text-xs py-2;
+      @apply text-green font-semibold py-2 text-sm;
     }
     .transacao-item {
       @apply flex flex-col items-start justify-start;

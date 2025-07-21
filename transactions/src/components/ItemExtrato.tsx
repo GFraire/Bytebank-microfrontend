@@ -26,11 +26,11 @@ export default function ItemExtrato({
       <div
         key={id}
         className={`transacao-item ${
-          tipo === "Depósito" ? "text-verde-light" : "text-laranja-grafico"
+          tipo === "Depósito" ? "text-green" : "text-secondary"
         }`}
       >
         <div className="flex flex-row items-center gap-4 justify-between w-full">
-          <p className=" text-nowrap">{tipo}</p>
+          <p className="text-nowrap">{tipo}</p>
           <p className="text-gray-500 text-xs ">
             {new Date(data).toLocaleDateString("pt-BR", {
               year: "numeric",

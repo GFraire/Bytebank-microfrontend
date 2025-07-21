@@ -6,8 +6,8 @@ export interface SeparadorProps {
 }
 
 const VARIANT_CLASSES = {
-  primary: "bg-cinza",
-  secondary: "bg-verde",
+  primary: "bg-gray-300",
+  secondary: "bg-green",
 };
 
 const SIZE_CLASSES = {
