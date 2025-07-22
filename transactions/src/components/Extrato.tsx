@@ -60,10 +60,10 @@ export function Extrato() {
   return (
     <aside className="card max-md:items-center relative">
       <h3 className="title pb-8">Extrato</h3>
-      <div className="transacoes">
+      <div className="transacoes max-md:items-center">
         {/* Última operação realizada */}
         {lastTransaction && (
-          <div className="mb-4 pb-4 w-full max-w-96">
+          <div className="mb-4 pb-4 w-full max-w-96 max-sm:max-w-full">
             <div className="border-l-4 border-primary pl-4">
               <h3 className="text-lg font-semibold text-gray-800 mb-2">
                 Última operação
@@ -110,7 +110,7 @@ export function Extrato() {
         )}
         {gruposTransacoes?.length > 0 &&
           Object.entries(transacoesPorMes).map(([mes, transacoes]) => (
-            <div key={mes} className="w-full max-w-96">
+            <div key={mes} className="w-full max-w-96 max-sm:max-w-full">
               <h4 className="mes-group">{mes}</h4>
               {transacoes.map((transacao) => (
                 <ItemExtrato
