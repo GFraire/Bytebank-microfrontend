@@ -10,7 +10,7 @@
     "dev:profile": "pnpm --filter profile run dev",
     "dev:sidebar": "pnpm --filter sidebar run dev",
     "dev:transactions": "pnpm --filter transactions run dev",
-    "dev:all": "concurrently -k -n add,dash,ds,profile,sidebar,tx,main -c blue,green,cyan,magenta,white,gray,yellow \"pnpm dev:add-transaction\" \"pnpm dev:dashboard\" \"pnpm dev:design-system\" \"pnpm dev:profile\" \"pnpm dev:sidebar\" \"pnpm dev:transactions\" \"pnpm dev:main-app\"",
+    "dev:all": "concurrently --kill-others --names ds,add,dash,profile,sidebar,tx,main --colors blue,green,cyan,magenta,white,gray,yellow \"pnpm dev:design-system\" \"pnpm dev:add-transaction\" \"pnpm dev:dashboard\" \"pnpm dev:profile\" \"pnpm dev:sidebar\" \"pnpm dev:transactions\" \"pnpm dev:main-app\"",
     "build": "pnpm -r run build",
     "deploy:design-system": "cd design-system && vercel --prod",
     "deploy:dashboard": "cd dashboard && vercel --prod",
