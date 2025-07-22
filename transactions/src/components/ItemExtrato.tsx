@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { DotsThreeVertical, Hamburger, Pencil, Trash } from "phosphor-react";
+import {
+  DotsThreeVertical,
+  Hamburger,
+  Pencil,
+  PencilSimple,
+  Trash,
+  TrashSimple,
+} from "phosphor-react";
 import Button from "./ui/form/Button";
 import { formatadorValor } from "../utils/formatadorValor";
 import { Hmac } from "crypto";
@@ -24,7 +31,20 @@ export default function ItemExtrato({
   onEditar,
 }: ItemExtratoProps) {
   const [openModal, setOpenModal] = useState(false);
+  const [activeActionMenu, setActiveActionMenu] = useState<number | null>(null);
 
+  // Função para alternar a visibilidade do menu de ações
+  const toggleActionMenu = (id: number) => {
+    if (activeActionMenu === id) {
+      setActiveActionMenu(null);
+    } else {
+      setActiveActionMenu(id);
+    }
+  };
+  // Fecha o menu de ações quando clicado fora
+  const handleClickOutside = () => {
+    setActiveActionMenu(null);
+  };
   return (
     <div className="transacao-item border-b-2 border-gray-200 pb-4 mb-4 w-full">
       <div className="flex justify-between items-start w-full">
@@ -54,18 +74,48 @@ export default function ItemExtrato({
             })}
           </p>
           {/* Botão de ações */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              // toggleActionMenu(transaction.id);
-            }}
-            aria-label="Opções"
-            className="p-1 hover:bg-gray-100 rounded"
-          >
-            <DotsThreeVertical size={22} />
-          </button>
+          <div className="relative">
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                toggleActionMenu(id);
+              }}
+              aria-label="Opções"
+              className="p-1 hover:bg-gray-100 rounded"
+            >
+              <DotsThreeVertical size={22} />
+            </button>
+            {/* Menu de ações */}
+            {activeActionMenu === id && (
+              <div
+                className="card absolute right-2 z-10"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button
+                  // onClick={() => handleEdit(transaction)}
+                  className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
+                  // disabled={!onEditTransaction}
+                >
+                  <PencilSimple size={16} className="mr-2" />
+                  Editar
+                </button>
+                <button
+                  // onClick={() => confirmDelete(transaction.id)}
+                  className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 flex items-center"
+                  // disabled={!onDeleteTransaction}
+                >
+                  <TrashSimple size={16} className="mr-2" />
+                  Excluir
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
+      {/* Overlay para fechar o menu quando clicado fora */}
+      {activeActionMenu !== null && (
+        <div className="fixed inset-0 z-0" onClick={handleClickOutside} />
+      )}
     </div>
   );
 }
