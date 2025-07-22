@@ -13,13 +13,13 @@
     @apply bg-primary text-white rounded-full p-2 mt-2 text-center font-semibold cursor-pointer transition-colors duration-300 ease-in-out hover:bg-green;
   }
   .transacoes {
-    @apply flex flex-col items-start justify-start gap-4 min-w-40;
+    @apply flex flex-col items-start justify-start gap-2 min-w-40 w-full;
 
     .mes-group {
       @apply text-green font-semibold py-2 text-sm;
     }
     .transacao-item {
-      @apply flex flex-col items-start justify-start;
+      @apply flex flex-col items-start justify-start w-full;
 
       h6 {
         @apply font-bold;
