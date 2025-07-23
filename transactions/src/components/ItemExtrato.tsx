@@ -1,6 +1,9 @@
+import React from "react";
 import { useState } from "react";
 import { DotsThreeVertical, PencilSimple, TrashSimple } from "phosphor-react";
 import { formatadorData, formatadorValor } from "../utils/formatador";
+import Modal from "./ui/Modal";
+import Button from "./ui/form/Button";
 
 interface ItemExtratoProps {
   typeItemExtrato?: "LastTransaction" | "Transaction";
@@ -38,6 +41,20 @@ export default function ItemExtrato({
   const handleClickOutside = () => {
     setActiveActionMenu(null);
   };
+
+  function handleModalClose() {
+    setOpenModal(false);
+  }
+  const handleExcluir = (id: number) => {
+    console.log("Excluindo transação com ID:", id);
+    // try {
+    //   // removerTransacao(id);
+    //   toast.success("Transação excluída com sucesso!");
+    // } catch {
+    //   toast.error("Erro ao excluir a transação.");
+    // }
+  };
+
   return (
     <div
       className={`${
@@ -92,22 +109,24 @@ export default function ItemExtrato({
                 className="card absolute right-2 z-10"
                 onClick={(e) => e.stopPropagation()}
               >
-                <button
+                <Button
+                  variant="secondary"
                   // onClick={() => handleEdit(transaction)}
-                  className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
+                  className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 hover:text-gray-800  flex items-center"
                   // disabled={!onEditTransaction}
                 >
                   <PencilSimple size={16} className="mr-2" />
                   Editar
-                </button>
-                <button
-                  // onClick={() => confirmDelete(transaction.id)}
-                  className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 flex items-center"
+                </Button>
+                <Button
+                  variant="secondary"
+                  onClick={() => setOpenModal(true)}
+                  className="w-full text-left px-4 py-2 text-sm text-secondary hover:bg-red-100 hover:text-red-600 flex items-center"
                   // disabled={!onDeleteTransaction}
                 >
                   <TrashSimple size={16} className="mr-2" />
                   Excluir
-                </button>
+                </Button>
               </div>
             )}
           </div>
@@ -116,6 +135,28 @@ export default function ItemExtrato({
       {/* Overlay para fechar o menu quando clicado fora */}
       {activeActionMenu !== null && (
         <div className="fixed inset-0 z-0" onClick={handleClickOutside} />
+      )}
+      {openModal && (
+        <Modal
+          title="Você tem certeza que deseja excluir esta transação?"
+          onClose={handleModalClose}
+        >
+          <p>Caso você exclua esta transação, ela não poderá ser recuperada.</p>
+          <div className="flex justify-between gap-2 mt-4 pt-6">
+            <Button variant="outline" onClick={handleModalClose}>
+              Cancelar
+            </Button>
+            <Button
+              variant="danger"
+              onClick={() => {
+                handleExcluir(id);
+                handleModalClose();
+              }}
+            >
+              Excluir
+            </Button>
+          </div>
+        </Modal>
       )}
     </div>
   );

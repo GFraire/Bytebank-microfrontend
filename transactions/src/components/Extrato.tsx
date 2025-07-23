@@ -59,7 +59,7 @@ export function Extrato() {
       <div className="transacoes max-md:items-center">
         {/* Última operação realizada */}
         {lastTransaction && (
-          <div className="mb-4  w-full max-w-96 max-sm:max-w-full">
+          <div className="mb-4 w-full max-w-96 max-sm:max-w-full">
             <div className="border-l-4 border-primary pl-4">
               <h3 className="text-lg font-semibold text-gray-800 ">
                 Última operação

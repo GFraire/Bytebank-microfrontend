@@ -9,9 +9,25 @@
   .card {
     @apply flex flex-col items-start justify-start bg-white rounded-md shadow-lg text-black p-4;
   }
-  .btn-icon {
-    @apply bg-primary text-white rounded-full p-2 mt-2 text-center font-semibold cursor-pointer transition-colors duration-300 ease-in-out hover:bg-green;
+  .btn {
+    @apply bg-green text-white rounded-md p-2 md:px-4 text-center font-semibold cursor-pointer transition-colors  hover:bg-green-light;
   }
+  .btn-secoundary {
+    @apply bg-white text-green rounded-md p-2 md:px-4 text-center font-semibold cursor-pointer transition-colors  hover:bg-green-light hover:text-white;
+  }
+  .btn-outline {
+    @apply border border-white text-black rounded-md p-2 md:px-4 text-center font-semibold cursor-pointer transition-colors  hover:bg-gray-200;
+  }
+  .btn-icon {
+    @apply bg-green  text-white rounded-full p-2 mt-2 text-center font-semibold cursor-pointer transition-colors  hover:bg-green-light;
+  }
+  .btn-danger {
+    @apply bg-secondary text-white rounded-md py-2 px-4 text-center font-semibold cursor-pointer transition-colors  hover:bg-red-500;
+  }
+  .modal {
+    @apply fixed inset-0 bg-black/20 z-10;
+  }
+
   .transacoes {
     @apply flex flex-col items-start justify-start gap-2 min-w-40 w-full;
 
