@@ -1,6 +1,12 @@
 import React from "react";
 import { useState } from "react";
-import { DotsThreeVertical, PencilSimple, TrashSimple } from "phosphor-react";
+import {
+  DotsThreeVertical,
+  Info,
+  PencilSimple,
+  TrashSimple,
+  Warning,
+} from "phosphor-react";
 import { formatadorData, formatadorValor } from "../utils/formatador";
 import Modal from "./ui/Modal";
 import Button from "./ui/form/Button";
@@ -131,12 +137,22 @@ export default function ItemExtrato({
       {activeActionMenu && (
         <div className="fixed inset-0 z-0" onClick={handleClickOutside} />
       )}
+
       {openModal && (
-        <Modal
-          title="Você tem certeza que deseja excluir esta transação?"
-          onClose={handleModalClose}
-        >
-          <p>Caso você exclua esta transação, ela não poderá ser recuperada.</p>
+        <Modal onClose={handleModalClose}>
+          <div className="text-center mb-6">
+            <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100 mb-4">
+              <Warning size={24} className="text-red-600" />
+            </div>
+            <h3 className="text-lg leading-6 font-medium text-gray-900 mb-1">
+              Confirmar exclusão
+            </h3>
+            <p className="text-sm text-gray-500">
+              Tem certeza que deseja excluir esta transação?
+              <br />
+              Esta ação não pode ser desfeita.
+            </p>
+          </div>
           <div className="flex justify-between gap-2 mt-4 pt-6">
             <Button variant="outline" onClick={handleModalClose}>
               Cancelar
