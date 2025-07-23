@@ -73,9 +73,9 @@ export function Extrato() {
                   typeItemExtrato="LastTransaction"
                   id={lastTransaction.id}
                   key={lastTransaction.id}
-                  tipo={lastTransaction.type}
-                  valor={lastTransaction.amount}
-                  data={lastTransaction.date.toString()}
+                  type={lastTransaction.type}
+                  amount={lastTransaction.amount}
+                  date={lastTransaction.date.toString()}
                   recipient={lastTransaction.recipient}
                   category={lastTransaction.category}
                   onEditar={() => {}}
@@ -101,9 +101,9 @@ export function Extrato() {
                   typeItemExtrato="Transaction"
                   id={transacao.id}
                   key={transacao.id}
-                  tipo={transacao.type}
-                  valor={transacao.amount}
-                  data={transacao.date.toString()}
+                  type={transacao.type}
+                  amount={transacao.amount}
+                  date={transacao.date.toString()}
                   recipient={transacao.recipient}
                   category={transacao.category}
                   onEditar={() => {}}

@@ -12,9 +12,9 @@ import { formatadorValor } from "../utils/formatadorValor";
 interface ItemExtratoProps {
   typeItemExtrato?: "LastTransaction" | "Transaction";
   id: number;
-  tipo: string;
-  valor: number;
-  data: string;
+  type: string;
+  amount: number;
+  date: string;
   recipient?: string;
   category?: string;
   onEditar?: (id: number) => void;
@@ -23,9 +23,9 @@ interface ItemExtratoProps {
 export default function ItemExtrato({
   typeItemExtrato = "Transaction",
   id,
-  tipo,
-  valor,
-  data,
+  type,
+  amount,
+  date,
   recipient,
   category,
   onEditar,
@@ -55,7 +55,7 @@ export default function ItemExtrato({
     >
       <div className="flex justify-between items-start w-full">
         <div className="flex-1 pr-4">
-          <p className="text-base font-medium text-gray-800 mb-1">{tipo}</p>
+          <p className="text-base font-medium text-gray-800 mb-1">{type}</p>
           {typeItemExtrato === "Transaction" && (
             <>
               {recipient && (
@@ -70,16 +70,16 @@ export default function ItemExtrato({
           )}
           <p
             className={`text-base font-bold ${
-              valor < 0 ? "text-secondary" : "text-green"
+              amount < 0 ? "text-secondary" : "text-green"
             }`}
           >
-            {valor < 0 ? "" : "+"}
-            {formatadorValor.format(valor)}
+            {amount < 0 ? "" : "+"}
+            {formatadorValor.format(amount)}
           </p>
         </div>
         <div className="flex flex-col items-end">
           <p className="text-gray-500 text-sm mb-2">
-            {new Date(data).toLocaleDateString("pt-BR", {
+            {new Date(date).toLocaleDateString("pt-BR", {
               year: "numeric",
               month: "2-digit",
               day: "2-digit",
