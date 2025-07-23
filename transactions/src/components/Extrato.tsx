@@ -63,39 +63,23 @@ export function Extrato() {
       <div className="transacoes max-md:items-center">
         {/* Última operação realizada */}
         {lastTransaction && (
-          <div className="mb-4 pb-4 w-full max-w-96 max-sm:max-w-full">
+          <div className="mb-4  w-full max-w-96 max-sm:max-w-full">
             <div className="border-l-4 border-primary pl-4">
-              <h3 className="text-lg font-semibold text-gray-800 mb-2">
+              <h3 className="text-lg font-semibold text-gray-800 ">
                 Última operação
               </h3>
               <div className="flex justify-between items-start">
-                <div>
-                  <p className="font-medium text-gray-800">
-                    {lastTransaction.type}
-                  </p>
-                  <p
-                    className={`text-xl font-bold ${
-                      lastTransaction.amount < 0
-                        ? "text-secondary"
-                        : "text-green"
-                    }`}
-                  >
-                    {lastTransaction.amount < 0 ? "-" : "+"}R${" "}
-                    {Math.abs(lastTransaction.amount)
-                      .toFixed(2)
-                      .replace(".", ",")}
-                  </p>
-                </div>
-
-                <div className="text-right">
-                  <p className="text-gray-500">
-                    {lastTransaction.date.toLocaleDateString("pt-BR", {
-                      year: "numeric",
-                      month: "2-digit",
-                      day: "2-digit",
-                    })}
-                  </p>
-                </div>
+                <ItemExtrato
+                  typeItemExtrato="LastTransaction"
+                  id={lastTransaction.id}
+                  key={lastTransaction.id}
+                  tipo={lastTransaction.type}
+                  valor={lastTransaction.amount}
+                  data={lastTransaction.date.toString()}
+                  recipient={lastTransaction.recipient}
+                  category={lastTransaction.category}
+                  onEditar={() => {}}
+                />
               </div>
             </div>
           </div>
@@ -112,8 +96,9 @@ export function Extrato() {
           Object.entries(transacoesPorMes).map(([mes, transacoes]) => (
             <div key={mes} className="w-full max-w-96 max-sm:max-w-full">
               <h4 className="mes-group">{mes}</h4>
-              {transacoes.map((transacao) => (
+              {transacoes.map((transacao, key) => (
                 <ItemExtrato
+                  typeItemExtrato="Transaction"
                   id={transacao.id}
                   key={transacao.id}
                   tipo={transacao.type}

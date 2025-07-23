@@ -7,11 +7,10 @@ import {
   Trash,
   TrashSimple,
 } from "phosphor-react";
-import Button from "./ui/form/Button";
 import { formatadorValor } from "../utils/formatadorValor";
-import { Hmac } from "crypto";
 
 interface ItemExtratoProps {
+  typeItemExtrato?: "LastTransaction" | "Transaction";
   id: number;
   tipo: string;
   valor: number;
@@ -22,6 +21,7 @@ interface ItemExtratoProps {
 }
 
 export default function ItemExtrato({
+  typeItemExtrato = "Transaction",
   id,
   tipo,
   valor,
@@ -46,15 +46,27 @@ export default function ItemExtrato({
     setActiveActionMenu(null);
   };
   return (
-    <div className="transacao-item border-b-2 border-gray-200 pb-4 mb-4 w-full">
+    <div
+      className={`${
+        typeItemExtrato === "Transaction"
+          ? "transacao-item border-b-2 border-gray-200 pb-4 mb-4 w-full"
+          : "transacao-item pb-2 w-full"
+      }`}
+    >
       <div className="flex justify-between items-start w-full">
         <div className="flex-1 pr-4">
           <p className="text-base font-medium text-gray-800 mb-1">{tipo}</p>
-          {recipient && (
-            <p className="text-xs text-gray-600 mb-1">Para: {recipient}</p>
-          )}
-          {category && (
-            <p className="text-xs text-gray-600 mb-1">Categoria: {category}</p>
+          {typeItemExtrato === "Transaction" && (
+            <>
+              {recipient && (
+                <p className="text-xs text-gray-600 mb-1">Para: {recipient}</p>
+              )}
+              {category && (
+                <p className="text-xs text-gray-600 mb-1">
+                  Categoria: {category}
+                </p>
+              )}
+            </>
           )}
           <p
             className={`text-base font-bold ${
