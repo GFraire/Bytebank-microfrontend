@@ -1,7 +1,11 @@
 import React from "react";
 import ItemExtrato from "./ItemExtrato";
+import {
+  groupTransactionsByMonth,
+  getLastTransaction,
+} from "../utils/transactionHelpers";
 
-interface Transaction {
+export interface Transaction {
   id: number;
   type: string;
   amount: number;
@@ -44,19 +48,11 @@ export function Extrato() {
       date: new Date(),
     },
   ];
-  // Se não há transações, não temos última operação
-  const lastTransaction =
-    gruposTransacoes.length > 0 ? gruposTransacoes[0] : null;
 
-  // Agrupar transações por mês
-  const transacoesPorMes = gruposTransacoes.reduce((grupos, transacao) => {
-    const mes = transacao.month;
-    if (!grupos[mes]) {
-      grupos[mes] = [];
-    }
-    grupos[mes].push(transacao);
-    return grupos;
-  }, {} as Record<string, Transaction[]>);
+  // Usando as funções utilitárias
+  const lastTransaction = getLastTransaction(gruposTransacoes);
+  const transacoesPorMes = groupTransactionsByMonth(gruposTransacoes);
+
   return (
     <aside className="card max-md:items-center relative">
       <h3 className="title pb-8">Extrato</h3>
@@ -75,7 +71,7 @@ export function Extrato() {
                   key={lastTransaction.id}
                   type={lastTransaction.type}
                   amount={lastTransaction.amount}
-                  date={lastTransaction.date.toString()}
+                  date={lastTransaction.date}
                   recipient={lastTransaction.recipient}
                   category={lastTransaction.category}
                   onEditar={() => {}}
@@ -103,7 +99,7 @@ export function Extrato() {
                   key={transacao.id}
                   type={transacao.type}
                   amount={transacao.amount}
-                  date={transacao.date.toString()}
+                  date={transacao.date}
                   recipient={transacao.recipient}
                   category={transacao.category}
                   onEditar={() => {}}

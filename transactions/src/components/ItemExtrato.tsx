@@ -7,14 +7,14 @@ import {
   Trash,
   TrashSimple,
 } from "phosphor-react";
-import { formatadorValor } from "../utils/formatadorValor";
+import { formatadorData, formatadorValor } from "../utils/formatador";
 
 interface ItemExtratoProps {
   typeItemExtrato?: "LastTransaction" | "Transaction";
   id: number;
   type: string;
   amount: number;
-  date: string;
+  date: Date;
   recipient?: string;
   category?: string;
   onEditar?: (id: number) => void;
@@ -79,11 +79,7 @@ export default function ItemExtrato({
         </div>
         <div className="flex flex-col items-end">
           <p className="text-gray-500 text-sm mb-2">
-            {new Date(date).toLocaleDateString("pt-BR", {
-              year: "numeric",
-              month: "2-digit",
-              day: "2-digit",
-            })}
+            {formatadorData.format(new Date(date))}
           </p>
           {/* Botão de ações */}
           <div className="relative">
