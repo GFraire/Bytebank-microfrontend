@@ -1,12 +1,5 @@
-import React, { useState } from "react";
-import {
-  DotsThreeVertical,
-  Hamburger,
-  Pencil,
-  PencilSimple,
-  Trash,
-  TrashSimple,
-} from "phosphor-react";
+import { useState } from "react";
+import { DotsThreeVertical, PencilSimple, TrashSimple } from "phosphor-react";
 import { formatadorData, formatadorValor } from "../utils/formatador";
 
 interface ItemExtratoProps {
