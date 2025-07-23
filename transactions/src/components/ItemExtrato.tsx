@@ -27,19 +27,11 @@ export default function ItemExtrato({
   onEditar,
 }: ItemExtratoProps) {
   const [openModal, setOpenModal] = useState(false);
-  const [activeActionMenu, setActiveActionMenu] = useState<number | null>(null);
+  const [activeActionMenu, setActiveActionMenu] = useState(false);
 
-  // Função para alternar a visibilidade do menu de ações
-  const toggleActionMenu = (id: number) => {
-    if (activeActionMenu === id) {
-      setActiveActionMenu(null);
-    } else {
-      setActiveActionMenu(id);
-    }
-  };
   // Fecha o menu de ações quando clicado fora
   const handleClickOutside = () => {
-    setActiveActionMenu(null);
+    setActiveActionMenu(false);
   };
 
   function handleModalClose() {
@@ -96,7 +88,7 @@ export default function ItemExtrato({
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                toggleActionMenu(id);
+                setActiveActionMenu(true);
               }}
               aria-label="Opções"
               className="p-1 hover:bg-gray-100 rounded"
@@ -104,7 +96,7 @@ export default function ItemExtrato({
               <DotsThreeVertical size={22} />
             </button>
             {/* Menu de ações */}
-            {activeActionMenu === id && (
+            {activeActionMenu && (
               <div
                 className="card absolute right-2 z-10"
                 onClick={(e) => e.stopPropagation()}
@@ -120,7 +112,10 @@ export default function ItemExtrato({
                 </Button>
                 <Button
                   variant="secondary"
-                  onClick={() => setOpenModal(true)}
+                  onClick={() => {
+                    setOpenModal(true);
+                    setActiveActionMenu(false);
+                  }}
                   className="w-full text-left px-4 py-2 text-sm text-secondary hover:bg-red-100 hover:text-red-600 flex items-center"
                   // disabled={!onDeleteTransaction}
                 >
@@ -133,7 +128,7 @@ export default function ItemExtrato({
         </div>
       </div>
       {/* Overlay para fechar o menu quando clicado fora */}
-      {activeActionMenu !== null && (
+      {activeActionMenu && (
         <div className="fixed inset-0 z-0" onClick={handleClickOutside} />
       )}
       {openModal && (
