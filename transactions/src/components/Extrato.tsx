@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import ItemExtrato from "./ItemExtrato";
 import {
   groupTransactionsByMonth,
   getLastTransaction,
 } from "../utils/transactionHelpers";
+import Modal from "./ui/Modal";
+import TransacaoForm from "./TransactionFormEdit";
 
 export interface Transaction {
   id: number;
@@ -22,7 +24,6 @@ export function Extrato() {
       type: "Depósito",
       amount: 10000,
       month: "Janeiro",
-      category: "Salário do mês de Janeiro de 2025",
       date: new Date(),
     },
     {
@@ -30,7 +31,8 @@ export function Extrato() {
       type: "Transferência",
       amount: -50,
       month: "Janeiro",
-      recipient: "João",
+      category: "groceries",
+      recipient: "Maria",
       date: new Date(),
     },
     {
@@ -38,6 +40,7 @@ export function Extrato() {
       type: "Depósito",
       amount: 200,
       month: "Fevereiro",
+      category: "services",
       date: new Date(),
     },
     {
@@ -45,6 +48,8 @@ export function Extrato() {
       type: "Transferência",
       amount: -30,
       month: "Fevereiro",
+      category: "entertainment",
+      recipient: "Ana",
       date: new Date(),
     },
   ];
@@ -52,6 +57,23 @@ export function Extrato() {
   // Usando as funções utilitárias
   const lastTransaction = getLastTransaction(gruposTransacoes);
   const transacoesPorMes = groupTransactionsByMonth(gruposTransacoes);
+  const [transacaoParaEditar, setTransacaoParaEditar] =
+    useState<Transaction | null>(null);
+  const [modalAberto, setModalAberto] = useState(true);
+
+  const abrirModal = (transacao: Transaction) => {
+    setTransacaoParaEditar(transacao);
+    setModalAberto(true);
+  };
+
+  const fecharModal = () => {
+    setTransacaoParaEditar(null);
+    setModalAberto(false);
+  };
+
+  const handleSave = () => {
+    fecharModal();
+  };
 
   return (
     <aside className="card max-md:items-center relative">
@@ -74,7 +96,7 @@ export function Extrato() {
                   date={lastTransaction.date}
                   recipient={lastTransaction.recipient}
                   category={lastTransaction.category}
-                  onEditar={() => {}}
+                  onEditar={() => abrirModal(lastTransaction)}
                 />
               </div>
             </div>
@@ -102,12 +124,22 @@ export function Extrato() {
                   date={transacao.date}
                   recipient={transacao.recipient}
                   category={transacao.category}
-                  onEditar={() => {}}
+                  onEditar={() => abrirModal(gruposTransacoes[key])}
                 />
               ))}
             </div>
           ))}
       </div>
+      {modalAberto && (
+        <Modal onClose={fecharModal} title="Editar Transação">
+          <TransacaoForm
+            fecharModal={fecharModal}
+            modo="editar"
+            transacaoParaEditar={transacaoParaEditar}
+            onSave={handleSave}
+          />
+        </Modal>
+      )}
     </aside>
   );
 }

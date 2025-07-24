@@ -109,7 +109,10 @@ export default function ItemExtrato({
               >
                 <Button
                   variant="secondary"
-                  // onClick={() => handleEdit(transaction)}
+                  onClick={() => {
+                    if (onEditar) onEditar(id);
+                    setActiveActionMenu(false);
+                  }}
                   className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 hover:text-gray-800  flex items-center"
                   // disabled={!onEditTransaction}
                 >

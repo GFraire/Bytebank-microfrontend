@@ -27,7 +27,12 @@
   .modal {
     @apply fixed inset-0 bg-black/20 z-10;
   }
-
+  .campo {
+    @apply flex flex-col py-2 gap-1 md:gap-2 w-full;
+  }
+  .campo-input {
+    @apply h-10 border-2 border-green-light bg-white rounded-md p-2 text-black text-start focus:border-green focus:outline-none text-base w-full;
+  }
   .transacoes {
     @apply flex flex-col items-start justify-start gap-2 min-w-40 w-full;
 
