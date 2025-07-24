@@ -31,7 +31,7 @@ module.exports = {
       name: "designSystem",
       filename: "remoteEntry.js",
       exposes: {
-        './styles': './src/global.css'
+        './styles': './src/index.ts'
       },
       shared: {
         react: { singleton: true, requiredVersion: '18.3.1', },
