@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "webpack serve --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js"
+    "build": "webpack --config webpack.prod.js",
+    "vercel-build": "webpack --config webpack.prod.js"
   },
   "dependencies": {
     "react": "^18.3.1",

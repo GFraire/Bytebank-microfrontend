@@ -7,7 +7,7 @@ module.exports = merge(common, {
   output: {
     filename: "[name].[contenthash].js",
     path: path.resolve(__dirname, "dist"),
-    publicPath: "http://localhost:4000/",
+    publicPath: "/",
     clean: true,
   },
 });
