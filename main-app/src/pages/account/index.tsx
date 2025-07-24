@@ -24,11 +24,11 @@ export default function Account() {
   return (
     <div>
       <h1>Account</h1>
-      <ProfileComponent />
+      {/* <ProfileComponent /> */}
 
-      <SidebarComponent />
-      <DashboardComponent />
-      <AddTransactionComponent />
+      {/* <SidebarComponent /> */}
+      {/* <DashboardComponent /> */}
+      {/* <AddTransactionComponent /> */}
       <TransactionsComponent />
     </div>
   );
