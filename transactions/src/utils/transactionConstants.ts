@@ -21,9 +21,10 @@ export const TRANSACTION_CATEGORIES: SelectOption[] = [
 
 export const TRANSACTION_TYPES: SelectOption[] = [
   { value: "", label: "Selecione" },
-  { value: "Depósito", label: "Depósito" },
-  { value: "Transferência", label: "Transferência" },
-  { value: "Pagamento de Boleto", label: "Pagamento de Boleto" },
+  { value: "deposit", label: "Depósito" },
+  { value: "transfer", label: "Transferência" },
+  { value: "payment", label: "Pagamento de Boleto" },
+  { value: "withdrawal", label: "Saque" },
 ];
 
 // Função utilitária para obter o label de uma categoria pelo value

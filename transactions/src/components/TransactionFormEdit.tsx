@@ -68,7 +68,7 @@ export default function TransacaoForm({
     <section className="flex flex-col w-full items-center justify-center xs:items-start xs:justify-start gap-2">
       {modo == "criar" && <h2 className="title pb-4">{formTitle}</h2>}
       <form onSubmit={handleSubmit(handleOnSubmit)} className="p-2 flex w-full">
-        <div className="flex flex-col w-full items-center justify-center xs:items-start xs:justify-start">
+        <div className="flex flex-col w-full justify-between xs:items-start xs:justify-start">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-4 justify-between">
             <div className="campo">
               <Label htmlFor="type" className="">
@@ -123,7 +123,8 @@ export default function TransacaoForm({
                 </p>
               )}
             </div>
-
+          </div>
+          <div className="flex flex-row justify-between gap-2 mt-4 pt-6">
             {modo === "editar" && (
               <Button
                 variant="outline"

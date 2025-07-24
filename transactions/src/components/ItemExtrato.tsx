@@ -10,6 +10,10 @@ import {
 import { formatadorData, formatadorValor } from "../utils/formatador";
 import Modal from "./ui/Modal";
 import Button from "./ui/form/Button";
+import {
+  getCategoryLabel,
+  getTransactionTypeLabel,
+} from "../utils/transactionConstants";
 
 interface ItemExtratoProps {
   typeItemExtrato?: "LastTransaction" | "Transaction";
@@ -63,7 +67,9 @@ export default function ItemExtrato({
     >
       <div className="flex justify-between items-start w-full">
         <div className="flex-1 pr-4">
-          <p className="text-base font-medium text-gray-800 mb-1">{type}</p>
+          <p className="text-base font-medium text-gray-800 mb-1">
+            {getTransactionTypeLabel(type)}
+          </p>
           {typeItemExtrato === "Transaction" && (
             <>
               {recipient && (
@@ -71,7 +77,7 @@ export default function ItemExtrato({
               )}
               {category && (
                 <p className="text-xs text-gray-600 mb-1">
-                  Categoria: {category}
+                  Categoria: {getCategoryLabel(category)}
                 </p>
               )}
             </>

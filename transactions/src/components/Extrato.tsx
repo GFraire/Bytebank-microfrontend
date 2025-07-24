@@ -21,14 +21,14 @@ export function Extrato() {
   const gruposTransacoes: Transaction[] = [
     {
       id: 1,
-      type: "Depósito",
+      type: "deposit",
       amount: 10000,
       month: "Janeiro",
       date: new Date(),
     },
     {
       id: 2,
-      type: "Transferência",
+      type: "withdrawal",
       amount: -50,
       month: "Janeiro",
       category: "groceries",
@@ -37,15 +37,22 @@ export function Extrato() {
     },
     {
       id: 3,
-      type: "Depósito",
-      amount: 200,
+      type: "payment",
+      amount: -200,
       month: "Fevereiro",
       category: "services",
       date: new Date(),
     },
     {
       id: 4,
-      type: "Transferência",
+      type: "deposit",
+      amount: 745,
+      month: "Fevereiro",
+      date: new Date(),
+    },
+    {
+      id: 5,
+      type: "transfer",
       amount: -30,
       month: "Fevereiro",
       category: "entertainment",
@@ -59,7 +66,7 @@ export function Extrato() {
   const transacoesPorMes = groupTransactionsByMonth(gruposTransacoes);
   const [transacaoParaEditar, setTransacaoParaEditar] =
     useState<Transaction | null>(null);
-  const [modalAberto, setModalAberto] = useState(true);
+  const [modalAberto, setModalAberto] = useState(false);
 
   const abrirModal = (transacao: Transaction) => {
     setTransacaoParaEditar(transacao);
@@ -124,7 +131,7 @@ export function Extrato() {
                   date={transacao.date}
                   recipient={transacao.recipient}
                   category={transacao.category}
-                  onEditar={() => abrirModal(gruposTransacoes[key])}
+                  onEditar={() => abrirModal(transacao)}
                 />
               ))}
             </div>

@@ -10,7 +10,7 @@
     @apply flex flex-col items-start justify-start bg-white rounded-md shadow-lg text-black p-4;
   }
   .btn {
-    @apply bg-green text-white rounded-md p-2 md:px-4 text-center font-semibold cursor-pointer transition-colors  hover:bg-green-light;
+    @apply bg-green text-white rounded-md p-2 md:px-4 text-center font-semibold cursor-pointer transition-colors  hover:bg-green;
   }
   .btn-secoundary {
     @apply bg-white text-green rounded-md p-2 md:px-4 text-center font-semibold cursor-pointer transition-colors  hover:bg-green-light hover:text-white;
