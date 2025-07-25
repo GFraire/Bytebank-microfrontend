@@ -1,7 +1,7 @@
 packages:
-  - 'design-system'
   - 'add-transaction'
   - 'dashboard'
+  - 'design-system'
   - 'main-app'
   - 'profile'
   - 'sidebar'

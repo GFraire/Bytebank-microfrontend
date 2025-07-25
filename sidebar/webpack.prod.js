@@ -7,7 +7,7 @@ module.exports = merge(common, {
   output: {
     filename: "[name].[contenthash].js",
     path: path.resolve(__dirname, "dist"),
-    publicPath: process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}/` : "auto",
+    publicPath: "http://localhost:3002/",
     clean: true,
   },
 });
