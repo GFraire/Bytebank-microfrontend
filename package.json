@@ -2,6 +2,7 @@
   "name": "bytebank-microfrontend",
   "version": "1.0.0",
   "scripts": {
-    "deploy:all": "cd design-system && vercel --prod && cd ../dashboard && vercel --prod && cd ../sidebar && vercel --prod && cd ../transactions && vercel --prod && cd ../add-transaction && vercel --prod && cd ../profile && vercel --prod && cd ../main-app && vercel --prod"
+    "deploy:api": "cd json-server && vercel --prod",
+    "deploy:all": "cd json-server && vercel --prod && cd ../design-system && vercel --prod && cd ../dashboard && vercel --prod && cd ../sidebar && vercel --prod && cd ../transactions && vercel --prod && cd ../add-transaction && vercel --prod && cd ../profile && vercel --prod && cd ../main-app && vercel --prod"
   }
 }
