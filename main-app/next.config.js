@@ -1,4 +1,5 @@
 const { NextFederationPlugin } = require('@module-federation/nextjs-mf');
+const remotes = require('./remotes');
 
 const nextConfig = {
   reactStrictMode: true,
@@ -9,11 +10,12 @@ const nextConfig = {
       new NextFederationPlugin({
         name: 'main',
         remotes: {
-          dashboard: "dashboard@http://localhost:3001/remoteEntry.js",
-          sidebar: "sidebar@http://localhost:3002/remoteEntry.js",
-          transactions: "transactions@http://localhost:3003/remoteEntry.js",
-          "addTransaction": "addTransaction@http://localhost:3004/remoteEntry.js",
-          profile: "profile@http://localhost:3005/remoteEntry.js",
+          designSystem: remotes.designSystem,
+          dashboard: remotes.dashboard,
+          sidebar: remotes.sidebar,
+          transactions: remotes.transactions,
+          addTransaction: remotes.addTransaction,
+          profile: remotes.profile,
         },
         filename: 'static/chunks/remoteEntry.js',
         extraOptions: {

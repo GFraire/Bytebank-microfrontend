@@ -1,3 +1,5 @@
-import("./bootstrap")
+// Importação do bootstrap
+import("./bootstrap");
 
-import "../../design-system/src/global.css"
+// Importação dos estilos do design-system
+import("designSystem/styles");
