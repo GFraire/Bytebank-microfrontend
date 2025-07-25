@@ -5,9 +5,5 @@
       "src": "package.json",
       "use": "@vercel/next"
     }
-  ],
-  "routes": [
-    { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "/" }
   ]
 }
