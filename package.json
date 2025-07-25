@@ -11,15 +11,7 @@
     "dev:sidebar": "pnpm --filter sidebar run dev",
     "dev:transactions": "pnpm --filter transactions run dev",
     "dev:all": "concurrently -k -n add,dash,ds,profile,sidebar,tx,main -c blue,green,cyan,magenta,white,gray,yellow \"pnpm dev:add-transaction\" \"pnpm dev:dashboard\" \"pnpm dev:design-system\" \"pnpm dev:profile\" \"pnpm dev:sidebar\" \"pnpm dev:transactions\" \"pnpm dev:main-app\"",
-    "build": "pnpm -r run build",
-    "deploy:design-system": "cd design-system && vercel --prod",
-    "deploy:dashboard": "cd dashboard && vercel --prod",
-    "deploy:sidebar": "cd sidebar && vercel --prod",
-    "deploy:transactions": "cd transactions && vercel --prod",
-    "deploy:add-transaction": "cd add-transaction && vercel --prod",
-    "deploy:profile": "cd profile && vercel --prod",
-    "deploy:main-app": "cd main-app && cp next.config.prod.js next.config.js && vercel --prod",
-    "deploy:all": "pnpm deploy:design-system && pnpm deploy:dashboard && pnpm deploy:sidebar && pnpm deploy:transactions && pnpm deploy:add-transaction && pnpm deploy:profile && pnpm deploy:main-app"
+    "build": "pnpm -r run build"
   },
   "overrides": {
     "webpack": "5.100.1",
@@ -27,9 +19,5 @@
   },
   "devDependencies": {
     "concurrently": "^9.2.0"
-  },
-  "dependencies": {
-    "g": "^2.0.1",
-    "pnpm": "^10.13.1"
   }
 }

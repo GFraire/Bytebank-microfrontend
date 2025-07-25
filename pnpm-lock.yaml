@@ -7,13 +7,6 @@ settings:
 importers:
 
   .:
-    dependencies:
-      g:
-        specifier: ^2.0.1
-        version: 2.0.1
-      pnpm:
-        specifier: ^10.13.1
-        version: 10.13.1
     devDependencies:
       concurrently:
         specifier: ^9.2.0
@@ -1863,9 +1856,6 @@ packages:
   function-bind@1.1.2:
     resolution: {integrity: sha512-7XHNxH7qX9xG5mIwxkhumTox/MIRNcOgDrxWsMt2pAr23WHp6MrRlN7FBSFpCpr+oVO0F744iUgR82nJMfG2SA==}
 
-  g@2.0.1:
-    resolution: {integrity: sha512-Fi6Ng5fZ/ANLQ15H11hCe+09sgUoNvDEBevVgx3KoYOhsH5iLNPn54hx0jPZ+3oSWr+xajnp2Qau9VmPsc7hTA==}
-
   gensync@1.0.0-beta.2:
     resolution: {integrity: sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg==}
     engines: {node: '>=6.9.0'}
@@ -2400,11 +2390,6 @@ packages:
   pkg-dir@4.2.0:
     resolution: {integrity: sha512-HRDzbaKjC+AOWVXxAU/x54COGeIv9eb+6CkDSQoNTt4XyWoIJvuPsXizxu/Fr23EiekbtZwmh1IcIG/l/a10GQ==}
     engines: {node: '>=8'}
-
-  pnpm@10.13.1:
-    resolution: {integrity: sha512-N+vxpcejDV+r4MXfRO6NpMllygxa89urKMOhaBtwolYhjQXIHJwNz3Z+9rhVHrW5YAQrntQwDFkkIzY3fgHPrQ==}
-    engines: {node: '>=18.12'}
-    hasBin: true
 
   postcss-attribute-case-insensitive@7.0.1:
     resolution: {integrity: sha512-Uai+SupNSqzlschRyNx3kbCTWgY/2hcwtHEI/ej2LJWc9JJ77qKgGptd8DHwY1mXtZ7Aoh4z4yxfwMBue9eNgw==}
@@ -4652,8 +4637,6 @@ snapshots:
 
   function-bind@1.1.2: {}
 
-  g@2.0.1: {}
-
   gensync@1.0.0-beta.2: {}
 
   get-caller-file@2.0.5: {}
@@ -5136,8 +5119,6 @@ snapshots:
   pkg-dir@4.2.0:
     dependencies:
       find-up: 4.1.0
-
-  pnpm@10.13.1: {}
 
   postcss-attribute-case-insensitive@7.0.1(postcss@8.5.6):
     dependencies:
