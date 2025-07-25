@@ -23,11 +23,11 @@ const BalanceCard: React.FC<BalanceCardProps> = ({
   const getColorClass = () => {
     switch (type) {
       case 'income':
-        return 'bg-green-50 border-green-200 text-green-700';
+        return 'bg-green-light border-green text-green';
       case 'expense':
-        return 'bg-red-50 border-red-200 text-red-700';
+        return 'bg-red-50 border-secondary text-secondary';
       default:
-        return 'bg-blue-50 border-blue-200 text-blue-700';
+        return 'bg-white border-primary text-primary';
     }
   };
 

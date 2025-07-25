@@ -18,10 +18,10 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({ userName = 'Usuário'
 
   return (
     <div className="mb-6">
-      <h1 className="text-2xl font-bold text-gray-800">
+      <h1 className="text-2xl font-bold text-primary">
         Olá, {userName}!
       </h1>
-      <p className="text-gray-600">
+      <p className="text-gray-500">
         {capitalizedDate}
       </p>
     </div>

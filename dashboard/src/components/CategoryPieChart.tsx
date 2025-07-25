@@ -7,7 +7,7 @@ interface CategoryPieChartProps {
   type: 'income' | 'expense';
 }
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d', '#ffc658', '#8dd1e1'];
+const COLORS = ['#004D61', '#47A138', '#FF5031', '#8B8B8B', '#767676', '#CBCBCB', '#444444', '#E4EDE3'];
 
 const CategoryPieChart: React.FC<CategoryPieChartProps> = ({ transactions, type }) => {
   const categoryData = useMemo(() => {
@@ -33,7 +33,7 @@ const CategoryPieChart: React.FC<CategoryPieChartProps> = ({ transactions, type 
   const isEmpty = categoryData.length === 0;
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+    <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-300">
       <h3 className="text-lg font-medium mb-4">{title}</h3>
       {isEmpty ? (
         <div className="h-[250px] flex items-center justify-center text-gray-500">

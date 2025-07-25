@@ -45,7 +45,7 @@ function AppDashboard() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-6">
+    <div className="container mx-auto px-4 py-6 bg-background min-h-screen">
       <DashboardHeader userName="João" />
       
       {/* Cards de Saldo */}

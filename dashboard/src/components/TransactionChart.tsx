@@ -16,9 +16,7 @@ interface TransactionChartProps {
 }
 
 const TransactionChart: React.FC<TransactionChartProps> = ({ transactions }) => {
-  // Processar dados para o gráfico
   const processChartData = () => {
-    // Agrupar transações por mês
     const monthlyData: Record<string, { income: number; expense: number }> = {};
     
     transactions.forEach(transaction => {
@@ -47,7 +45,7 @@ const TransactionChart: React.FC<TransactionChartProps> = ({ transactions }) => 
   const chartData = processChartData();
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+    <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-300">
       <h3 className="text-lg font-medium mb-4">Receitas vs Despesas</h3>
       <ResponsiveContainer width="100%" height={300}>
         <BarChart
@@ -62,8 +60,8 @@ const TransactionChart: React.FC<TransactionChartProps> = ({ transactions }) => 
             labelFormatter={(label) => `Mês: ${label}`}
           />
           <Legend />
-          <Bar dataKey="income" name="Receitas" fill="#4ade80" />
-          <Bar dataKey="expense" name="Despesas" fill="#f87171" />
+          <Bar dataKey="income" name="Receitas" fill="#47A138" />
+          <Bar dataKey="expense" name="Despesas" fill="#FF5031" />
         </BarChart>
       </ResponsiveContainer>
     </div>

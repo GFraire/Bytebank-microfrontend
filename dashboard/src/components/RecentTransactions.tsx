@@ -19,7 +19,7 @@ const RecentTransactions: React.FC<RecentTransactionsProps> = ({ transactions })
   };
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+    <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-300">
       <h3 className="text-lg font-medium mb-4">Transações Recentes</h3>
       
       {transactions.length === 0 ? (
@@ -56,7 +56,7 @@ const RecentTransactions: React.FC<RecentTransactionsProps> = ({ transactions })
                     {formatDate(transaction.date)}
                   </td>
                   <td className={`px-6 py-4 whitespace-nowrap text-sm text-right font-medium ${
-                    transaction.type === 'income' ? 'text-green-600' : 'text-red-600'
+                    transaction.type === 'income' ? 'text-green' : 'text-secondary'
                   }`}>
                     {transaction.type === 'income' ? '+' : '-'} {formatCurrency(transaction.amount)}
                   </td>
