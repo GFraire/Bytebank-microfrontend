@@ -1,10 +1,9 @@
 import axios from 'axios';
 import { DashboardData, Transaction } from './types';
 
-// URL base da API - em produção usará a URL do Vercel
-const API_URL = process.env.NODE_ENV === 'production' 
-  ? 'https://bytebank-api-grupo-9-fiapinhos-projects.vercel.app'
-  : 'http://localhost:3333';
+const API_URL = process.env.NODE_ENV === 'production'
+  ? 'https://api-bytebank-g9.vercel.app'
+  : 'http://localhost:3000';
 
 const api = axios.create({
   baseURL: API_URL,
@@ -12,8 +11,24 @@ const api = axios.create({
 
 export const getDashboardData = async (): Promise<DashboardData> => {
   try {
-    const response = await api.get('/dashboard');
-    return response.data;
+    const transactions = await getTransactions();
+    
+    const income = transactions
+      .filter(t => t.type === 'income')
+      .reduce((sum, t) => sum + t.amount, 0);
+    
+    const expense = transactions
+      .filter(t => t.type === 'expense')
+      .reduce((sum, t) => sum + t.amount, 0);
+    
+    const balance = income - expense;
+    
+    return {
+      balance,
+      income,
+      expense,
+      transactions: transactions.slice(0, 5) // últimas 5 transações
+    };
   } catch (error) {
     console.error('Erro ao buscar dados do dashboard:', error);
     return {
@@ -37,8 +52,9 @@ export const getTransactions = async (): Promise<Transaction[]> => {
 
 export const getCategories = async (): Promise<string[]> => {
   try {
-    const response = await api.get('/categories');
-    return response.data;
+    const transactions = await getTransactions();
+    const categories = [...new Set(transactions.map(t => t.category))];
+    return categories;
   } catch (error) {
     console.error('Erro ao buscar categorias:', error);
     return [];
