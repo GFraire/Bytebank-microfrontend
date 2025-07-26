@@ -10,6 +10,7 @@
     "dev:sidebar": "pnpm --filter sidebar run dev",
     "dev:transactions": "pnpm --filter transactions run dev",
     "dev:all": "concurrently -k -n add,dash,ds,profile,sidebar,tx,main -c blue,green,cyan,magenta,white,gray,yellow \"pnpm dev:add-transaction\" \"pnpm dev:dashboard\" \"pnpm dev:design-system\" \"pnpm dev:profile\" \"pnpm dev:sidebar\" \"pnpm dev:transactions\" \"pnpm dev:main-app\"",
+    "build": "pnpm -r run build",
     "deploy:api": "cd json-server && vercel --prod",
     "deploy:all": "cd json-server && vercel --prod && cd ../design-system && vercel --prod && cd ../dashboard && vercel --prod && cd ../sidebar && vercel --prod && cd ../transactions && vercel --prod && cd ../add-transaction && vercel --prod && cd ../profile && vercel --prod && cd ../main-app && vercel --prod"
   },
