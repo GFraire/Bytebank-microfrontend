@@ -1,9 +1,7 @@
 import axios from 'axios';
 import { DashboardData, Transaction } from './types';
 
-const API_URL = process.env.NODE_ENV === 'production'
-  ? 'https://api-bytebank-g9.vercel.app'
-  : 'http://localhost:3000';
+const API_URL = 'https://api-bytebank-g9.vercel.app'
 
 const api = axios.create({
   baseURL: API_URL,

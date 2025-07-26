@@ -5,7 +5,7 @@ import DashboardHeader from "./components/DashboardHeader";
 import BalanceCard from "./components/BalanceCard";
 import TransactionChart from "./components/TransactionChart";
 import CategoryPieChart from "./components/CategoryPieChart";
-import RecentTransactions from "./components/RecentTransactions";
+
 
 function AppDashboard() {
   const [loading, setLoading] = useState(true);
@@ -38,51 +38,64 @@ function AppDashboard() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      <div className="flex items-center justify-center h-screen bg-background">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto px-4 py-6 bg-background min-h-screen">
-      <DashboardHeader userName="João" />
-      
-      {/* Cards de Saldo */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <BalanceCard 
-          title="Saldo Atual" 
-          value={dashboardData.balance} 
-          type="default" 
-        />
-        <BalanceCard 
-          title="Receitas" 
-          value={dashboardData.income} 
-          type="income" 
-        />
-        <BalanceCard 
-          title="Despesas" 
-          value={dashboardData.expense} 
-          type="expense" 
-        />
+    <main className="min-h-screen bg-background">
+      <div className="container mx-auto px-4 py-6">
+        {/* Header */}
+        <header className="mb-8">
+          <DashboardHeader userName="João" />
+        </header>
+        
+        {/* Grid Principal */}
+        <div className="grid grid-cols-2 gap-6 h-[calc(100vh-200px)]">
+          {/* Coluna 1 - Cards de Resumo */}
+          <div className="space-y-4">
+            <section>
+              <h2 className="text-lg font-semibold text-gray-700 mb-4">Resumo Financeiro</h2>
+              <div className="space-y-4">
+                <BalanceCard 
+                  title="Saldo Atual" 
+                  value={dashboardData.balance} 
+                  type="default" 
+                />
+                <BalanceCard 
+                  title="Receitas" 
+                  value={dashboardData.income} 
+                  type="income" 
+                />
+                <BalanceCard 
+                  title="Despesas" 
+                  value={dashboardData.expense} 
+                  type="expense" 
+                />
+              </div>
+            </section>
+          </div>
+          
+          {/* Coluna 2 - Gráficos */}
+          <div className="space-y-6">
+            <section>
+              <h2 className="text-lg font-semibold text-gray-700 mb-4">Análise de Transações</h2>
+              <TransactionChart transactions={allTransactions} />
+            </section>
+            
+            <section>
+              <h2 className="text-lg font-semibold text-gray-700 mb-4">Análise por Categoria</h2>
+              <div className="grid grid-cols-1 gap-4">
+                <CategoryPieChart transactions={allTransactions} type="income" />
+                <CategoryPieChart transactions={allTransactions} type="expense" />
+              </div>
+            </section>
+          </div>
+        </div>
       </div>
-      
-      {/* Gráfico de Barras */}
-      <div className="mb-6">
-        <TransactionChart transactions={allTransactions} />
-      </div>
-      
-      {/* Gráficos de Pizza */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-        <CategoryPieChart transactions={allTransactions} type="income" />
-        <CategoryPieChart transactions={allTransactions} type="expense" />
-      </div>
-      
-      {/* Transações Recentes */}
-      <div className="mb-6">
-        <RecentTransactions transactions={dashboardData.transactions} />
-      </div>
-    </div>
+    </main>
   );
 }
 

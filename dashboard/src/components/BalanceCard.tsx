@@ -32,13 +32,13 @@ const BalanceCard: React.FC<BalanceCardProps> = ({
   };
 
   return (
-    <div className={`p-4 rounded-lg border ${getColorClass()} shadow-sm`}>
-      <div className="flex justify-between items-center">
-        <h3 className="text-sm font-medium">{title}</h3>
-        {icon && <div className="text-xl">{icon}</div>}
-      </div>
-      <p className="text-2xl font-bold mt-2">{formatCurrency(value)}</p>
-    </div>
+    <article className={`p-6 rounded-lg border ${getColorClass()} shadow-sm transition-all hover:shadow-md`}>
+      <header className="flex justify-between items-center mb-3">
+        <h3 className="text-sm font-medium uppercase tracking-wide">{title}</h3>
+        {icon && <div className="text-xl opacity-70">{icon}</div>}
+      </header>
+      <div className="text-3xl font-bold">{formatCurrency(value)}</div>
+    </article>
   );
 };
 

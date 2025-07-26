@@ -33,37 +33,43 @@ const CategoryPieChart: React.FC<CategoryPieChartProps> = ({ transactions, type 
   const isEmpty = categoryData.length === 0;
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-300">
-      <h3 className="text-lg font-medium mb-4">{title}</h3>
+    <article className="bg-white p-6 rounded-lg shadow-sm border border-gray-300">
+      <header className="mb-6">
+        <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
+      </header>
+      
       {isEmpty ? (
-        <div className="h-[250px] flex items-center justify-center text-gray-500">
-          Sem dados para exibir
+        <div className="h-[200px] flex flex-col items-center justify-center text-gray-500">
+          <div className="text-4xl mb-2 opacity-50">📈</div>
+          <p>Sem dados para exibir</p>
         </div>
       ) : (
-        <ResponsiveContainer width="100%" height={250}>
-          <PieChart>
-            <Pie
-              data={categoryData}
-              cx="50%"
-              cy="50%"
-              labelLine={false}
-              outerRadius={80}
-              fill="#8884d8"
-              dataKey="value"
-              label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-            >
-              {categoryData.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-              ))}
-            </Pie>
-            <Tooltip 
-              formatter={(value) => [`R$ ${value}`, undefined]}
-            />
-            <Legend />
-          </PieChart>
-        </ResponsiveContainer>
+        <div className="chart-wrapper">
+          <ResponsiveContainer width="100%" height={200}>
+            <PieChart>
+              <Pie
+                data={categoryData}
+                cx="50%"
+                cy="50%"
+                labelLine={false}
+                outerRadius={80}
+                fill="#8884d8"
+                dataKey="value"
+                label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+              >
+                {categoryData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+              <Tooltip 
+                formatter={(value) => [`R$ ${value}`, undefined]}
+              />
+              <Legend />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
       )}
-    </div>
+    </article>
   );
 };
 
