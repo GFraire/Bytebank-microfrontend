@@ -1,0 +1,10 @@
+node_modules
+.pnpm
+.next
+build
+.git
+.gitignore
+*.md
+build.log
+**/node_modules
+**/.pnpm
