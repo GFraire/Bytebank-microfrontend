@@ -22,7 +22,6 @@ module.exports = {
         use: ["style-loader", "css-loader", "postcss-loader"],
         include: [
           path.resolve(__dirname, "src"),
-          path.resolve(__dirname, "../design-system/src"),
         ],
       },
     ],
