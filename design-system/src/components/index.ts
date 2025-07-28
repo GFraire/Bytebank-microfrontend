@@ -1,2 +1,4 @@
 // Exporta todos os componentes do design system
-export * from './Button';
+import "../global.css"
+
+export { Button } from './Button'
