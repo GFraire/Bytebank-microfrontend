@@ -27,9 +27,11 @@
   ],
   "profile": {
     "id": 1,
-    "name": "João Silva",
-    "email": "joao@bytebank.com",
+    "name": "SILVIO CELSO DA SILVA",
+    "email": "silvioand1@gmail.com",
+    "password": "123456@",
     "balance": 4530,
-    "accountNumber": "12345-6"
+    "accountNumber": "12345-6",
+    "role": "user"
   }
 }

@@ -1,10 +1,17 @@
 import Head from "next/head";
-import React from "react";
+import React, { useState } from "react";
+import { useAuth } from "../../authContext";
 
 import styles from "../styles/Home.module.css";
 import Image from "next/image";
+import ModalLogin from "../components/modal/modal-login";
+import ModalCreateAccount from "../components/modal/modal-create-account";
 
 export default function Home() {
+  const { user } = useAuth();
+
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showSignupModal, setShowSignupModal] = useState(false);
   const advantageCards = [
     {
       icon: "present",
@@ -40,7 +47,6 @@ export default function Home() {
     <>
       <Head>
         <title>Bytebank | Home</title>
-
         <meta
           name="description"
           content="Um banco digital feito especialmente para você."
@@ -61,7 +67,6 @@ export default function Home() {
                 priority
                 width={146}
               />
-
               <Image
                 alt=""
                 className="hidden mr-0 object-cover tablet:block"
@@ -70,28 +75,41 @@ export default function Home() {
                 priority
                 width={26}
               />
-
               <span className="text-green text-subtitle font-semibold">
                 Sobre
               </span>
-
               <span className="text-green text-subtitle font-semibold">
                 Serviços
               </span>
             </div>
-
+            <ModalLogin
+              isOpen={showLoginModal}
+              onClose={() => setShowLoginModal(false)}
+            />
+            <ModalCreateAccount
+              isOpen={showSignupModal}
+              onClose={() => setShowSignupModal(false)}
+            />
             <div className="flex items-center gap-6 tablet:gap-3">
-              <button className="h-12 w-[180px] rounded-lg bg-green border-none text-body font-semibold text-white">
-                Abrir minha conta
-              </button>
-
-              <button className="h-12 w-[180px] rounded-lg bg-transparent border-solid border-2 border-green text-body font-semibold text-green">
-                Já tenho conta
-              </button>
+              {!user ? (
+                <>
+                  <button
+                    onClick={() => setShowSignupModal(true)}
+                    className="h-12 w-[180px] rounded-lg bg-green border-none text-body font-semibold text-white"
+                  >
+                    Abrir minha conta
+                  </button>
+                  <button
+                    onClick={() => setShowLoginModal(true)}
+                    className="h-12 w-[180px] rounded-lg bg-transparent border-solid border-2 border-green text-body font-semibold text-green"
+                  >
+                    Já tenho conta
+                  </button>
+                </>
+              ) : null}
             </div>
           </div>
         </header>
-
         <div
           className={`h-full pb-[150px] ${styles["gradient-background"]} from-primary to-white`}
         >
@@ -101,7 +119,6 @@ export default function Home() {
                 Experimente mais liberdade no controle da sua vida financeira.
                 Crie sua conta com a gente!
               </p>
-
               <Image
                 alt="Desenho de uma pessoa segurando dinheiro"
                 className="tablet:w-[520px] tablet:h-[390px]"
@@ -111,12 +128,10 @@ export default function Home() {
                 width={660}
               />
             </div>
-
             <div className="flex flex-col mt-10 gap-10">
               <h3 className="block text-display-lg font-bold text-center">
                 Vantagens do nosso banco:
               </h3>
-
               <div className="grid grid-cols-4 gap-6 tablet:grid-cols-2">
                 {advantageCards.map((card) => {
                   return (
@@ -130,11 +145,9 @@ export default function Home() {
                         src={`/icons/${card.icon}.svg`}
                         width={73}
                       />
-
                       <span className="text-green text-display-md font-semibold text-center">
                         {card.title}
                       </span>
-
                       <p className="text-body text-gray-600 text-center">
                         {card.description}
                       </p>
@@ -145,32 +158,22 @@ export default function Home() {
             </div>
           </main>
         </div>
-
         <footer className="bg-black">
           <div className="flex justify-between max-w-[1200px] mx-auto text-white py-11 px-6">
             <div className="flex flex-col gap-4">
               <strong>Serviços</strong>
-
               <span>Conta corrente</span>
-
               <span>Conta PJ</span>
-
               <span>Cartão de crédito</span>
             </div>
-
             <div className="flex flex-col gap-4">
               <strong>Contato</strong>
-
               <span>0800 004 250 08</span>
-
               <span>meajuda@bytebank.com.br</span>
-
               <span>ouvidoria@bytebank.com.br</span>
             </div>
-
             <div className="flex flex-col items-center gap-6">
               <strong>Desenvolvido por Alura</strong>
-
               <Image
                 alt="Texto escrito Bytebank"
                 height={32}
@@ -178,7 +181,6 @@ export default function Home() {
                 priority
                 width={146}
               />
-
               <div className="flex gap-6">
                 <Image
                   alt=""
@@ -186,14 +188,12 @@ export default function Home() {
                   src="/icons/instagram.svg"
                   width={30}
                 />
-
                 <Image
                   alt=""
                   height={30}
                   src="/icons/whatsapp.svg"
                   width={30}
                 />
-
                 <Image alt="" height={30} src="/icons/youtube.svg" width={30} />
               </div>
             </div>

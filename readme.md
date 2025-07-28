@@ -62,19 +62,3 @@ pnpm dev:sidebar           # Roda a sidebar
 pnpm dev:transactions      # Roda o app de transações
 pnpm dev:main-app          # Roda o app principal (host)
 ```
-
-🐳 Docker
-Para containerizar e executar o projeto usando Docker, siga os passos abaixo:
-
-1. Construa a imagem Docker
-   Certifique-se de ter o Docker instalado, então execute:
-   docker build -t bytebank-microfrontend .
-
-2. Execute o contêiner
-   Inicie o contêiner mapeando a porta 3000:
-   docker run -p 3000:3000 bytebank-microfrontend
-
-3. Usando Docker Compose (Opcional)
-   Com o arquivo docker-compose.yml configurado, inicie todos os serviços:
-   docker-compose up --build
-   Acesse a aplicação em: http://localhost:3000
