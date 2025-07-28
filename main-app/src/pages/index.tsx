@@ -75,10 +75,12 @@ export default function Home() {
                 priority
                 width={26}
               />
-              <span className="text-green text-subtitle font-semibold">
+
+              <span className="text-green text-subtitle font-semibold mobile:hidden">
                 Sobre
               </span>
-              <span className="text-green text-subtitle font-semibold">
+
+              <span className="text-green text-subtitle font-semibold mobile:hidden">
                 Serviços
               </span>
             </div>
@@ -111,7 +113,7 @@ export default function Home() {
           </div>
         </header>
         <div
-          className={`h-full pb-[150px] ${styles["gradient-background"]} from-primary to-white`}
+          className={`pb-[150px] tablet:pb-[70px] ${styles["gradient-background"]} from-primary to-white`}
         >
           <main className={`${styles["container-page"]} mx-auto px-6`}>
             <div className="flex justify-between items-center h-full mt-6 tablet:flex-col tablet:gap-4 tablet:mt-10">
@@ -121,7 +123,7 @@ export default function Home() {
               </p>
               <Image
                 alt="Desenho de uma pessoa segurando dinheiro"
-                className="tablet:w-[520px] tablet:h-[390px]"
+                className="tablet:w-[520px] tablet:h-[390px] mobile:h-[200px]"
                 priority
                 src="/banner.png"
                 height={412}
@@ -132,7 +134,8 @@ export default function Home() {
               <h3 className="block text-display-lg font-bold text-center">
                 Vantagens do nosso banco:
               </h3>
-              <div className="grid grid-cols-4 gap-6 tablet:grid-cols-2">
+
+              <div className="grid grid-cols-4 gap-6 tablet:grid-cols-2 mobile:grid-cols-1">
                 {advantageCards.map((card) => {
                   return (
                     <div
@@ -159,7 +162,7 @@ export default function Home() {
           </main>
         </div>
         <footer className="bg-black">
-          <div className="flex justify-between max-w-[1200px] mx-auto text-white py-11 px-6">
+          <div className="flex justify-between max-w-[1200px] mx-auto text-white py-11 px-6 mobile:flex-col mobile:items-start mobile:px-10 mobile:gap-8">
             <div className="flex flex-col gap-4">
               <strong>Serviços</strong>
               <span>Conta corrente</span>
