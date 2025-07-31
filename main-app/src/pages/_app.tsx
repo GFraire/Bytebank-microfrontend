@@ -1,21 +1,15 @@
 import { AppProps } from "next/app";
-import { useEffect } from "react";
+import { AuthProvider } from "../../authContext";
+import "../../../design-system/src/global.css";
 
-// Importa CSS global do design-system via Module Federation
-const loadGlobalCSS = async () => {
-  try {
-    await import('designSystem/GlobalCSS');
-  } catch (error) {
-    console.warn('Design system CSS não carregado:', error);
-  }
-};
+import("../styles/global.css")
 
 function MyApp({ Component, pageProps }: AppProps) {
-  useEffect(() => {
-    loadGlobalCSS();
-  }, []);
-
-  return <Component {...pageProps} />;
+  return (
+    <AuthProvider>
+      <Component {...pageProps} />
+    </AuthProvider>
+  );
 }
 
 export default MyApp;

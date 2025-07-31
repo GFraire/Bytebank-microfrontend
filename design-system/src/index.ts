@@ -1,1 +1,2 @@
-import './global.css';
+import("./bootstrap")
+import "./global.css"

@@ -1,2 +1,5 @@
-import("./bootstrap")
-import('designSystem/GlobalCSS').catch(() => console.warn('Design system CSS não carregado'))
+// Importação do bootstrap
+import("./bootstrap");
+
+// Importação dos estilos do design-system
+import("designSystem/styles");

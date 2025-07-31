@@ -1,4 +1,4 @@
-declare module 'designSystem/GlobalCSS' {
+declare module 'designSystem/styles' {
   const GlobalCSS: any;
   export default GlobalCSS;
 }

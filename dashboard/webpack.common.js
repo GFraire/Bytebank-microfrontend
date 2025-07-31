@@ -22,7 +22,6 @@ module.exports = {
         use: ["style-loader", "css-loader", "postcss-loader"],
         include: [
           path.resolve(__dirname, "src"),
-          path.resolve(__dirname, "../design-system/src"),
         ],
       },
     ],
@@ -32,10 +31,12 @@ module.exports = {
       name: "dashboard",
       filename: "remoteEntry.js",
       remotes: {
-        designSystem: "designSystem@http://localhost:4000/remoteEntry.js",
+        designSystem: process.env.NODE_ENV === 'production'
+          ? "designSystem@https://design-system-g9.vercel.app/remoteEntry.js"
+          : "designSystem@http://localhost:4000/remoteEntry.js",
       },
       exposes: {
-        './Dashboard': './src/bootstrap',
+        './Dashboard': './src/bootstrap.tsx',
       },
       shared: {
         react: { singleton: true, requiredVersion: '18.3.1', },

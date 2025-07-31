@@ -1,0 +1,11 @@
+{
+  "name": "bytebank-api",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "json-server --watch db.json --port 4000",
+    "dev": "json-server --watch db.json --port 4000"
+  },
+  "dependencies": {
+    "json-server": "^0.17.4"
+  }
+}

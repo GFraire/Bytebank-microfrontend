@@ -1,0 +1,37 @@
+{
+  "transactions": [
+    {
+      "id": 1,
+      "type": "income",
+      "description": "Salário",
+      "amount": 5000,
+      "date": "2024-01-15",
+      "category": "Trabalho"
+    },
+    {
+      "id": 2,
+      "type": "expense",
+      "description": "Supermercado",
+      "amount": 350,
+      "date": "2024-01-14",
+      "category": "Alimentação"
+    },
+    {
+      "id": 3,
+      "type": "expense",
+      "description": "Conta de luz",
+      "amount": 120,
+      "date": "2024-01-13",
+      "category": "Contas"
+    }
+  ],
+  "profile": {
+    "id": 1,
+    "name": "Henrique Teste",
+    "email": "henrique.bmoura@yahoo.com",
+    "password": "123456",
+    "balance": 4530,
+    "accountNumber": "12345-6",
+    "role": "user"
+  }
+}
