@@ -1,7 +1,12 @@
 import React from "react";
+import { Extrato } from "./components/Extrato";
 
 function AppTransaction() {
-  return <h1 className="text-primary">Transactions</h1>;
+  return (
+    <>
+      <Extrato />
+    </>
+  );
 }
 
 export default AppTransaction;
