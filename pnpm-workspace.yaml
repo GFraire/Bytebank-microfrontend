@@ -6,3 +6,4 @@ packages:
   - 'profile'
   - 'sidebar'
   - 'transactions'
+  - 'api'
