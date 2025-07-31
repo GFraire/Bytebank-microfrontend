@@ -27,9 +27,9 @@
   ],
   "profile": {
     "id": 1,
-    "name": "SILVIO CELSO DA SILVA",
-    "email": "silvioand1@gmail.com",
-    "password": "123456@",
+    "name": "Henrique Teste",
+    "email": "henrique.bmoura@yahoo.com",
+    "password": "123456",
     "balance": 4530,
     "accountNumber": "12345-6",
     "role": "user"
