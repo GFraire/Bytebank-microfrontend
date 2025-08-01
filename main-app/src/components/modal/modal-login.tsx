@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { useAuth } from "../../../authContext";
 import Image from "next/image";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:333";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3333";
 
 const loginSchema = z.object({
   email: z.string().email("E-mail inválido"),
@@ -38,11 +38,12 @@ export default function ModalLogin({ isOpen, onClose }: ModalLoginProps) {
       if (!response.ok) {
         throw new Error("Erro ao conectar ao servidor: " + response.statusText);
       }
-      const userData = await response.json();
-      if (
-        userData.email !== data.email ||
-        userData.password !== data.password
-      ) {
+      const users = await response.json();
+      const userData = users.find((user: any) => 
+        user.email === data.email && user.password === data.password
+      );
+      
+      if (!userData) {
         throw new Error("Credenciais inválidas");
       }
 
