@@ -1,10 +1,32 @@
 import React, { useState } from "react";
 
+const TRANSACTION_TYPES = [
+  { value: 'deposit', label: 'Depósito' },
+  { value: 'transfer', label: 'Transferência' },
+  { value: 'payment', label: 'Pagamento de Boleto' },
+  { value: 'withdrawal', label: 'Saque' },
+];
+
+const TRANSACTION_CATEGORIES = [
+  { value: 'bills', label: 'Contas e Faturas' },
+  { value: 'services', label: 'Serviços' },
+  { value: 'taxes', label: 'Impostos' },
+  { value: 'education', label: 'Educação' },
+  { value: 'entertainment', label: 'Entretenimento' },
+  { value: 'groceries', label: 'Supermercado' },
+  { value: 'transportation', label: 'Transporte' },
+  { value: 'health', label: 'Saúde' },
+  { value: 'clothing', label: 'Vestuário' },
+  { value: 'gifts', label: 'Presentes' },
+  { value: 'travel', label: 'Viagens' },
+  { value: 'other', label: 'Outros' },
+];
+
 function AppTransaction() {
   const [formData, setFormData] = useState({
     description: '',
     amount: '',
-    type: 'expense',
+    type: 'deposit',
     category: '',
     date: new Date().toISOString().split('T')[0]
   });
@@ -17,7 +39,8 @@ function AppTransaction() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...formData,
-          amount: parseFloat(formData.amount)
+          amount: parseFloat(formData.amount),
+          type: formData.type === 'deposit' || formData.type === 'transfer' ? 'income' : 'expense'
         })
       });
       if (response.ok) {
@@ -25,7 +48,7 @@ function AppTransaction() {
         setFormData({
           description: '',
           amount: '',
-          type: 'expense',
+          type: 'deposit',
           category: '',
           date: new Date().toISOString().split('T')[0]
         });
@@ -50,6 +73,7 @@ function AppTransaction() {
               value={formData.description}
               onChange={(e) => setFormData({...formData, description: e.target.value})}
               className="w-full p-2 border border-gray-300 rounded-md"
+              placeholder="Ex: Supermercado, Salário..."
               required
             />
           </div>
@@ -61,24 +85,27 @@ function AppTransaction() {
             <input
               type="number"
               step="0.01"
+              min="0.01"
               value={formData.amount}
               onChange={(e) => setFormData({...formData, amount: e.target.value})}
               className="w-full p-2 border border-gray-300 rounded-md"
+              placeholder="0,00"
               required
             />
           </div>
           
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Tipo
+              Tipo de Transação
             </label>
             <select
               value={formData.type}
               onChange={(e) => setFormData({...formData, type: e.target.value})}
               className="w-full p-2 border border-gray-300 rounded-md"
             >
-              <option value="expense">Despesa</option>
-              <option value="income">Receita</option>
+              {TRANSACTION_TYPES.map(type => (
+                <option key={type.value} value={type.value}>{type.label}</option>
+              ))}
             </select>
           </div>
           
@@ -86,13 +113,17 @@ function AppTransaction() {
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Categoria
             </label>
-            <input
-              type="text"
+            <select
               value={formData.category}
               onChange={(e) => setFormData({...formData, category: e.target.value})}
               className="w-full p-2 border border-gray-300 rounded-md"
               required
-            />
+            >
+              <option value="">Selecione uma categoria</option>
+              {TRANSACTION_CATEGORIES.map(category => (
+                <option key={category.value} value={category.value}>{category.label}</option>
+              ))}
+            </select>
           </div>
           
           <div>
@@ -110,7 +141,7 @@ function AppTransaction() {
           
           <button
             type="submit"
-            className="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700"
+            className="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 font-semibold"
           >
             Adicionar Transação
           </button>
