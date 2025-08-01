@@ -1,5 +1,5 @@
 {
-  "name": "bytebank-api",
+  "name": "api",
   "version": "1.0.0",
   "description": "API para o Bytebank",
   "main": "index.js",

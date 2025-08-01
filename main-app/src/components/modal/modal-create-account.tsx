@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { useAuth } from "../../../authContext";
 import Image from "next/image";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3333";
 
 const signupSchema = z.object({
   name: z.string().min(3, "Nome deve ter pelo menos 3 caracteres"),
@@ -57,7 +57,7 @@ export default function ModalCreateAccount({
       };
 
       const updateResponse = await fetch(`${API_URL}/profile`, {
-        method: "PUT",
+        method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newProfile),
       });

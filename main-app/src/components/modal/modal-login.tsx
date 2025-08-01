@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { useAuth } from "../../../authContext";
 import Image from "next/image";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:333";
 
 const loginSchema = z.object({
   email: z.string().email("E-mail inválido"),

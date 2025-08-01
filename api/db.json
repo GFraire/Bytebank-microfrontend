@@ -33,12 +33,14 @@
       "date": "2023-10-20"
     }
   ],
-  "user": {
-    "id": 1,
-    "name": "João Silva",
-    "email": "joao@bytebank.com",
-    "avatar": "https://i.pravatar.cc/150?img=3"
-  },
+  "profile": [
+    {
+      "name": "hnrq",
+      "email": "diretor@teste.com",
+      "password": "123456",
+      "id": 1
+    }
+  ],
   "categories": [
     "Alimentação",
     "Transporte",
