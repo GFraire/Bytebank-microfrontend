@@ -1,8 +1,7 @@
 import { AppProps } from "next/app";
-import { AuthProvider } from "../contexts/authContext";
+import { AuthProvider } from "../../authContext";
 
-import "../styles/global.css";
-import("dashboard/Styles");
+import "../styles/global.css"
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

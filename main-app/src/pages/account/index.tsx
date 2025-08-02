@@ -1,5 +1,6 @@
 import dynamic from "next/dynamic";
-import Head from "next/head";
+import Navbar from "../../components/navbar";
+import Balance from "../../components/balance";
 
 const DashboardComponent = dynamic(() => import("dashboard/Dashboard"), {
   ssr: false,
@@ -29,24 +30,15 @@ const ProfileComponent = dynamic(() => import("profile/Profile"), {
 
 export default function Account() {
   return (
-    <>
-      <Head>
-        <title>Bytebank | Serviços</title>
-      </Head>
+    <div>
+      <Navbar />
+      <Balance />
+      {/* <ProfileComponent /> */}
 
-      <div className="bg-background flex flex-col gap-6 w-full h-full grow">
-        <ProfileComponent />
-
-        <div className="flex gap-6 max-w-[1232px] px-4 mx-auto pb-6 h-full w-full tablet:flex-col tablet:px-[60px] mobile:px-4">
-          <SidebarComponent />
-
-          <main className="w-full">
-            <DashboardComponent />
-            {/* <AddTransactionComponent /> */}
-          </main>
-          <TransactionsComponent />
-        </div>
-      </div>
-    </>
+      <SidebarComponent />
+      <DashboardComponent />
+      <AddTransactionComponent />
+      <TransactionsComponent />
+    </div>
   );
 }

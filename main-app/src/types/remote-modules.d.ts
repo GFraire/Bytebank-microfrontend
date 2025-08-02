@@ -1,29 +1,24 @@
-declare module "dashboard/Dashboard" {
+declare module 'dashboard/Dashboard' {
   const Component: React.ComponentType;
   export default Component;
 }
 
-declare module "dashboard/Styles" {
-  const noop: undefined;
-  export default noop;
-}
-
-declare module "sidebar/Sidebar" {
+declare module 'sidebar/Sidebar' {
   const Component: React.ComponentType;
   export default Component;
 }
 
-declare module "transactions/Transactions" {
+declare module 'transactions/Transactions' {
   const Component: React.ComponentType;
   export default Component;
 }
 
-declare module "addTransaction/AddTransaction" {
+declare module 'addTransaction/AddTransaction' {
   const Component: React.ComponentType;
   export default Component;
 }
 
-declare module "profile/Profile" {
+declare module 'profile/Profile' {
   const Component: React.ComponentType;
   export default Component;
 }
