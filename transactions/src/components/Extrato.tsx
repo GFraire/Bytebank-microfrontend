@@ -43,7 +43,7 @@ export function Extrato() {
         month: new Date(t.date).toLocaleDateString('pt-BR', { month: 'long' }),
         description: t.description,
         category: t.category,
-        attachments: t.attachments,
+        attachments: t.attachments || [],
       }));
       
       setGruposTransacoes(transactions);
