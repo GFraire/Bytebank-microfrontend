@@ -8,6 +8,7 @@ const destinations = [
   path.resolve(__dirname, '..', 'dashboard', 'tailwind.config.js'),
   path.resolve(__dirname, '..', 'profile', 'tailwind.config.js'),
   path.resolve(__dirname, '..', 'sidebar', 'tailwind.config.js'),
+  path.resolve(__dirname, '..', 'transactions', 'tailwind.config.js'),
   path.resolve(__dirname, '..', 'main-app', 'tailwind.config.js'),
 ]
 
