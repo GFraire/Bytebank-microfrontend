@@ -34,15 +34,15 @@ export default function Account() {
         <title>Bytebank | Serviços</title>
       </Head>
 
-      <div className="bg-background flex flex-col gap-6 w-full grow">
+      <div className="bg-background flex flex-col gap-6 w-full h-full grow">
         <ProfileComponent />
 
         <div className="flex gap-6 max-w-[1232px] px-4 mx-auto pb-6 h-full w-full tablet:flex-col tablet:px-[60px] mobile:px-4">
           <SidebarComponent />
 
-          <main>
+          <main className="w-full">
             <DashboardComponent />
-            <AddTransactionComponent />
+            {/* <AddTransactionComponent /> */}
           </main>
           <TransactionsComponent />
         </div>
