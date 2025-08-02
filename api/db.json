@@ -38,8 +38,13 @@
       "name": "SILVIO CELSO DA SILVA",
       "email": "silvioand1@gmail.com",
       "password": "123456",
-      "id": 1,
-      "balance": 0
+      "id": 1
+    },
+    {
+      "name": "Gabriel F Araujo",
+      "email": "gabrielfreiresa@gmail.com",
+      "password": "123123",
+      "id": 2
     }
   ],
   "categories": [
