@@ -56,8 +56,8 @@ function AppDashboard() {
       <div className="p-4 md:p-6">
         {/* Cards de Resumo */}
         <div className="max-w-4xl mx-auto mb-6 md:mb-8">
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-            <div className="flex-1 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl shadow-lg border-l-4 border-blue-500 p-4 sm:p-6 hover:shadow-xl transition-all duration-300">
+          <div className="flex flex-col md:flex-row gap-3 md:gap-4">
+            <div className="flex-1 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl shadow-lg border-l-4 border-blue-500 p-4 md:p-6 hover:shadow-xl transition-all duration-300">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-xs font-semibold text-blue-600 uppercase tracking-wide mb-1">Saldo Total</p>
@@ -67,15 +67,15 @@ function AppDashboard() {
                     type="default" 
                   />
                 </div>
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-100 rounded-full flex items-center justify-center shadow-lg">
-                  <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="#2563eb" strokeWidth={2} viewBox="0 0 24 24">
+                <div className="w-10 h-10 md:w-12 md:h-12 bg-blue-100 rounded-full flex items-center justify-center shadow-lg">
+                  <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="#2563eb" strokeWidth={2} viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
                   </svg>
                 </div>
               </div>
             </div>
 
-            <div className="flex-1 bg-gradient-to-br from-green-50 to-green-100 rounded-xl shadow-lg border-l-4 border-green-500 p-4 sm:p-6 hover:shadow-xl transition-all duration-300">
+            <div className="flex-1 bg-gradient-to-br from-green-50 to-green-100 rounded-xl shadow-lg border-l-4 border-green-500 p-4 md:p-6 hover:shadow-xl transition-all duration-300">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-xs font-semibold text-green-600 uppercase tracking-wide mb-1">Receitas</p>
@@ -85,15 +85,15 @@ function AppDashboard() {
                     type="income" 
                   />
                 </div>
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-100 rounded-full flex items-center justify-center shadow-lg">
-                  <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="#16a34a" strokeWidth={2} viewBox="0 0 24 24">
+                <div className="w-10 h-10 md:w-12 md:h-12 bg-green-100 rounded-full flex items-center justify-center shadow-lg">
+                  <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="#16a34a" strokeWidth={2} viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M7 11l5-5m0 0l5 5m-5-5v12" />
                   </svg>
                 </div>
               </div>
             </div>
 
-            <div className="flex-1 bg-gradient-to-br from-red-100 to-red-200 rounded-xl shadow-lg border-l-4 border-red-500 p-4 sm:p-6 hover:shadow-xl transition-all duration-300">
+            <div className="flex-1 bg-gradient-to-br from-red-100 to-red-200 rounded-xl shadow-lg border-l-4 border-red-500 p-4 md:p-6 hover:shadow-xl transition-all duration-300">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-xs font-semibold text-red-700 uppercase tracking-wide mb-1">Despesas</p>
@@ -103,8 +103,8 @@ function AppDashboard() {
                     type="expense" 
                   />
                 </div>
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-red-100 rounded-full flex items-center justify-center shadow-lg">
-                  <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="#dc2626" strokeWidth={2} viewBox="0 0 24 24">
+                <div className="w-10 h-10 md:w-12 md:h-12 bg-red-100 rounded-full flex items-center justify-center shadow-lg">
+                  <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="#dc2626" strokeWidth={2} viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M17 13l-5 5m0 0l-5-5m5 5V6" />
                   </svg>
                 </div>
