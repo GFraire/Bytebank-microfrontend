@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+
 const TRANSACTION_TYPES = [
   { value: 'deposit', label: 'Depósito' },
   { value: 'transfer', label: 'Transferência' },
@@ -60,22 +61,7 @@ function AppTransaction() {
 
   return (
     <div className="h-full bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b border-gray-200 px-6 py-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-              <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-              </svg>
-            </div>
-            <div>
-              <h1 className="text-xl font-bold text-gray-900">Nova Transação</h1>
-              <p className="text-sm text-gray-600">Registre uma nova movimentação</p>
-            </div>
-          </div>
-        </div>
-      </header>
+
 
       {/* Content */}
       <main className="p-4 md:p-6">
