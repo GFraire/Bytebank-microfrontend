@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useAuth } from "../../contexts/authContext";
 import * as z from "zod";
 import Image from "next/image";
 
@@ -27,6 +28,7 @@ interface ModalLoginProps {
 }
 
 export default function ModalLogin({ isOpen, onClose }: ModalLoginProps) {
+  const { setUser } = useAuth();
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
@@ -52,6 +54,13 @@ export default function ModalLogin({ isOpen, onClose }: ModalLoginProps) {
       if (user.password !== data.password) {
         throw new Error("Credenciais inválidas");
       }
+
+      setUser({
+        uid: user.id.toString(),
+        email: user.email,
+        displayName: user.name,
+      });
+
       onClose();
 
       router.push("/account"); // Redireciona para /account após login
