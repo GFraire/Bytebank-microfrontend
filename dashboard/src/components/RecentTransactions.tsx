@@ -48,10 +48,7 @@ export default function RecentTransactions() {
   };
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('pt-BR', {
-      day: '2-digit',
-      month: '2-digit'
-    });
+    return new Date(dateString).toLocaleDateString('pt-BR');
   };
 
   return (
@@ -63,34 +60,45 @@ export default function RecentTransactions() {
         </button>
       </div>
       
-      <div className="space-y-3">
+      <div className="divide-y divide-gray-200">
         {transactions.map((transaction) => (
-          <div key={transaction.id} className="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg transition-colors">
-            <div className="flex items-center space-x-3">
-              <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                transaction.type === 'income' ? 'bg-green-100' : 'bg-red-100'
-              }`}>
-                {transaction.type === 'income' ? (
-                  <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 11l5-5m0 0l5 5m-5-5v12" />
-                  </svg>
-                ) : (
-                  <svg className="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 13l-5 5m0 0l-5-5m5 5V6" />
-                  </svg>
-                )}
+          <div key={transaction.id} className="p-4 hover:bg-gray-50 transition-colors">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-4">
+                <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
+                  transaction.type === 'income' 
+                    ? 'bg-green-100 text-green-600' 
+                    : 'bg-red-100 text-red-600'
+                }`} style={{
+                  backgroundColor: transaction.type === 'income' ? '#dcfce7' : '#fee2e2',
+                  color: transaction.type === 'income' ? '#16a34a' : '#dc2626'
+                }}>
+                  {transaction.type === 'income' ? (
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 11l5-5m0 0l5 5m-5-5v12" />
+                    </svg>
+                  ) : (
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 13l-5 5m0 0l-5-5m5 5V6" />
+                    </svg>
+                  )}
+                </div>
+                <div>
+                  <p className="font-medium text-gray-900">{transaction.description}</p>
+                  <p className="text-sm text-gray-500">
+                    {transaction.category} • {formatDate(transaction.date)}
+                  </p>
+                </div>
               </div>
-              <div>
-                <p className="font-medium text-gray-900">{transaction.description}</p>
-                <p className="text-sm text-gray-500">{formatDate(transaction.date)}</p>
+              <div className="text-right">
+                <p className={`font-semibold ${
+                  transaction.type === 'income' ? 'text-green-600' : 'text-red-600'
+                }`} style={{
+                  color: transaction.type === 'income' ? '#16a34a' : '#dc2626'
+                }}>
+                  {transaction.type === 'income' ? '+' : '-'}{formatCurrency(transaction.amount)}
+                </p>
               </div>
-            </div>
-            <div className="text-right">
-              <p className={`font-semibold ${
-                transaction.type === 'income' ? 'text-green-600' : 'text-red-600'
-              }`}>
-                {formatCurrency(transaction.type === 'income' ? transaction.amount : -transaction.amount)}
-              </p>
             </div>
           </div>
         ))}
