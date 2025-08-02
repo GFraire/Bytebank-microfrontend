@@ -66,8 +66,7 @@ export default function ModalCreateAccount({
       });
 
       onClose();
-
-      router.push("/account"); // Redireciona para /account após signup
+      router.push("/account");
     } catch (err) {
       setError((err as Error).message);
     }
