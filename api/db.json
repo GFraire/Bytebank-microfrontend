@@ -3,8 +3,8 @@
     {
       "description": "Salário",
       "amount": 5000,
-      "type": "expense",
-      "category": "Alimentação",
+      "type": "income",
+      "category": "Trabalho",
       "date": "2025-08-08",
       "recipient": "",
       "attachments": [
@@ -29,24 +29,26 @@
       "type": "income",
       "category": "Trabalho",
       "date": "2023-10-20",
-      "recipient": "Empresa XYZ",
+      "recipient": "",
       "attachments": []
-    },
-    {
-      "description": "teste",
-      "amount": 100,
-      "type": "income",
-      "category": "entertainment",
-      "date": "2025-08-01",
-      "id": 5
     },
     {
       "description": "mercado",
       "amount": 250,
       "type": "expense",
-      "category": "groceries",
+      "category": "Alimentação",
       "date": "2025-08-02",
       "id": 6
+    },
+    {
+      "description": "layout",
+      "amount": 58,
+      "type": "income",
+      "category": "Transporte",
+      "date": "2025-08-02",
+      "recipient": "henrique",
+      "attachments": [],
+      "id": 7
     }
   ],
   "profile": [
