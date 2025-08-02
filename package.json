@@ -4,7 +4,6 @@
   "scripts": {
     "dev:add-transaction": "pnpm --filter add-transaction run dev",
     "dev:dashboard": "pnpm --filter dashboard run dev",
-    "dev:design-system": "pnpm --filter design-system run dev",
     "dev:main-app": "pnpm --filter main-app run dev",
     "dev:profile": "pnpm --filter profile run dev",
     "dev:sidebar": "pnpm --filter sidebar run dev",
@@ -12,7 +11,6 @@
     "dev:api": "pnpm --filter api run dev",
     "dev:all": "concurrently --kill-others --names api,add,dash,profile,sidebar,tx,main --colors blue,green,cyan,magenta,white,gray,yellow \"pnpm dev:api\" \"pnpm dev:add-transaction\" \"pnpm dev:dashboard\" \"pnpm dev:profile\" \"pnpm dev:sidebar\" \"pnpm dev:transactions\" \"pnpm dev:main-app\"",
     "build": "pnpm -r run build",
-    "deploy:design-system": "cd design-system && vercel --prod",
     "deploy:dashboard": "cd dashboard && vercel --prod",
     "deploy:sidebar": "cd sidebar && vercel --prod",
     "deploy:transactions": "cd transactions && vercel --prod",
@@ -20,7 +18,8 @@
     "deploy:profile": "cd profile && vercel --prod",
     "deploy:api": "cd api && vercel --prod",
     "deploy:main-app": "cd main-app && cp next.config.prod.js next.config.js && vercel --prod",
-    "deploy:all": "pnpm deploy:design-system && pnpm deploy:dashboard && pnpm deploy:sidebar && pnpm deploy:transactions && pnpm deploy:add-transaction && pnpm deploy:profile && pnpm deploy:api && pnpm deploy:main-app"
+    "deploy:all": "pnpm deploy:dashboard && pnpm deploy:sidebar && pnpm deploy:transactions && pnpm deploy:add-transaction && pnpm deploy:profile && pnpm deploy:api && pnpm deploy:main-app"
+    
   },
   "overrides": {
     "webpack": "5.100.1",

@@ -1,7 +1,6 @@
 packages:
   - 'add-transaction'
   - 'dashboard'
-  - 'design-system'
   - 'api'
   - 'main-app'
   - 'profile'
