@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { DashboardData, Transaction } from './types';
 
-const API_URL = 'https://api-bytebank-g9.vercel.app'
+const API_URL = 'http://localhost:3333'
 
 const api = axios.create({
   baseURL: API_URL,
