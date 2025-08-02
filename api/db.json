@@ -1,20 +1,16 @@
 {
   "transactions": [
     {
-      "id": 1,
       "description": "Salário",
       "amount": 5000,
       "type": "income",
       "category": "Trabalho",
-      "date": "2023-10-05"
-    },
-    {
-      "id": 2,
-      "description": "Aluguel",
-      "amount": 1200,
-      "type": "expense",
-      "category": "Moradia",
-      "date": "2023-10-10"
+      "date": "2025-08-08",
+      "recipient": "",
+      "attachments": [
+        "1Henrique.png"
+      ],
+      "id": 1
     },
     {
       "id": 3,
@@ -22,7 +18,9 @@
       "amount": 450,
       "type": "expense",
       "category": "Alimentação",
-      "date": "2023-10-15"
+      "date": "2023-10-15",
+      "recipient": "Extra Supermercados",
+      "attachments": []
     },
     {
       "id": 4,
@@ -30,7 +28,55 @@
       "amount": 1200,
       "type": "income",
       "category": "Trabalho",
-      "date": "2023-10-20"
+      "date": "2023-10-20",
+      "recipient": "",
+      "attachments": []
+    },
+    {
+      "description": "mercado",
+      "amount": 250,
+      "type": "expense",
+      "category": "Alimentação",
+      "date": "2025-08-02",
+      "id": 6
+    },
+    {
+      "description": "layout",
+      "amount": 58,
+      "type": "income",
+      "category": "Transporte",
+      "date": "2025-08-02",
+      "recipient": "henrique",
+      "attachments": [],
+      "id": 7
+    },
+    {
+      "description": "timezone",
+      "amount": 123,
+      "type": "income",
+      "category": "entertainment",
+      "date": "2025-08-02",
+      "id": 8
+    },
+    {
+      "description": "teste2",
+      "amount": 345,
+      "type": "income",
+      "category": "services",
+      "date": "2025-08-02",
+      "id": 9
+    },
+    {
+      "description": "date",
+      "amount": 567,
+      "type": "income",
+      "category": "taxes",
+      "date": "2025-08-02",
+      "recipient": "",
+      "attachments": [
+        "1754115147948_Favicon 48px.png"
+      ],
+      "id": 10
     }
   ],
   "profile": [

@@ -24,6 +24,7 @@ interface ItemExtratoProps {
   recipient?: string;
   category?: string;
   onEditar?: (id: number) => void;
+  onRemover?: (id: number) => void;
 }
 
 export default function ItemExtrato({
@@ -35,6 +36,7 @@ export default function ItemExtrato({
   recipient,
   category,
   onEditar,
+  onRemover,
 }: ItemExtratoProps) {
   const [openModal, setOpenModal] = useState(false);
   const [activeActionMenu, setActiveActionMenu] = useState(false);
@@ -48,13 +50,10 @@ export default function ItemExtrato({
     setOpenModal(false);
   }
   const handleExcluir = (id: number) => {
-    console.log("Excluindo transação com ID:", id);
-    // try {
-    //   // removerTransacao(id);
-    //   toast.success("Transação excluída com sucesso!");
-    // } catch {
-    //   toast.error("Erro ao excluir a transação.");
-    // }
+    if (onRemover) {
+      onRemover(id);
+    }
+    handleModalClose();
   };
 
   return (

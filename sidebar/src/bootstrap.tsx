@@ -7,7 +7,7 @@ const ROOT_ID = "#_sidebar-dev-Root";
 
 const rootEl = document.querySelector(ROOT_ID);
 
-export default () => <App />;
+export default (props: any) => <App {...props} />;
 
 if (rootEl) {
   const root = createRoot(rootEl);

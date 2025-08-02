@@ -5,18 +5,14 @@ export interface SelectOption {
 
 export const TRANSACTION_CATEGORIES: SelectOption[] = [
   { value: "", label: "Selecione" },
-  { value: "bills", label: "Contas e Faturas" },
-  { value: "services", label: "Serviços" },
-  { value: "taxes", label: "Impostos" },
-  { value: "education", label: "Educação" },
-  { value: "entertainment", label: "Entretenimento" },
-  { value: "groceries", label: "Supermercado" },
-  { value: "transportation", label: "Transporte" },
-  { value: "health", label: "Saúde" },
-  { value: "clothing", label: "Vestuário" },
-  { value: "gifts", label: "Presentes" },
-  { value: "travel", label: "Viagens" },
-  { value: "other", label: "Outros" },
+  { value: "Alimentação", label: "Alimentação" },
+  { value: "Transporte", label: "Transporte" },
+  { value: "Moradia", label: "Moradia" },
+  { value: "Lazer", label: "Lazer" },
+  { value: "Saúde", label: "Saúde" },
+  { value: "Educação", label: "Educação" },
+  { value: "Trabalho", label: "Trabalho" },
+  { value: "Outros", label: "Outros" },
 ];
 
 export const TRANSACTION_TYPES: SelectOption[] = [
