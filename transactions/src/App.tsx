@@ -20,10 +20,27 @@ function AppTransaction() {
   const [periodFilter, setPeriodFilter] = useState('all');
   const [editingTransaction, setEditingTransaction] = useState<Transaction | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState<number | null>(null);
 
   useEffect(() => {
     fetchTransactions();
   }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (!target.closest('.relative')) {
+        setDropdownOpen(null);
+      }
+    };
+    
+    if (dropdownOpen !== null) {
+      setTimeout(() => {
+        document.addEventListener('click', handleClickOutside);
+      }, 0);
+      return () => document.removeEventListener('click', handleClickOutside);
+    }
+  }, [dropdownOpen]);
 
   const fetchTransactions = async () => {
     try {
@@ -43,7 +60,18 @@ function AppTransaction() {
     const matchesSearch = transaction.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          transaction.amount.toString().includes(searchTerm);
     const matchesCategory = categoryFilter === 'all' || transaction.type === categoryFilter;
-    return matchesSearch && matchesCategory;
+    
+    // Filtro de período
+    let matchesPeriod = true;
+    if (periodFilter !== 'all') {
+      const transactionDate = new Date(transaction.date);
+      const today = new Date();
+      const daysAgo = parseInt(periodFilter);
+      const filterDate = new Date(today.getTime() - (daysAgo * 24 * 60 * 60 * 1000));
+      matchesPeriod = transactionDate >= filterDate;
+    }
+    
+    return matchesSearch && matchesCategory && matchesPeriod;
   });
 
   const formatCurrency = (amount: number) => {
@@ -75,6 +103,21 @@ function AppTransaction() {
   const handleDelete = () => {
     fetchTransactions();
     handleCloseModal();
+  };
+
+  const handleRemove = async (id: number) => {
+    if (confirm('Tem certeza que deseja remover esta transação?')) {
+      try {
+        const response = await fetch(`http://localhost:3333/transactions/${id}`, {
+          method: 'DELETE'
+        });
+        if (response.ok) {
+          fetchTransactions();
+        }
+      } catch (error) {
+        console.error('Erro ao remover transação:', error);
+      }
+    }
   };
 
   if (loading) {
@@ -191,15 +234,50 @@ function AppTransaction() {
                           <p className="text-sm text-gray-500">{transaction.recipient}</p>
                         )}
                       </div>
-                      <button
-                        onClick={() => handleEdit(transaction)}
-                        className="p-2 text-gray-400 hover:text-blue-600 transition-colors"
-                        title="Editar transação"
-                      >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                        </svg>
-                      </button>
+                      <div className="relative">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setDropdownOpen(dropdownOpen === transaction.id ? null : transaction.id);
+                          }}
+                          className="p-2 text-gray-400 hover:text-gray-600 transition-colors"
+                          title="Opções"
+                        >
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+                          </svg>
+                        </button>
+                        {dropdownOpen === transaction.id && (
+                          <div className="absolute right-0 mt-1 w-32 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleEdit(transaction);
+                                setDropdownOpen(null);
+                              }}
+                              className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 flex items-center space-x-2 rounded-t-lg"
+                            >
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                              </svg>
+                              <span>Editar</span>
+                            </button>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleRemove(transaction.id);
+                                setDropdownOpen(null);
+                              }}
+                              className="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 flex items-center space-x-2 rounded-b-lg"
+                            >
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                              </svg>
+                              <span>Remover</span>
+                            </button>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
