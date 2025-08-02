@@ -1,3 +1,5 @@
+// Este arquivo deve ser alterado somente em /tailwind-config/tailwind.config.js
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [

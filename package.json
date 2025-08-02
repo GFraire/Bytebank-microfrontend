@@ -2,6 +2,7 @@
   "name": "bytebank-microfrontend",
   "version": "1.0.0",
   "scripts": {
+    "copy:tailwind": "pnpm --filter tailwind-config run copy:tailwind",
     "dev:add-transaction": "pnpm --filter add-transaction run dev",
     "dev:dashboard": "pnpm --filter dashboard run dev",
     "dev:main-app": "pnpm --filter main-app run dev",
