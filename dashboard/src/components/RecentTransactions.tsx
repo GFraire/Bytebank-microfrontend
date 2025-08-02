@@ -13,34 +13,27 @@ export default function RecentTransactions() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
 
   useEffect(() => {
-    // Buscar dados reais das transações
     const fetchTransactions = async () => {
       try {
         const response = await fetch('http://localhost:3333/transactions');
         if (response.ok) {
           const data = await response.json();
-          // Pegar apenas as 5 mais recentes
-          const recent = data.slice(0, 5).map((t: any) => ({
-            id: t.id,
-            description: t.description,
-            amount: t.amount,
-            type: t.type,
-            date: t.date,
-            category: t.category
-          }));
-          setTransactions(recent);
+          // Ordenar por data (mais recentes primeiro) e pegar apenas as 5 primeiras
+          const sortedTransactions = data
+            .sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime())
+            .slice(0, 5)
+            .map((t: any) => ({
+              id: t.id,
+              description: t.description,
+              amount: t.amount,
+              type: t.type,
+              date: t.date,
+              category: t.category
+            }));
+          setTransactions(sortedTransactions);
         }
       } catch (error) {
         console.error('Erro ao buscar transações:', error);
-        // Fallback para dados mock
-        const mockTransactions: Transaction[] = [
-          { id: 1, description: 'Salário', amount: 5000, type: 'income', date: '2024-01-15', category: 'salary' },
-          { id: 2, description: 'Supermercado', amount: 250, type: 'expense', date: '2024-01-14', category: 'groceries' },
-          { id: 3, description: 'Freelance', amount: 800, type: 'income', date: '2024-01-13', category: 'work' },
-          { id: 4, description: 'Conta de Luz', amount: 120, type: 'expense', date: '2024-01-12', category: 'bills' },
-          { id: 5, description: 'Uber', amount: 35, type: 'expense', date: '2024-01-11', category: 'transport' },
-        ];
-        setTransactions(mockTransactions);
       }
     };
     
