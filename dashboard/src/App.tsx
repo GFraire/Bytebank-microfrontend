@@ -6,14 +6,13 @@ import BalanceCard from "./components/BalanceCard";
 import TransactionChart from "./components/TransactionChart";
 import CategoryPieChart from "./components/CategoryPieChart";
 
-
 function AppDashboard() {
   const [loading, setLoading] = useState(true);
   const [dashboardData, setDashboardData] = useState<DashboardData>({
     balance: 0,
     income: 0,
     expense: 0,
-    transactions: []
+    transactions: [],
   });
   const [allTransactions, setAllTransactions] = useState<Transaction[]>([]);
 
@@ -23,7 +22,7 @@ function AppDashboard() {
         setLoading(true);
         const dashData = await getDashboardData();
         const transactions = await getTransactions();
-        
+
         setDashboardData(dashData);
         setAllTransactions(transactions);
       } catch (error) {
@@ -45,57 +44,31 @@ function AppDashboard() {
   }
 
   return (
-    <main className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-6">
-        {/* Header */}
-        <header className="mb-8">
-          <DashboardHeader userName="João" />
-        </header>
-        
-        {/* Grid Principal */}
-        <div className="grid grid-cols-2 gap-6 h-[calc(100vh-200px)]">
-          {/* Coluna 1 - Cards de Resumo */}
-          <div className="space-y-4">
-            <section>
-              <h2 className="text-lg font-semibold text-gray-700 mb-4">Resumo Financeiro</h2>
-              <div className="space-y-4">
-                <BalanceCard 
-                  title="Saldo Atual" 
-                  value={dashboardData.balance} 
-                  type="default" 
-                />
-                <BalanceCard 
-                  title="Receitas" 
-                  value={dashboardData.income} 
-                  type="income" 
-                />
-                <BalanceCard 
-                  title="Despesas" 
-                  value={dashboardData.expense} 
-                  type="expense" 
-                />
-              </div>
-            </section>
+    <div className="bg-primary flex flex-col rounded-lg p-4 gap-4">
+      <div className="flex flex-col gap-2">
+        <h2 className="text-lg font-semibold text-white">
+          Análise de Transações
+        </h2>
+
+        <TransactionChart transactions={allTransactions} />
+      </div>
+
+      <div className="flex flex-col w-full gap-2">
+        <h2 className="text-lg font-semibold text-white">
+          Análise por Categoria
+        </h2>
+
+        <div className="flex gap-4">
+          <div className="grow">
+            <CategoryPieChart transactions={allTransactions} type="income" />
           </div>
-          
-          {/* Coluna 2 - Gráficos */}
-          <div className="space-y-6">
-            <section>
-              <h2 className="text-lg font-semibold text-gray-700 mb-4">Análise de Transações</h2>
-              <TransactionChart transactions={allTransactions} />
-            </section>
-            
-            <section>
-              <h2 className="text-lg font-semibold text-gray-700 mb-4">Análise por Categoria</h2>
-              <div className="grid grid-cols-1 gap-4">
-                <CategoryPieChart transactions={allTransactions} type="income" />
-                <CategoryPieChart transactions={allTransactions} type="expense" />
-              </div>
-            </section>
+
+          <div className="grow">
+            <CategoryPieChart transactions={allTransactions} type="expense" />
           </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 }
 

@@ -46,8 +46,8 @@ const TransactionChart: React.FC<TransactionChartProps> = ({ transactions }) => 
 
   return (
     <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-300">
-      <h3 className="text-lg font-medium mb-4">Receitas vs Despesas</h3>
-      <ResponsiveContainer width="100%" height={300}>
+      <h3 className="text-lg font-medium">Receitas vs Despesas</h3>
+      <ResponsiveContainer width="100%" height={150}>
         <BarChart
           data={chartData}
           margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
