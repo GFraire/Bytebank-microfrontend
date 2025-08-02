@@ -30,11 +30,6 @@ module.exports = {
     new ModuleFederationPlugin({
       name: "profile",
       filename: "remoteEntry.js",
-      remotes: {
-        designSystem: process.env.NODE_ENV === 'production'
-          ? "designSystem@https://design-system-g9.vercel.app/remoteEntry.js"
-          : "designSystem@http://localhost:4000/remoteEntry.js",
-      },
       exposes: {
         './Profile': './src/bootstrap',
       },
