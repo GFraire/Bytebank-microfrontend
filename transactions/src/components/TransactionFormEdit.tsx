@@ -9,6 +9,7 @@ import Select from "./ui/form/Select";
 import FileUpload from "./FileUpload";
 import { Transaction } from "./Extrato";
 import { transactionService } from "../services/transactionService";
+import { fileService } from "../services/fileService";
 import {
   TRANSACTION_CATEGORIES,
   TRANSACTION_TYPES,
@@ -115,6 +116,18 @@ export default function TransacaoForm({
   const handleOnSubmit: SubmitHandler<Inputs> = async (data) => {
     setIsLoading(true);
     try {
+      // Upload dos novos arquivos
+      let uploadedFiles: string[] = [];
+      if (attachments.length > 0) {
+        uploadedFiles = await fileService.upload(attachments);
+      }
+
+      // Combinar arquivos existentes com novos
+      const allAttachments = [
+        ...(transacaoParaEditar?.attachments || []),
+        ...uploadedFiles
+      ];
+
       const transactionData = {
         description: data.description,
         amount: data.amount,
@@ -122,7 +135,7 @@ export default function TransacaoForm({
         category: data.category,
         date: data.date,
         recipient: data.recipient,
-        attachments: attachments.map(f => f.name),
+        attachments: allAttachments,
       };
 
       if (modo === 'editar' && transacaoParaEditar?.id) {
@@ -253,7 +266,10 @@ export default function TransacaoForm({
           
           <div className="campo mt-4">
             <Label htmlFor="attachments">Anexos (Recibos/Documentos):</Label>
-            <FileUpload onFilesChange={setAttachments} />
+            <FileUpload 
+              onFilesChange={setAttachments}
+              existingFiles={transacaoParaEditar?.attachments || []}
+            />
           </div>
 
           {errors.root && (
