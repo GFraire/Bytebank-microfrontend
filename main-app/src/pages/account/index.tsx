@@ -26,8 +26,10 @@ const ProfileComponent = dynamic(() => import("profile/Profile"), {
   ssr: false,
 });
 
+type PageType = 'dashboard' | 'transactions' | 'add-transaction' | 'profile';
+
 export default function Account() {
-  const [activeView, setActiveView] = useState('dashboard');
+  const [activeView, setActiveView] = useState<PageType>('dashboard');
   const [userProfile, setUserProfile] = useState({ name: 'Usuário' });
   const router = useRouter();
   const { logout } = useAuth();
@@ -38,7 +40,6 @@ export default function Account() {
         const response = await fetch('http://localhost:3333/profile/1');
         if (response.ok) {
           const profile = await response.json();
-          console.log('Profile fetched:', profile);
           setUserProfile(profile);
         }
       } catch (error) {
@@ -49,8 +50,9 @@ export default function Account() {
   }, []);
   
   const handleNavigation = (view: string) => {
-    console.log('Main navigation:', view);
-    setActiveView(view);
+    if (view === 'dashboard' || view === 'transactions' || view === 'add-transaction' || view === 'profile') {
+      setActiveView(view as PageType);
+    }
   };
 
   const handleLogout = () => {
@@ -61,40 +63,15 @@ export default function Account() {
   const renderContent = () => {
     switch (activeView) {
       case 'dashboard':
-        return (
-          <>
-            <DashboardHeader userName={userProfile.name} pageType="dashboard" showUserProfile={true} />
-            <DashboardComponent />
-          </>
-        );
+        return <DashboardComponent />;
       case 'transactions':
-        return (
-          <>
-            <DashboardHeader userName={userProfile.name} pageType="transactions" showUserProfile={true} />
-            <TransactionsComponent />
-          </>
-        );
+        return <TransactionsComponent />;
       case 'add-transaction':
-        return (
-          <>
-            <DashboardHeader userName={userProfile.name} pageType="add-transaction" showUserProfile={true} />
-            <AddTransactionComponent />
-          </>
-        );
+        return <AddTransactionComponent />;
       case 'profile':
-        return (
-          <>
-            <DashboardHeader userName={userProfile.name} pageType="profile" showUserProfile={true} />
-            <ProfileComponent />
-          </>
-        );
+        return <ProfileComponent />;
       default:
-        return (
-          <>
-            <DashboardHeader userName={userProfile.name} pageType="dashboard" showUserProfile={true} />
-            <DashboardComponent />
-          </>
-        );
+        return <DashboardComponent />;
     }
   };
 
@@ -109,8 +86,11 @@ export default function Account() {
       </div>
       
       {/* Área de conteúdo principal */}
-      <div className="flex-1 overflow-auto pb-20 md:pb-0">
-        {renderContent()}
+      <div className="flex-1 flex flex-col overflow-hidden pb-20 md:pb-0">
+        <DashboardHeader userName={userProfile.name} pageType={activeView} showUserProfile={true} />
+        <div className="flex-1 overflow-auto">
+          {renderContent()}
+        </div>
       </div>
       
       {/* Navegação Inferior Mobile */}
