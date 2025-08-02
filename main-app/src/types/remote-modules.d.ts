@@ -7,6 +7,7 @@ declare module 'sidebar/Sidebar' {
   interface SidebarProps {
     onNavigate?: (view: string) => void;
     activeView?: string;
+    onLogout?: () => void;
   }
   const Component: React.ComponentType<SidebarProps>;
   export default Component;
