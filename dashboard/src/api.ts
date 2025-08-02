@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { DashboardData, Transaction } from './types';
+import { DashboardData, Transaction } from './types/types';
 
 const API_URL = 'https://api-bytebank-g9.vercel.app'
 

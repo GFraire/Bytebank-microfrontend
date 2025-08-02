@@ -5,6 +5,7 @@ const sourcePath = path.resolve(__dirname, 'tailwind.config.js')
 
 const destinations = [
   path.resolve(__dirname, '..', 'add-transaction', 'tailwind.config.js'),
+  path.resolve(__dirname, '..', 'dashboard', 'tailwind.config.js'),
   path.resolve(__dirname, '..', 'profile', 'tailwind.config.js'),
 ]
 
