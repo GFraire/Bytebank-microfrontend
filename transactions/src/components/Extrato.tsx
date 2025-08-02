@@ -93,29 +93,45 @@ export function Extrato() {
 
   if (loading) {
     return (
-      <aside className="card max-md:items-center relative">
-        <h3 className="title pb-8">Extrato</h3>
-        <div className="flex justify-center items-center h-32">
-          <p>Carregando transações...</p>
+      <div className="p-6">
+        <div className="flex items-center justify-between mb-6">
+          <h3 className="text-xl font-bold text-gray-900">Extrato de Transações</h3>
         </div>
-      </aside>
+        <div className="flex justify-center items-center h-32">
+          <div className="flex items-center space-x-2">
+            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-green-600"></div>
+            <p className="text-gray-600">Carregando transações...</p>
+          </div>
+        </div>
+      </div>
     );
   }
 
   if (error) {
     return (
-      <aside className="card max-md:items-center relative">
-        <h3 className="title pb-8">Extrato</h3>
-        <div className="flex justify-center items-center h-32">
-          <p className="text-red-500">{error}</p>
+      <div className="p-6">
+        <div className="flex items-center justify-between mb-6">
+          <h3 className="text-xl font-bold text-gray-900">Extrato de Transações</h3>
         </div>
-      </aside>
+        <div className="flex justify-center items-center h-32">
+          <div className="text-center">
+            <span className="text-4xl mb-2 block">⚠️</span>
+            <p className="text-red-500">{error}</p>
+          </div>
+        </div>
+      </div>
     );
   }
 
   return (
-    <aside className="card max-md:items-center relative">
-      <h3 className="title pb-8">Extrato</h3>
+    <div className="p-6">
+      <div className="flex items-center justify-between mb-6">
+        <h3 className="text-xl font-bold text-gray-900">Extrato de Transações</h3>
+        <div className="flex items-center space-x-2 text-sm text-gray-500">
+          <span>🔄</span>
+          <span>Atualizado agora</span>
+        </div>
+      </div>
       <div className="transacoes max-md:items-center">
         {/* Última operação realizada */}
         {lastTransaction && (
@@ -181,6 +197,6 @@ export function Extrato() {
           />
         </Modal>
       )}
-    </aside>
+    </div>
   );
 }
