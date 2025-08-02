@@ -59,10 +59,27 @@ function AppTransaction() {
   };
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold text-gray-800 mb-6">Adicionar Transação</h1>
-      
-      <div className="bg-white rounded-lg shadow-sm border border-gray-300 p-6">
+    <div className="h-full bg-gray-50">
+      {/* Header */}
+      <header className="bg-white shadow-sm border-b border-gray-200 px-6 py-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-4">
+            <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+              <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+              </svg>
+            </div>
+            <div>
+              <h1 className="text-xl font-bold text-gray-900">Nova Transação</h1>
+              <p className="text-sm text-gray-600">Registre uma nova movimentação</p>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Content */}
+      <main className="p-4 md:p-6">
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -146,7 +163,18 @@ function AppTransaction() {
             Adicionar Transação
           </button>
         </form>
-      </div>
+        </div>
+        
+        {/* Dicas */}
+        <div className="mt-6 bg-blue-50 border border-blue-200 rounded-xl p-6">
+          <h3 className="text-lg font-semibold text-blue-900 mb-3">Dicas</h3>
+          <ul className="space-y-2 text-blue-800">
+            <li>• Use descrições claras para facilitar o controle</li>
+            <li>• Categorize corretamente para relatórios precisos</li>
+            <li>• Anexe comprovantes quando possível</li>
+          </ul>
+        </div>
+      </main>
     </div>
   );
 }
