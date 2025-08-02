@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
-import { useAuth } from "../../contexts/authContext";
+import { useAuth } from "../../../authContext";
 import * as z from "zod";
 import Image from "next/image";
 

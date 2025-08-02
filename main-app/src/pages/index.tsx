@@ -1,3 +1,5 @@
+import { useAuth } from "../../authContext";
+
 import Head from "next/head";
 import React, { useState } from "react";
 import Image from "next/image";
