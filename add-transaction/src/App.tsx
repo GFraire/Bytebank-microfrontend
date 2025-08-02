@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-
 const TRANSACTION_TYPES = [
   { value: 'deposit', label: 'Depósito' },
   { value: 'transfer', label: 'Transferência' },

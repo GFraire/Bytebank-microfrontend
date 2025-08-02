@@ -33,6 +33,7 @@ module.exports = {
       filename: "remoteEntry.js",
       exposes: {
         './Sidebar': './src/bootstrap',
+        './Styles': './src/styles/global.css',
       },
       shared: {
         react: { singleton: true, requiredVersion: '18.3.1', },

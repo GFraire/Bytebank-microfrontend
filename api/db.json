@@ -1,18 +1,6 @@
 {
   "transactions": [
     {
-      "description": "Salário",
-      "amount": 5000,
-      "type": "income",
-      "category": "Trabalho",
-      "date": "2025-08-08",
-      "recipient": "",
-      "attachments": [
-        "1Henrique.png"
-      ],
-      "id": 1
-    },
-    {
       "id": 3,
       "description": "Supermercado",
       "amount": 450,
@@ -31,14 +19,6 @@
       "date": "2023-10-20",
       "recipient": "",
       "attachments": []
-    },
-    {
-      "description": "mercado",
-      "amount": 250,
-      "type": "expense",
-      "category": "Alimentação",
-      "date": "2025-08-02",
-      "id": 6
     },
     {
       "description": "layout",
@@ -77,6 +57,22 @@
         "1754115147948_Favicon 48px.png"
       ],
       "id": 10
+    },
+    {
+      "description": "Teste hoje",
+      "amount": 1200,
+      "type": "income",
+      "category": "other",
+      "date": "2025-08-02",
+      "id": 11
+    },
+    {
+      "description": "Teste",
+      "amount": 100,
+      "type": "income",
+      "category": "education",
+      "date": "2025-08-02",
+      "id": 12
     }
   ],
   "profile": [

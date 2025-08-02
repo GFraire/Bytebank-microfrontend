@@ -87,7 +87,7 @@ export default function Account() {
       <MobileHeader onNavigate={handleNavigation} activeView={activeView} />
       
       {/* Sidebar Desktop */}
-      <div className="w-64 flex-shrink-0 hidden md:block">
+      <div className="w-64 flex-shrink-0 sm:hidden md:block">
         <SidebarComponent onNavigate={handleNavigation} activeView={activeView} onLogout={handleLogout} />
       </div>
       
