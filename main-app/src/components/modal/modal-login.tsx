@@ -5,7 +5,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuth } from "../../contexts/authContext";
 import * as z from "zod";
 import Image from "next/image";
-import { useAuth } from "../../../authContext";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3333";
 
