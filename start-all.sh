@@ -3,9 +3,6 @@
 # Inicia cada MFE em uma janela de terminal separada
 # Este script é uma alternativa ao comando pnpm dev:all
 
-# Design System
-osascript -e 'tell app "Terminal" to do script "cd \"'$PWD'/design-system\" && pnpm dev"'
-
 # Espera um pouco para garantir que o design-system inicie primeiro
 sleep 3
 
