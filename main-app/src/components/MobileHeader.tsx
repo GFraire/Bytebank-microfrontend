@@ -25,12 +25,12 @@ export default function MobileHeader({ onNavigate, activeView }: MobileHeaderPro
     <header className="md:hidden bg-gradient-to-r from-green-600 to-green-700 text-white p-4 shadow-lg">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-3">
-          <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center">
-            <span className="text-green-600 font-bold text-lg">B</span>
+          <div className=" bg-white rounded-lg flex items-center justify-center">
+            <img src="/logo.png" alt="ByteBank Logo" />
           </div>
           <div>
-            <h1 className="text-lg font-bold">{getPageTitle()}</h1>
-            <p className="text-green-100 text-xs">ByteBank - Seu banco digital</p>
+            {/* <h1 className="text-lg font-bold">{getPageTitle()}</h1> */}
+            {/* <p className="text-green-100 text-xs">ByteBank - Seu banco digital</p> */}
           </div>
         </div>
         
@@ -42,12 +42,12 @@ export default function MobileHeader({ onNavigate, activeView }: MobileHeaderPro
       </div>
 
       {/* Saldo Mobile - apenas no dashboard */}
-      {activeView === 'dashboard' && (
+      {/* {activeView === 'dashboard' && (
         <div className="mt-4 p-3 bg-white/10 rounded-lg">
           <p className="text-green-100 text-xs">Saldo disponível</p>
           <p className="text-xl font-bold">R$ 12.450,00</p>
         </div>
-      )}
+      )} */}
     </header>
   );
 }
