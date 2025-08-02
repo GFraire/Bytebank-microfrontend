@@ -4,7 +4,11 @@ declare module 'dashboard/Dashboard' {
 }
 
 declare module 'sidebar/Sidebar' {
-  const Component: React.ComponentType;
+  interface SidebarProps {
+    onNavigate?: (view: string) => void;
+    activeView?: string;
+  }
+  const Component: React.ComponentType<SidebarProps>;
   export default Component;
 }
 
