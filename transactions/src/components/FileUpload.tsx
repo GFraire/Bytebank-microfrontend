@@ -1,15 +1,18 @@
 import React, { useRef, useState } from 'react';
 import { Upload, X, FileText } from 'phosphor-react';
+import { fileService } from '../services/fileService';
 
 interface FileUploadProps {
   onFilesChange: (files: File[]) => void;
+  existingFiles?: string[];
   maxFiles?: number;
   acceptedTypes?: string[];
   maxSize?: number; // em MB
 }
 
 export default function FileUpload({ 
-  onFilesChange, 
+  onFilesChange,
+  existingFiles = [],
   maxFiles = 5, 
   acceptedTypes = ['image/*', 'application/pdf'],
   maxSize = 5 
@@ -92,26 +95,80 @@ export default function FileUpload({
         />
       </div>
 
-      {files.length > 0 && (
-        <div className="mt-4 space-y-2">
-          {files.map((file, index) => (
-            <div key={index} className="flex items-center justify-between p-2 bg-gray-50 rounded">
-              <div className="flex items-center">
-                <FileText size={20} className="text-gray-500 mr-2" />
-                <span className="text-sm text-gray-700 truncate">{file.name}</span>
-                <span className="text-xs text-gray-500 ml-2">
-                  ({(file.size / 1024 / 1024).toFixed(2)} MB)
-                </span>
+      {/* Arquivos existentes */}
+      {existingFiles && existingFiles.length > 0 && (
+        <div className="mt-4">
+          <h4 className="text-sm font-medium text-gray-700 mb-2">Arquivos anexados:</h4>
+          <div className="space-y-2">
+            {existingFiles.map((fileName, index) => (
+              <div key={`existing-${index}`} className="flex items-center justify-between p-2 bg-blue-50 rounded border border-blue-200">
+                <div className="flex items-center">
+                  <FileText size={20} className="text-blue-600 mr-2" />
+                  <span className="text-sm text-gray-700 truncate">{fileName}</span>
+                </div>
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (fileName.includes('_')) {
+                        alert(`Arquivo simulado: ${fileName.split('_').slice(1).join('_')}`);
+                      } else {
+                        window.open(fileService.getFileUrl(fileName), '_blank');
+                      }
+                    }}
+                    className="text-blue-600 hover:text-blue-800 text-xs px-2 py-1 rounded bg-blue-100 hover:bg-blue-200"
+                    title="Visualizar arquivo"
+                  >
+                    Ver
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (fileName.includes('_')) {
+                        alert(`Download simulado: ${fileName.split('_').slice(1).join('_')}`);
+                      } else {
+                        const link = document.createElement('a');
+                        link.href = fileService.getFileUrl(fileName);
+                        link.download = fileName;
+                        link.click();
+                      }
+                    }}
+                    className="text-green-600 hover:text-green-800 text-xs px-2 py-1 rounded bg-green-100 hover:bg-green-200"
+                    title="Baixar arquivo"
+                  >
+                    Download
+                  </button>
+                </div>
               </div>
-              <button
-                type="button"
-                onClick={() => removeFile(index)}
-                className="text-red-500 hover:text-red-700"
-              >
-                <X size={16} />
-              </button>
-            </div>
-          ))}
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Novos arquivos */}
+      {files.length > 0 && (
+        <div className="mt-4">
+          <h4 className="text-sm font-medium text-gray-700 mb-2">Novos arquivos:</h4>
+          <div className="space-y-2">
+            {files.map((file, index) => (
+              <div key={index} className="flex items-center justify-between p-2 bg-gray-50 rounded">
+                <div className="flex items-center">
+                  <FileText size={20} className="text-gray-500 mr-2" />
+                  <span className="text-sm text-gray-700 truncate">{file.name}</span>
+                  <span className="text-xs text-gray-500 ml-2">
+                    ({(file.size / 1024 / 1024).toFixed(2)} MB)
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => removeFile(index)}
+                  className="text-red-500 hover:text-red-700"
+                >
+                  <X size={16} />
+                </button>
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </div>
