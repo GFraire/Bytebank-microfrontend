@@ -1,11 +1,52 @@
-import React from 'react';
-import { Transaction } from '../types';
+import React, { useEffect, useState } from 'react';
 
-interface RecentTransactionsProps {
-  transactions: Transaction[];
+interface Transaction {
+  id: number;
+  description: string;
+  amount: number;
+  type: 'income' | 'expense';
+  date: string;
+  category: string;
 }
 
-const RecentTransactions: React.FC<RecentTransactionsProps> = ({ transactions }) => {
+export default function RecentTransactions() {
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+
+  useEffect(() => {
+    // Buscar dados reais das transações
+    const fetchTransactions = async () => {
+      try {
+        const response = await fetch('http://localhost:3333/transactions');
+        if (response.ok) {
+          const data = await response.json();
+          // Pegar apenas as 5 mais recentes
+          const recent = data.slice(0, 5).map((t: any) => ({
+            id: t.id,
+            description: t.description,
+            amount: t.amount,
+            type: t.type,
+            date: t.date,
+            category: t.category
+          }));
+          setTransactions(recent);
+        }
+      } catch (error) {
+        console.error('Erro ao buscar transações:', error);
+        // Fallback para dados mock
+        const mockTransactions: Transaction[] = [
+          { id: 1, description: 'Salário', amount: 5000, type: 'income', date: '2024-01-15', category: 'salary' },
+          { id: 2, description: 'Supermercado', amount: 250, type: 'expense', date: '2024-01-14', category: 'groceries' },
+          { id: 3, description: 'Freelance', amount: 800, type: 'income', date: '2024-01-13', category: 'work' },
+          { id: 4, description: 'Conta de Luz', amount: 120, type: 'expense', date: '2024-01-12', category: 'bills' },
+          { id: 5, description: 'Uber', amount: 35, type: 'expense', date: '2024-01-11', category: 'transport' },
+        ];
+        setTransactions(mockTransactions);
+      }
+    };
+    
+    fetchTransactions();
+  }, []);
+
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('pt-BR', {
       style: 'currency',
@@ -14,70 +55,53 @@ const RecentTransactions: React.FC<RecentTransactionsProps> = ({ transactions })
   };
 
   const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return new Intl.DateTimeFormat('pt-BR').format(date);
+    return new Date(dateString).toLocaleDateString('pt-BR', {
+      day: '2-digit',
+      month: '2-digit'
+    });
   };
 
   return (
-    <article className="bg-white p-6 rounded-lg shadow-sm border border-gray-300 h-full overflow-auto">
-      <header className="mb-6">
-        <h3 className="text-lg font-semibold text-gray-800">Transações Recentes</h3>
-        <p className="text-sm text-gray-500 mt-1">Últimas {transactions.length} transações</p>
-      </header>
+    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="text-lg font-semibold text-gray-900">Últimas Transações</h3>
+        <button className="text-green-600 text-sm font-medium hover:text-green-700">
+          Ver todas
+        </button>
+      </div>
       
-      {transactions.length === 0 ? (
-        <div className="text-center py-12">
-          <div className="text-4xl mb-4 opacity-50">💳</div>
-          <p className="text-gray-500">Nenhuma transação recente</p>
-        </div>
-      ) : (
-        <div className="overflow-x-auto">
-          <table className="min-w-full">
-            <thead>
-              <tr className="border-b border-gray-200">
-                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                  Descrição
-                </th>
-                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                  Categoria
-                </th>
-                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                  Data
-                </th>
-                <th className="px-4 py-3 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                  Valor
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-100">
-              {transactions.map((transaction) => (
-                <tr key={transaction.id} className="hover:bg-gray-50 transition-colors">
-                  <td className="px-4 py-4 text-sm font-medium text-gray-900">
-                    {transaction.description}
-                  </td>
-                  <td className="px-4 py-4 text-sm text-gray-600">
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-                      {transaction.category}
-                    </span>
-                  </td>
-                  <td className="px-4 py-4 text-sm text-gray-600">
-                    {formatDate(transaction.date)}
-                  </td>
-                  <td className={`px-4 py-4 text-sm text-right font-semibold ${
-                    transaction.type === 'income' ? 'text-green' : 'text-secondary'
-                  }`}>
-                    <span className="inline-flex items-center">
-                      {transaction.type === 'income' ? '+' : '-'} {formatCurrency(transaction.amount)}
-                    </span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
-    </article>
+      <div className="space-y-3">
+        {transactions.map((transaction) => (
+          <div key={transaction.id} className="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg transition-colors">
+            <div className="flex items-center space-x-3">
+              <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                transaction.type === 'income' ? 'bg-green-100' : 'bg-red-100'
+              }`}>
+                {transaction.type === 'income' ? (
+                  <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 11l5-5m0 0l5 5m-5-5v12" />
+                  </svg>
+                ) : (
+                  <svg className="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 13l-5 5m0 0l-5-5m5 5V6" />
+                  </svg>
+                )}
+              </div>
+              <div>
+                <p className="font-medium text-gray-900">{transaction.description}</p>
+                <p className="text-sm text-gray-500">{formatDate(transaction.date)}</p>
+              </div>
+            </div>
+            <div className="text-right">
+              <p className={`font-semibold ${
+                transaction.type === 'income' ? 'text-green-600' : 'text-red-600'
+              }`}>
+                {formatCurrency(transaction.type === 'income' ? transaction.amount : -transaction.amount)}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
   );
-};
-
-export default RecentTransactions;
+}
