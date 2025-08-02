@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
-import { Transaction, CategoryTotal } from '../types';
+import { Transaction, CategoryTotal } from '../types/types';
 
 interface CategoryPieChartProps {
   transactions: Transaction[];

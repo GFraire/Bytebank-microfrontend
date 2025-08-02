@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Transaction } from '../types/types';
 
 interface Transaction {
   id: number;

@@ -1,17 +1,16 @@
-import Head from "next/head";
-import React, { useState } from "react";
 import { useAuth } from "../../authContext";
 
-import styles from "../styles/Home.module.css";
+import Head from "next/head";
+import React, { useState } from "react";
 import Image from "next/image";
+import styles from "../styles/Home.module.css";
 import ModalLogin from "../components/modal/modal-login";
 import ModalCreateAccount from "../components/modal/modal-create-account";
 
 export default function Home() {
-  const { user } = useAuth();
-
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
+
   const advantageCards = [
     {
       icon: "present",
@@ -84,31 +83,31 @@ export default function Home() {
                 Serviços
               </span>
             </div>
+
             <ModalLogin
               isOpen={showLoginModal}
               onClose={() => setShowLoginModal(false)}
             />
+
             <ModalCreateAccount
               isOpen={showSignupModal}
               onClose={() => setShowSignupModal(false)}
             />
+
             <div className="flex items-center gap-6 tablet:gap-3">
-              {!user ? (
-                <>
-                  <button
-                    onClick={() => setShowSignupModal(true)}
-                    className="h-12 w-[180px] rounded-lg bg-green border-none text-body font-semibold text-white"
-                  >
-                    Abrir minha conta
-                  </button>
-                  <button
-                    onClick={() => setShowLoginModal(true)}
-                    className="h-12 w-[180px] rounded-lg bg-transparent border-solid border-2 border-green text-body font-semibold text-green"
-                  >
-                    Já tenho conta
-                  </button>
-                </>
-              ) : null}
+              <button
+                onClick={() => setShowSignupModal(true)}
+                className="h-12 w-[180px] rounded-lg bg-green border-none text-body font-semibold text-white"
+              >
+                Abrir minha conta
+              </button>
+
+              <button
+                onClick={() => setShowLoginModal(true)}
+                className="h-12 w-[180px] rounded-lg bg-transparent border-solid border-2 border-green text-body font-semibold text-green"
+              >
+                Já tenho conta
+              </button>
             </div>
           </div>
         </header>

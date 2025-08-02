@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getDashboardData, getTransactions } from "./api";
-import { DashboardData, Transaction } from "./types";
-
+import { DashboardData, Transaction } from "./types/types";
+import DashboardHeader from "./components/DashboardHeader";
 import BalanceCard from "./components/BalanceCard";
 import TransactionChart from "./components/TransactionChart";
 import CategoryPieChart from "./components/CategoryPieChart";

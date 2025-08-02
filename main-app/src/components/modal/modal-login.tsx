@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/router";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { useRouter } from "next/router";
-import { useAuth } from "../../../authContext";
 import Image from "next/image";
+import { useAuth } from "../../../authContext";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3333";
 
@@ -15,6 +15,13 @@ const loginSchema = z.object({
 
 type LoginFormData = z.infer<typeof loginSchema>;
 
+interface IUserData {
+  id: string;
+  name: string;
+  email: string;
+  password: string;
+}
+
 interface ModalLoginProps {
   isOpen: boolean;
   onClose: () => void;
@@ -22,8 +29,9 @@ interface ModalLoginProps {
 
 export default function ModalLogin({ isOpen, onClose }: ModalLoginProps) {
   const { setUser } = useAuth();
-  const router = useRouter();
   const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -34,27 +42,27 @@ export default function ModalLogin({ isOpen, onClose }: ModalLoginProps) {
 
   const onSubmit = async (data: LoginFormData) => {
     try {
-      const response = await fetch(`${API_URL}/profile`);
+      const response = await fetch(`${API_URL}/profile?email=${data.email}`);
+
       if (!response.ok) {
         throw new Error("Erro ao conectar ao servidor: " + response.statusText);
       }
-      const users = await response.json();
-      const userData = users.find((user: any) => 
-        user.email === data.email && user.password === data.password
-      );
-      
-      if (!userData) {
+
+      const userData: IUserData[] = await response.json();
+      const user = userData[0];
+
+      if (user.password !== data.password) {
         throw new Error("Credenciais inválidas");
       }
 
       setUser({
-        uid: userData.id.toString(),
-        email: userData.email,
-        displayName: userData.name,
-        role: userData.role || "user",
+        uid: user.id.toString(),
+        email: user.email,
+        displayName: user.name,
       });
+
       onClose();
-      router.push("/account"); // Redireciona para /account após login
+      router.push("/account");
     } catch (err) {
       setError((err as Error).message);
     }

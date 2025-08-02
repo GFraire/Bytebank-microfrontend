@@ -14,13 +14,19 @@ const SidebarComponent = dynamic(() => import("sidebar/Sidebar"), {
   ssr: false,
 });
 
-const TransactionsComponent = dynamic(() => import("transactions/Transactions"), {
-  ssr: false,
-});
+const TransactionsComponent = dynamic(
+  () => import("transactions/Transactions"),
+  {
+    ssr: false,
+  }
+);
 
-const AddTransactionComponent = dynamic(() => import("addTransaction/AddTransaction"), {
-  ssr: false,
-});
+const AddTransactionComponent = dynamic(
+  () => import("addTransaction/AddTransaction"),
+  {
+    ssr: false,
+  }
+);
 
 const ProfileComponent = dynamic(() => import("profile/Profile"), {
   ssr: false,

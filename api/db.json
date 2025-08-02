@@ -81,10 +81,11 @@
   ],
   "profile": [
     {
-      "name": "hnrq",
-      "email": "diretor@teste.com",
+      "name": "SILVIO CELSO DA SILVA",
+      "email": "silvioand1@gmail.com",
       "password": "123456",
-      "id": 1
+      "id": 1,
+      "balance": 0
     }
   ],
   "categories": [

@@ -1,7 +1,6 @@
 const isProd = process.env.NODE_ENV === 'production';
 
 const domains = {
-  designSystem: isProd ? 'https://design-system-g9.vercel.app' : 'http://localhost:4000',
   dashboard: isProd ? 'https://dashboard-g9.vercel.app' : 'http://localhost:3001',
   sidebar: isProd ? 'https://sidebar-g9.vercel.app' : 'http://localhost:3002',
   transactions: isProd ? 'https://transactions-g9.vercel.app' : 'http://localhost:3003',
@@ -10,7 +9,6 @@ const domains = {
 };
 
 module.exports = {
-  designSystem: `designSystem@${domains.designSystem}/remoteEntry.js`,
   dashboard: `dashboard@${domains.dashboard}/remoteEntry.js`,
   sidebar: `sidebar@${domains.sidebar}/remoteEntry.js`,
   transactions: `transactions@${domains.transactions}/remoteEntry.js`,

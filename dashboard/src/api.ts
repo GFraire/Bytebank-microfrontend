@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { DashboardData, Transaction } from './types';
+import { DashboardData, Transaction } from './types/types';
 
 const API_URL = 'http://localhost:3333'
 
