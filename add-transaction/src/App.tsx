@@ -60,9 +60,7 @@ function AppTransaction() {
   };
 
   return (
-    <div className="h-full bg-gray-50">
-
-
+    <div className="bg-gray-50">
       {/* Content */}
       <main className="p-4 md:p-6">
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
@@ -144,7 +142,7 @@ function AppTransaction() {
           
           <button
             type="submit"
-            className="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 font-semibold"
+            className="w-full bg-slate-600 text-black py-2 px-4 rounded-md hover:bg-green-700 font-semibold"
           >
             Adicionar Transação
           </button>

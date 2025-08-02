@@ -59,12 +59,12 @@ function AppSidebar({ onNavigate, activeView = 'dashboard', onLogout }: AppSideb
   return (
     <aside className="bg-white border-r border-gray-200 text-gray-900 w-64 h-screen p-6 shadow-sm flex flex-col">
       {/* Logo */}
-        <div className="flex items-center space-x-3 px-4 py-3">
-          <div className="mb-8">
-            <img src="/logo.png" alt="Logo" />
-            <p className="text-gray-600 text-sm">Seu banco digital</p>
-          </div>
+      <div className="flex items-center space-x-3 px-4 py-3">
+        <div className="mb-8">
+          <img src="/logo.png" alt="Logo" />
+          <p className="text-gray-600 text-sm">Seu banco digital</p>
         </div>
+      </div>
 
       {/* Menu */}
       <nav className="space-y-2 flex-1 mt-10">
@@ -72,11 +72,24 @@ function AppSidebar({ onNavigate, activeView = 'dashboard', onLogout }: AppSideb
           <button
             key={item.id}
             onClick={() => handleNavigation(item.id)}
-            className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors text-left ${
-              activeView === item.id
-                ? "bg-green-100 text-green-700 font-medium"
-                : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-            }`}
+            className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors text-left"
+            style={{
+              backgroundColor: activeView === item.id ? '#22c55e' : 'transparent',
+              color: activeView === item.id ? 'white' : '#374151',
+              fontWeight: activeView === item.id ? '500' : '400'
+            }}
+            onMouseEnter={(e) => {
+              if (activeView !== item.id) {
+                e.currentTarget.style.backgroundColor = '#f3f4f6';
+                e.currentTarget.style.color = '#111827';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (activeView !== item.id) {
+                e.currentTarget.style.backgroundColor = 'transparent';
+                e.currentTarget.style.color = '#374151';
+              }
+            }}
           >
             <div className="w-5 h-5">{item.icon}</div>
             <span>{item.label}</span>
@@ -84,17 +97,17 @@ function AppSidebar({ onNavigate, activeView = 'dashboard', onLogout }: AppSideb
         ))}
       </nav>
 
-      {/* Saldo */}
-      {/* <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-        <p className="text-gray-600 text-sm">Saldo disponível</p>
-        <p className="text-2xl font-bold text-green-600">R$ 12.450,00</p>
-      </div> */}
-
       {/* Footer */}
       <div className="border-t border-gray-200 pt-4">
         <button 
           onClick={onLogout}
-          className="flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors"
+          className="flex items-center space-x-2 text-gray-600 transition-colors"
+          onMouseEnter={(e) => {
+            e.currentTarget.style.color = '#dc2626';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.color = '#6b7280';
+          }}
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
