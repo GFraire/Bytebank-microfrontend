@@ -49,6 +49,34 @@
       "recipient": "henrique",
       "attachments": [],
       "id": 7
+    },
+    {
+      "description": "timezone",
+      "amount": 123,
+      "type": "income",
+      "category": "entertainment",
+      "date": "2025-08-02",
+      "id": 8
+    },
+    {
+      "description": "teste2",
+      "amount": 345,
+      "type": "income",
+      "category": "services",
+      "date": "2025-08-02",
+      "id": 9
+    },
+    {
+      "description": "date",
+      "amount": 567,
+      "type": "income",
+      "category": "taxes",
+      "date": "2025-08-02",
+      "recipient": "",
+      "attachments": [
+        "1754115147948_Favicon 48px.png"
+      ],
+      "id": 10
     }
   ],
   "profile": [
