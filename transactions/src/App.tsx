@@ -10,6 +10,7 @@ interface Transaction {
   category: string;
   date: string;
   recipient?: string;
+  attachments?: string[];
 }
 
 function AppTransaction() {
@@ -21,6 +22,8 @@ function AppTransaction() {
   const [editingTransaction, setEditingTransaction] = useState<Transaction | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState<number | null>(null);
+  const [attachmentsModalOpen, setAttachmentsModalOpen] = useState(false);
+  const [selectedAttachments, setSelectedAttachments] = useState<string[]>([]);
 
   useEffect(() => {
     fetchTransactions();
@@ -215,7 +218,25 @@ function AppTransaction() {
                         )}
                       </div>
                       <div>
-                        <p className="font-medium text-gray-900">{transaction.description}</p>
+                        <div className="flex items-center gap-2">
+                          <p className="font-medium text-gray-900">{transaction.description}</p>
+                          {transaction.attachments && transaction.attachments.length > 0 && (
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setSelectedAttachments(transaction.attachments!);
+                                setAttachmentsModalOpen(true);
+                              }}
+                              className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-blue-100 text-blue-800 hover:bg-blue-200 transition-colors cursor-pointer"
+                              title="Ver arquivos anexados"
+                            >
+                              <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+                              </svg>
+                              {transaction.attachments.length}
+                            </button>
+                          )}
+                        </div>
                         <p className="text-sm text-gray-500">
                           {transaction.category} • {formatDate(transaction.date)}
                         </p>
@@ -305,6 +326,49 @@ function AppTransaction() {
             onSave={handleSave}
             onDelete={handleDelete}
           />
+        </Modal>
+      )}
+      
+      {attachmentsModalOpen && (
+        <Modal onClose={() => setAttachmentsModalOpen(false)} title="Arquivos Anexados">
+          <div className="space-y-3">
+            {selectedAttachments.map((fileName, index) => (
+              <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border">
+                <div className="flex items-center">
+                  <svg className="w-5 h-5 text-blue-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  <span className="text-sm font-medium text-gray-900">
+                    {fileName.includes('_') ? fileName.split('_').slice(1).join('_') : fileName}
+                  </span>
+                </div>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => {
+                      const fileUrl = `http://localhost:3333/files/${fileName}`;
+                      window.open(fileUrl, '_blank');
+                    }}
+                    className="px-3 py-1 text-xs bg-blue-100 text-blue-700 rounded hover:bg-blue-200 transition-colors"
+                  >
+                    Ver
+                  </button>
+                  <button
+                    onClick={() => {
+                      const fileUrl = `http://localhost:3333/files/${fileName}`;
+                      const originalName = fileName.includes('_') ? fileName.split('_').slice(1).join('_') : fileName;
+                      const link = document.createElement('a');
+                      link.href = fileUrl;
+                      link.download = originalName;
+                      link.click();
+                    }}
+                    className="px-3 py-1 text-xs bg-green-100 text-green-700 rounded hover:bg-green-200 transition-colors"
+                  >
+                    Download
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
         </Modal>
       )}
     </div>

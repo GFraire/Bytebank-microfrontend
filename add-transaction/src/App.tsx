@@ -29,7 +29,13 @@ function AppTransaction() {
     amount: '',
     type: 'deposit',
     category: '',
-    date: new Date().toISOString().split('T')[0]
+    date: (() => {
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = String(today.getMonth() + 1).padStart(2, '0');
+      const day = String(today.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    })()
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -51,7 +57,13 @@ function AppTransaction() {
           amount: '',
           type: 'deposit',
           category: '',
-          date: new Date().toISOString().split('T')[0]
+          date: (() => {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+          })()
         });
       }
     } catch (error) {
