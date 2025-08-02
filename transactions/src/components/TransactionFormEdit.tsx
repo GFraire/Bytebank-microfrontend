@@ -51,21 +51,22 @@ export default function TransacaoForm({
 
   const getSuggestions = (description: string) => {
     const suggestions: Record<string, string[]> = {
-      'supermercado': ['groceries'],
-      'gasolina': ['transportation'],
-      'uber': ['transportation'],
-      'aluguel': ['bills'],
-      'salário': ['other'],
-      'freelance': ['other'],
-      'cinema': ['entertainment'],
-      'médico': ['health'],
-      'farmácia': ['health'],
-      'curso': ['education'],
-      'conta': ['bills'],
-      'imposto': ['taxes'],
-      'roupa': ['clothing'],
-      'presente': ['gifts'],
-      'viagem': ['travel'],
+      'supermercado': ['Alimentação'],
+      'mercado': ['Alimentação'],
+      'gasolina': ['Transporte'],
+      'uber': ['Transporte'],
+      'aluguel': ['Moradia'],
+      'salário': ['Trabalho'],
+      'freelance': ['Trabalho'],
+      'cinema': ['Lazer'],
+      'médico': ['Saúde'],
+      'farmácia': ['Saúde'],
+      'curso': ['Educação'],
+      'conta': ['Outros'],
+      'imposto': ['Outros'],
+      'roupa': ['Outros'],
+      'presente': ['Outros'],
+      'viagem': ['Lazer'],
     };
     
     const desc = description.toLowerCase();
