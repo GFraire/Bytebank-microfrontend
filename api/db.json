@@ -1,0 +1,105 @@
+{
+  "transactions": [
+    {
+      "id": 3,
+      "description": "Supermercado",
+      "amount": 450,
+      "type": "expense",
+      "category": "Alimentação",
+      "date": "2023-10-15",
+      "recipient": "Extra Supermercados",
+      "attachments": []
+    },
+    {
+      "id": 4,
+      "description": "Freelance",
+      "amount": 1200,
+      "type": "income",
+      "category": "Trabalho",
+      "date": "2023-10-20",
+      "recipient": "",
+      "attachments": []
+    },
+    {
+      "description": "layout",
+      "amount": 58,
+      "type": "income",
+      "category": "Transporte",
+      "date": "2025-08-02",
+      "recipient": "henrique",
+      "attachments": [],
+      "id": 7
+    },
+    {
+      "description": "timezone",
+      "amount": 123,
+      "type": "income",
+      "category": "entertainment",
+      "date": "2025-08-02",
+      "id": 8
+    },
+    {
+      "description": "teste2",
+      "amount": 345,
+      "type": "income",
+      "category": "services",
+      "date": "2025-08-02",
+      "id": 9
+    },
+    {
+      "description": "date",
+      "amount": 567,
+      "type": "income",
+      "category": "taxes",
+      "date": "2025-08-02",
+      "recipient": "",
+      "attachments": [
+        "1754115147948_Favicon 48px.png"
+      ],
+      "id": 10
+    },
+    {
+      "description": "Teste hoje",
+      "amount": 1200,
+      "type": "income",
+      "category": "other",
+      "date": "2025-08-02",
+      "id": 11
+    },
+    {
+      "description": "Teste",
+      "amount": 100,
+      "type": "income",
+      "category": "education",
+      "date": "2025-08-02",
+      "id": 12
+    }
+  ],
+  "profile": [
+    {
+      "name": "Silvio Celso",
+      "email": "silvioand1@gmail.com",
+      "password": "987654",
+      "id": 1,
+      "phone": "11 996526874",
+      "cpf": "339.339.098-80",
+      "address": "cicero de campos povoa"
+    },
+    {
+      "name": "SILVIO CELSO DA SILVA",
+      "email": "silvioand2@gmail.com",
+      "password": "123456",
+      "id": 2
+    }
+  ],
+  "categories": [
+    "Alimentação",
+    "Transporte",
+    "Moradia",
+    "Lazer",
+    "Saúde",
+    "Educação",
+    "Trabalho",
+    "Outros"
+  ]
+}

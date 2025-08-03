@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 import { useRouter } from "next/router";
 import { useAuth } from "../../../authContext";
+import * as z from "zod";
 import Image from "next/image";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3333";
 
 const signupSchema = z.object({
   name: z.string().min(3, "Nome deve ter pelo menos 3 caracteres"),
@@ -41,42 +41,35 @@ export default function ModalCreateAccount({
 
   const onSubmit = async (data: SignupFormData) => {
     try {
-      const currentResponse = await fetch(`${API_URL}/profile`);
-      if (!currentResponse.ok) {
-        throw new Error(
-          "Erro ao conectar ao servidor: " + currentResponse.statusText
-        );
-      }
-      const currentProfile = await currentResponse.json();
-
       const newProfile = {
-        ...currentProfile,
         name: data.name,
         email: data.email,
         password: data.password,
       };
 
-      const updateResponse = await fetch(`${API_URL}/profile`, {
-        method: "PUT",
+      const response = await fetch(`${API_URL}/profile`, {
+        method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newProfile),
       });
 
-      if (!updateResponse.ok) {
-        throw new Error(
-          "Erro ao criar/atualizar perfil: " + updateResponse.statusText
-        );
+      if (!response.ok) {
+        throw new Error("Erro ao criar perfil: " + response.statusText);
       }
 
-      const userData = await updateResponse.json();
+      const userData = await response.json();
+
       setUser({
         uid: userData.id.toString(),
         email: userData.email,
         displayName: userData.name,
-        role: userData.role || "user",
       });
+
+      // Armazenar o uid no localStorage
+      localStorage.setItem("userId", userData.id.toString());
+
       onClose();
-      router.push("/account"); // Redireciona para /account após signup
+      router.push("/account");
     } catch (err) {
       setError((err as Error).message);
     }

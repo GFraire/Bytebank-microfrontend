@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
+const webpack = require("webpack");
 const path = require("path");
 
 module.exports = {
@@ -31,13 +32,9 @@ module.exports = {
     new ModuleFederationPlugin({
       name: "addTransaction",
       filename: "remoteEntry.js",
-      remotes: {
-        designSystem: process.env.NODE_ENV === 'production'
-          ? "designSystem@https://design-system-g9.vercel.app/remoteEntry.js"
-          : "designSystem@http://localhost:4000/remoteEntry.js",
-      },
       exposes: {
         "./AddTransaction": "./src/bootstrap",
+        "./Styles": "./src/styles/global.css",
       },
       shared: {
         react: { singleton: true, requiredVersion: '18.3.1', },
@@ -46,6 +43,10 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       template: "./public/index.html",
+    }),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+      'process.env.REACT_APP_API_URL': JSON.stringify(process.env.REACT_APP_API_URL || 'http://localhost:3333'),
     }),
   ],
 };
