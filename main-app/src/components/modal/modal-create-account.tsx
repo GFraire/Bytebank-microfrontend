@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
-import { useAuth } from "../../../authContext";
+import { IUserData, useAuth  } from "../../contexts/authContext";
 import * as z from "zod";
 import Image from "next/image";
 
@@ -45,6 +45,7 @@ export default function ModalCreateAccount({
         name: data.name,
         email: data.email,
         password: data.password,
+        balance: 0,
       };
 
       const response = await fetch(`${API_URL}/profile`, {
@@ -57,16 +58,18 @@ export default function ModalCreateAccount({
         throw new Error("Erro ao criar perfil: " + response.statusText);
       }
 
-      const userData = await response.json();
+      const userData: IUserData = await response.json();
 
       setUser({
         uid: userData.id.toString(),
         email: userData.email,
         displayName: userData.name,
+        balance: userData.balance,
       });
 
       onClose();
-      router.push("/account");
+      
+      router.push("account");
     } catch (err) {
       setError((err as Error).message);
     }

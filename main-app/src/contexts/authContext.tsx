@@ -1,9 +1,18 @@
 import React, { createContext, useContext, ReactNode, useState } from "react";
 
+export interface IUserData {
+  id: string;
+  name: string;
+  email: string;
+  password: string;
+  balance: number;
+}
+
 export type AuthUser = {
   uid: string;
   email: string | null;
   displayName: string | null;
+  balance: number;
 };
 
 type AuthContextType = {

@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { useAuth } from "../../../authContext";
+import { useAuth } from "../../contexts/authContext";
 import MobileHeader from "../../components/MobileHeader";
 import BottomNavigation from "../../components/BottomNavigation";
 import DashboardHeader from "../../components/DashboardHeader";
@@ -32,49 +32,44 @@ const ProfileComponent = dynamic(() => import("profile/Profile"), {
   ssr: false,
 });
 
-type PageType = 'dashboard' | 'transactions' | 'add-transaction' | 'profile';
+type PageType = "dashboard" | "transactions" | "add-transaction" | "profile";
 
 export default function Account() {
-  const [activeView, setActiveView] = useState<PageType>('dashboard');
-  const [userProfile, setUserProfile] = useState({ name: 'Usuário' });
+  const { logout, user } = useAuth();
+  const [activeView, setActiveView] = useState<PageType>("dashboard");
   const router = useRouter();
-  const { logout } = useAuth();
 
   useEffect(() => {
-    const fetchUserProfile = async () => {
-      try {
-        const response = await fetch('http://localhost:3333/profile/1');
-        if (response.ok) {
-          const profile = await response.json();
-          setUserProfile(profile);
-        }
-      } catch (error) {
-        console.error('Erro ao buscar perfil:', error);
-      }
-    };
-    fetchUserProfile();
+    if (!user) {
+      router.push("/");
+    }
   }, []);
-  
+
   const handleNavigation = (view: string) => {
-    if (view === 'dashboard' || view === 'transactions' || view === 'add-transaction' || view === 'profile') {
+    if (
+      view === "dashboard" ||
+      view === "transactions" ||
+      view === "add-transaction" ||
+      view === "profile"
+    ) {
       setActiveView(view as PageType);
     }
   };
 
   const handleLogout = () => {
     logout();
-    router.push('/');
+    router.push("/");
   };
 
   const renderContent = () => {
     switch (activeView) {
-      case 'dashboard':
+      case "dashboard":
         return <DashboardComponent />;
-      case 'transactions':
+      case "transactions":
         return <TransactionsComponent />;
-      case 'add-transaction':
+      case "add-transaction":
         return <AddTransactionComponent />;
-      case 'profile':
+      case "profile":
         return <ProfileComponent />;
       default:
         return <DashboardComponent />;
@@ -85,20 +80,26 @@ export default function Account() {
     <div className="flex flex-col md:flex-row h-screen bg-gray-50">
       {/* Header Mobile */}
       <MobileHeader onNavigate={handleNavigation} activeView={activeView} />
-      
+
       {/* Sidebar Desktop */}
       <div className="w-64 flex-shrink-0 sm:hidden md:block">
-        <SidebarComponent onNavigate={handleNavigation} activeView={activeView} onLogout={handleLogout} />
+        <SidebarComponent
+          onNavigate={handleNavigation}
+          activeView={activeView}
+          onLogout={handleLogout}
+        />
       </div>
-      
+
       {/* Área de conteúdo principal */}
       <div className="flex-1 flex flex-col overflow-hidden pb-20 md:pb-0">
-        <DashboardHeader userName={userProfile.name} pageType={activeView} showUserProfile={true} />
-        <div className="flex-1 overflow-auto">
-          {renderContent()}
-        </div>
+        <DashboardHeader
+          userName={user?.displayName}
+          pageType={activeView}
+          showUserProfile={true}
+        />
+        <div className="flex-1 overflow-auto">{renderContent()}</div>
       </div>
-      
+
       {/* Navegação Inferior Mobile */}
       <BottomNavigation onNavigate={handleNavigation} activeView={activeView} />
     </div>

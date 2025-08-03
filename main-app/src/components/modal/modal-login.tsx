@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useAuth } from "../../contexts/authContext";
+
 import * as z from "zod";
 import Image from "next/image";
-import { useAuth } from "../../../authContext";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3333";
 
@@ -14,13 +15,6 @@ const loginSchema = z.object({
 });
 
 type LoginFormData = z.infer<typeof loginSchema>;
-
-interface IUserData {
-  id: string;
-  name: string;
-  email: string;
-  password: string;
-}
 
 interface ModalLoginProps {
   isOpen: boolean;
@@ -59,9 +53,11 @@ export default function ModalLogin({ isOpen, onClose }: ModalLoginProps) {
         uid: user.id.toString(),
         email: user.email,
         displayName: user.name,
+        balance: user.balance,
       });
 
       onClose();
+
       router.push("/account");
     } catch (err) {
       setError((err as Error).message);
