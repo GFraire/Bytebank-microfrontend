@@ -65,6 +65,9 @@ export default function ModalCreateAccount({
         displayName: userData.name,
       });
 
+      // Armazenar o uid no localStorage
+      localStorage.setItem("userId", userData.id.toString());
+
       onClose();
       router.push("/account");
     } catch (err) {
