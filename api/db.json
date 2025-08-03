@@ -77,11 +77,19 @@
   ],
   "profile": [
     {
-      "name": "SILVIO CELSO DA SILVA",
+      "name": "Silvio Celso",
       "email": "silvioand1@gmail.com",
-      "password": "123456",
+      "password": "987654",
       "id": 1,
-      "balance": 0
+      "phone": "11 996526874",
+      "cpf": "339.339.098-80",
+      "address": "cicero de campos povoa"
+    },
+    {
+      "name": "SILVIO CELSO DA SILVA",
+      "email": "silvioand2@gmail.com",
+      "password": "123456",
+      "id": 2
     }
   ],
   "categories": [

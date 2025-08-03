@@ -43,7 +43,6 @@ export default function ModalLogin({ isOpen, onClose }: ModalLoginProps) {
   const onSubmit = async (data: LoginFormData) => {
     try {
       const response = await fetch(`${API_URL}/profile?email=${data.email}`);
-
       if (!response.ok) {
         throw new Error("Erro ao conectar ao servidor: " + response.statusText);
       }
@@ -60,6 +59,9 @@ export default function ModalLogin({ isOpen, onClose }: ModalLoginProps) {
         email: user.email,
         displayName: user.name,
       });
+
+      // Armazenar o uid no localStorage
+      localStorage.setItem("userId", user.id.toString());
 
       onClose();
       router.push("/account");
