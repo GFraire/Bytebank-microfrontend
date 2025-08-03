@@ -1,3 +1,3 @@
-import "./styles/global.css";
+import("./bootstrap")
 
-import("./bootstrap");
+import("designSystem/styles");

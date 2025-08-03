@@ -4,6 +4,7 @@ export type AuthUser = {
   uid: string;
   email: string | null;
   displayName: string | null;
+  role: string;
 };
 
 type AuthContextType = {
@@ -25,7 +26,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const logout = () => {
     handleSetUser(null);
-    localStorage.removeItem("userId");
   };
 
   return (

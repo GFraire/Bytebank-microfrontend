@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
-import { Transaction, CategoryTotal } from '../types/types';
+import { Transaction, CategoryTotal } from '../types';
 
 interface CategoryPieChartProps {
   transactions: Transaction[];
@@ -55,7 +55,7 @@ const CategoryPieChart: React.FC<CategoryPieChartProps> = ({ transactions, type 
                 outerRadius={80}
                 fill="#8884d8"
                 dataKey="value"
-                label={({ name, percent }) => `${name}: ${percent ? (percent * 100).toFixed(0) : 0}%`}
+                label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
               >
                 {categoryData.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />

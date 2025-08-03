@@ -6,7 +6,7 @@ const ROOT_ID = "#_transactions-dev-Root";
 
 const rootEl = document.querySelector(ROOT_ID);
 
-export default (props: any) => <App {...props} />;
+export default () => <App />;
 
 if (rootEl) {
   const root = createRoot(rootEl);

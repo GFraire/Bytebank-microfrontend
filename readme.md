@@ -43,6 +43,7 @@ Este comando inicia:
 
 - add-transaction
 - dashboard
+- design-system
 - profile
 - sidebar
 - transactions
@@ -55,6 +56,7 @@ Se preferir trabalhar em apenas um dos apps por vez, use os comandos abaixo:
 ```bash
 pnpm dev:add-transaction   # Roda o app de adicionar transações
 pnpm dev:dashboard         # Roda o dashboard
+pnpm dev:design-system     # Roda o design system
 pnpm dev:profile           # Roda o perfil do usuário
 pnpm dev:sidebar           # Roda a sidebar
 pnpm dev:transactions      # Roda o app de transações

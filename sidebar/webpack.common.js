@@ -31,9 +31,13 @@ module.exports = {
     new ModuleFederationPlugin({
       name: "sidebar",
       filename: "remoteEntry.js",
+      remotes: {
+        designSystem: process.env.NODE_ENV === 'production'
+          ? "designSystem@https://design-system-g9.vercel.app/remoteEntry.js"
+          : "designSystem@http://localhost:4000/remoteEntry.js",
+      },
       exposes: {
         './Sidebar': './src/bootstrap',
-        './Styles': './src/styles/global.css',
       },
       shared: {
         react: { singleton: true, requiredVersion: '18.3.1', },
