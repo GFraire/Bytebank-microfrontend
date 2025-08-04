@@ -4,45 +4,19 @@ import { DashboardData, Transaction } from "./types/types";
 import CategoryPieChart from "./components/CategoryPieChart";
 import RecentTransactions from "./components/RecentTransactions";
 import TransactionChart from "./components/TransactionChart";
+import BalanceCard from "./components/BalanceCard";
 
-const BalanceCard: React.FC<{
-  title: string;
-  value: number;
-  type: "default" | "income" | "expense";
-}> = ({ title, value, type }) => {
-  const formatCurrency = (value: number) => {
-    const formatted = new Intl.NumberFormat("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-    }).format(Math.abs(value));
-    return value < 0 ? `-${formatted}` : formatted;
-  };
+export interface AuthUser {
+  uid: string;
+  email: string | null;
+  displayName: string | null;
+}
 
-  const getTextColor = () => {
-    switch (type) {
-      case "income":
-        return "text-green-600";
-      case "expense":
-        return "text-red-600";
-      default:
-        return value >= 0 ? "text-blue-600" : "text-red-600";
-    }
-  };
+export interface AppDashboardProps {
+  user: AuthUser | null;
+}
 
-  return (
-    <div className="flex items-baseline">
-      <p
-        className={`text-lg md:text-xl font-bold ${getTextColor()} whitespace-nowrap ${
-          Math.abs(value) > 999999 ? "text-base" : ""
-        }`}
-      >
-        {formatCurrency(value)}
-      </p>
-    </div>
-  );
-};
-
-function AppDashboard() {
+function AppDashboard({ user }: AppDashboardProps) {
   const [loading, setLoading] = useState(true);
   const [dashboardData, setDashboardData] = useState<DashboardData>({
     balance: 0,
@@ -56,8 +30,8 @@ function AppDashboard() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const dashData = await getDashboardData();
-        const transactions = await getTransactions();
+        const dashData = await getDashboardData(user);
+        const transactions = await getTransactions(user);
 
         setDashboardData(dashData);
         setAllTransactions(transactions);
@@ -69,7 +43,7 @@ function AppDashboard() {
     };
 
     fetchData();
-  }, []);
+  }, [user]);
 
   if (loading) {
     return (
@@ -271,7 +245,7 @@ function AppDashboard() {
                 Últimas Transações
               </h2>
             </div>
-            <RecentTransactions />
+            <RecentTransactions user={user} />
           </div>
         </div>
       </div>

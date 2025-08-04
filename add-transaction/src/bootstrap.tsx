@@ -1,14 +1,16 @@
-import React from 'react';
-import { createRoot } from 'react-dom/client';
-import App from './App';
+import React from "react";
+import { createRoot } from "react-dom/client";
+import App, { AppTransactionProps } from "./App";
 
-const ROOT_ID = '#_add-transaction-dev-Root';
+const ROOT_ID = "#_add-transaction-dev-Root";
 
 const rootEl = document.querySelector(ROOT_ID);
 
-export default () => <App />;
+export default function Mount(props: AppTransactionProps) {
+  return <App {...props} />;
+}
 
 if (rootEl) {
   const root = createRoot(rootEl);
-  root.render(<App />);
+  root.render(<App user={null} />);
 }

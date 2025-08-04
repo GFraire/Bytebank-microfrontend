@@ -13,7 +13,17 @@ interface Transaction {
   attachments?: string[];
 }
 
-function AppTransaction() {
+export interface AuthUser {
+  uid: string;
+  email: string | null;
+  displayName: string | null;
+}
+
+export interface AppTransactionProps {
+  user: AuthUser | null;
+}
+
+function AppTransaction({ user }: AppTransactionProps) {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -48,7 +58,8 @@ function AppTransaction() {
 
   const fetchTransactions = async () => {
     try {
-      const response = await fetch("http://localhost:3333/transactions");
+      const response = await fetch(`http://localhost:3333/transactions?userId=${user?.uid}`);
+      
       if (response.ok) {
         const data = await response.json();
         setTransactions(data);

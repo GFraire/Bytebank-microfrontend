@@ -28,8 +28,28 @@ const personalInfoSchema = z.object({
 type ChangePasswordFormData = z.infer<typeof changePasswordSchema>;
 type PersonalInfoFormData = z.infer<typeof personalInfoSchema>;
 
-function App() {
-  const [profile, setProfile] = useState<any>(null);
+export interface AuthUser {
+  uid: string;
+  email: string | null;
+  displayName: string | null;
+}
+
+interface IUserData {
+  id: string;
+  name: string;
+  email: string;
+  password: string;
+  phone?: string;
+  cpf?: string;
+  address?: string;
+}
+
+export interface AppProps {
+  user: AuthUser | null;
+}
+
+function App({ user }: AppProps) {
+  const [profile, setProfile] = useState<IUserData | null>(null);
   const [showChangePassword, setShowChangePassword] = useState(false);
   const [showEditInfo, setShowEditInfo] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -45,7 +65,8 @@ function App() {
   });
 
   useEffect(() => {
-    const userId = localStorage.getItem("userId");
+    const userId = user?.uid;
+
     if (!userId) {
       setError("Nenhum usuário logado.");
       setLoading(false);
@@ -59,8 +80,9 @@ function App() {
         }
         return res.json();
       })
-      .then((data) => {
+      .then((data: IUserData) => {
         setProfile(data);
+
         infoForm.reset({
           name: data.name || "",
           phone: data.phone || "",
@@ -75,7 +97,8 @@ function App() {
   }, [infoForm]);
 
   const onPasswordSubmit = async (data: ChangePasswordFormData) => {
-    const userId = localStorage.getItem("userId");
+    const userId = user?.uid;
+
     if (!userId) {
       setError("Usuário não está logado");
       return;
@@ -135,7 +158,7 @@ function App() {
           ...profile,
           ...updateData,
           id: userId,
-          email: profile.email,
+          email: profile?.email,
         }),
       });
 
@@ -161,7 +184,7 @@ function App() {
     return <div>{error}</div>;
   }
 
-  const initials = profile.name
+  const initials = profile?.name
     .split(" ")
     .slice(0, 2)
     .map((n: string) => n[0])
@@ -194,9 +217,9 @@ function App() {
               </div>
               <div className="flex-1">
                 <h2 className="text-2xl font-bold text-gray-900">
-                  {profile.name}
+                  {profile?.name}
                 </h2>
-                <p className="text-gray-600">{profile.email}</p>
+                <p className="text-gray-600">{profile?.email}</p>
               </div>
             </div>
           </div>
@@ -214,7 +237,7 @@ function App() {
                   <input
                     type="text"
                     {...infoForm.register("name")}
-                    defaultValue={profile.name || ""}
+                    defaultValue={profile?.name || ""}
                     className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-gray-200"
                     readOnly
                   />
@@ -225,7 +248,7 @@ function App() {
                   </label>
                   <input
                     type="email"
-                    value={profile.email}
+                    value={profile?.email}
                     className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-gray-200"
                     readOnly
                   />
@@ -237,7 +260,7 @@ function App() {
                   <input
                     type="tel"
                     {...infoForm.register("phone")}
-                    defaultValue={profile.phone || ""}
+                    defaultValue={profile?.phone || ""}
                     className={`w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
                       showEditInfo ? "" : "bg-gray-50"
                     }`}
@@ -251,7 +274,7 @@ function App() {
                   <input
                     type="text"
                     {...infoForm.register("cpf")}
-                    defaultValue={profile.cpf || ""}
+                    defaultValue={profile?.cpf || ""}
                     className={`w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
                       showEditInfo ? "" : "bg-gray-50"
                     }`}
@@ -265,7 +288,7 @@ function App() {
                   <input
                     type="text"
                     {...infoForm.register("address")}
-                    defaultValue={profile.address || ""}
+                    defaultValue={profile?.address || ""}
                     className={`w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
                       showEditInfo ? "" : "bg-gray-50"
                     }`}

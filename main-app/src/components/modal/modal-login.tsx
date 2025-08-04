@@ -52,7 +52,6 @@ export default function ModalLogin({ isOpen, onClose }: ModalLoginProps) {
         uid: user.id.toString(),
         email: user.email,
         displayName: user.name,
-        balance: user.balance,
       });
 
       // Armazenar o uid no localStorage

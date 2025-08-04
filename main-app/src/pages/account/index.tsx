@@ -43,6 +43,12 @@ export default function Account() {
     if (!user) {
       router.push("/");
     }
+
+    const event = new CustomEvent("auth:userChange", {
+      detail: user,
+    });
+
+    window.dispatchEvent(event);
   }, []);
 
   const handleNavigation = (view: string) => {
@@ -64,15 +70,15 @@ export default function Account() {
   const renderContent = () => {
     switch (activeView) {
       case "dashboard":
-        return <DashboardComponent />;
+        return <DashboardComponent user={user} />;
       case "transactions":
-        return <TransactionsComponent />;
+        return <TransactionsComponent user={user} />;
       case "add-transaction":
-        return <AddTransactionComponent />;
+        return <AddTransactionComponent user={user} />;
       case "profile":
-        return <ProfileComponent />;
+        return <ProfileComponent user={user} />;
       default:
-        return <DashboardComponent />;
+        return <DashboardComponent user={user} />;
     }
   };
 
@@ -108,7 +114,7 @@ export default function Account() {
       {/* Área de conteúdo principal */}
       <div className="flex-1 flex flex-col overflow-hidden pb-20 md:pb-0">
         <DashboardHeader
-          userName={user?.displayName}
+          userName={user?.displayName || ""}
           pageType={activeView}
           showUserProfile={true}
         />

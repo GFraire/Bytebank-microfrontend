@@ -45,7 +45,6 @@ export default function ModalCreateAccount({
         name: data.name,
         email: data.email,
         password: data.password,
-        balance: 0,
       };
 
       const response = await fetch(`${API_URL}/profile`, {
@@ -64,7 +63,6 @@ export default function ModalCreateAccount({
         uid: userData.id.toString(),
         email: userData.email,
         displayName: userData.name,
-        balance: userData.balance,
       });
 
       // Armazenar o uid no localStorage

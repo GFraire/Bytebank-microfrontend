@@ -11,14 +11,12 @@ export interface IUserData {
   name: string;
   email: string;
   password: string;
-  balance: number;
 }
 
-export type AuthUser = {
+export interface AuthUser {
   uid: string;
   email: string | null;
   displayName: string | null;
-  balance: number;
 };
 
 type AuthContextType = {
@@ -60,7 +58,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             uid: user.id.toString(),
             email: user.email,
             displayName: user.name,
-            balance: user.balance,
           });
         } catch (err) {
           console.error("Erro ao restaurar usuário:", err);

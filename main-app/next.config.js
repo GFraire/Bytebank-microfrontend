@@ -7,13 +7,16 @@ const nextConfig = {
     config.experiments = { topLevelAwait: true, layers: true };
     config.plugins.push(
       new NextFederationPlugin({
-        name: 'main',
+        name: 'mainApp',
         remotes: {
           dashboard: remotes.dashboard,
           sidebar: remotes.sidebar,
           transactions: remotes.transactions,
           addTransaction: remotes.addTransaction,
           profile: remotes.profile,
+        },
+        exposes: {
+          "./AuthContext": "./src/contexts/authContext",
         },
         filename: 'static/chunks/remoteEntry.js',
         extraOptions: {

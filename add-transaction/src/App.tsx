@@ -22,7 +22,17 @@ const TRANSACTION_CATEGORIES = [
   { value: "other", label: "Outros" },
 ];
 
-function AppTransaction() {
+export interface AuthUser {
+  uid: string;
+  email: string | null;
+  displayName: string | null;
+}
+
+export interface AppTransactionProps {
+  user: AuthUser | null;
+}
+
+function AppTransaction({ user }: AppTransactionProps) {
   const [formData, setFormData] = useState({
     description: "",
     amount: "",
@@ -50,6 +60,7 @@ function AppTransaction() {
             formData.type === "deposit" || formData.type === "transfer"
               ? "income"
               : "expense",
+          userId: user?.uid,
         }),
       });
       if (response.ok) {

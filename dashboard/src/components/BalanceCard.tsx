@@ -1,44 +1,41 @@
-import React from 'react';
+import React from "react";
 
-interface BalanceCardProps {
+type BalanceCardProps = {
   title: string;
   value: number;
-  type?: 'default' | 'income' | 'expense';
-  icon?: React.ReactNode;
-}
+  type: "default" | "income" | "expense";
+};
 
-const BalanceCard: React.FC<BalanceCardProps> = ({ 
-  title, 
-  value, 
-  type = 'default',
-  icon
-}) => {
+const BalanceCard: React.FC<BalanceCardProps> = ({ title, value, type }) => {
   const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL'
-    }).format(value);
+    const formatted = new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(Math.abs(value));
+    return value < 0 ? `-${formatted}` : formatted;
   };
 
-  const getColorClass = () => {
+  const getTextColor = () => {
     switch (type) {
-      case 'income':
-        return 'bg-green-light border-green text-green';
-      case 'expense':
-        return 'bg-red-50 border-secondary text-secondary';
+      case "income":
+        return "text-green-600";
+      case "expense":
+        return "text-red-600";
       default:
-        return 'bg-white border-primary text-primary';
+        return value >= 0 ? "text-blue-600" : "text-red-600";
     }
   };
 
   return (
-    <article className={`p-6 rounded-lg border ${getColorClass()} shadow-sm transition-all hover:shadow-md`}>
-      <header className="flex justify-between items-center mb-3">
-        <h3 className="text-sm font-medium uppercase tracking-wide">{title}</h3>
-        {icon && <div className="text-xl opacity-70">{icon}</div>}
-      </header>
-      <div className="text-3xl font-bold">{formatCurrency(value)}</div>
-    </article>
+    <div className="flex items-baseline">
+      <p
+        className={`text-lg md:text-xl font-bold ${getTextColor()} whitespace-nowrap ${
+          Math.abs(value) > 999999 ? "text-base" : ""
+        }`}
+      >
+        {formatCurrency(value)}
+      </p>
+    </div>
   );
 };
 

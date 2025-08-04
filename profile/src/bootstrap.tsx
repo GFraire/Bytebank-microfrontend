@@ -1,14 +1,16 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-import App from "./App";
+import App, { AppProps } from "./App";
 
 const ROOT_ID = "#_profile-dev-Root";
 
 const rootEl = document.querySelector(ROOT_ID);
 
-export default () => <App />;
+export default function Mount(props: AppProps) {
+  return <App {...props} />;
+}
 
 if (rootEl) {
   const root = createRoot(rootEl);
-  root.render(<App />);
+  root.render(<App user={null} />);
 }

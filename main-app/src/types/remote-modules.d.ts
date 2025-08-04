@@ -1,5 +1,15 @@
+interface AuthUser {
+  uid: string;
+  email: string | null;
+  displayName: string | null;
+}
+
 declare module "dashboard/Dashboard" {
-  const Component: React.ComponentType;
+  interface DashboardProps {
+    user: AuthUser | null;
+  }
+
+  const Component: React.ComponentType<DashboardProps>;
   export default Component;
 }
 
@@ -14,6 +24,7 @@ declare module "sidebar/Sidebar" {
     activeView?: string;
     onLogout?: () => void;
   }
+
   const Component: React.ComponentType<SidebarProps>;
   export default Component;
 }
@@ -24,7 +35,11 @@ declare module "sidebar/Styles" {
 }
 
 declare module "transactions/Transactions" {
-  const Component: React.ComponentType;
+  interface TransactionsProps {
+    user: AuthUser | null;
+  }
+
+  const Component: React.ComponentType<TransactionsProps>;
   export default Component;
 }
 
@@ -34,7 +49,11 @@ declare module "transactions/Styles" {
 }
 
 declare module "addTransaction/AddTransaction" {
-  const Component: React.ComponentType;
+  interface AddTransactionProps {
+    user: AuthUser | null;
+  }
+
+  const Component: React.ComponentType<AddTransactionProps>;
   export default Component;
 }
 
@@ -44,7 +63,11 @@ declare module "addTransaction/Styles" {
 }
 
 declare module "profile/Profile" {
-  const Component: React.ComponentType;
+  interface ProfileProps {
+    user: AuthUser | null;
+  }
+
+  const Component: React.ComponentType<ProfileProps>;
   export default Component;
 }
 
