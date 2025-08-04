@@ -35,6 +35,15 @@
       "date": "2025-07-15",
       "userId": "4",
       "id": 5
+    },
+    {
+      "description": "mercadoi teste",
+      "amount": 190,
+      "type": "income",
+      "category": "transportation",
+      "date": "2025-08-04",
+      "userId": "5",
+      "id": 6
     }
   ],
   "profile": [
@@ -61,6 +70,12 @@
       "phone": "",
       "cpf": "123123",
       "address": ""
+    },
+    {
+      "name": "Henrique Moura",
+      "email": "henrique.bmoura@yahoo.com.br",
+      "password": "123456",
+      "id": 5
     }
   ],
   "categories": [
