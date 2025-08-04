@@ -525,60 +525,70 @@ function AppTransactionContent({ user }: AppTransactionProps) {
           onClose={() => setAttachmentsModalOpen(false)}
           title="Arquivos Anexados"
         >
-          <div className="space-y-3">
-            {selectedAttachments.map((fileName, index) => (
-              <div
-                key={index}
-                className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border"
-              >
-                <div className="flex items-center">
-                  <svg
-                    className="w-5 h-5 text-blue-600 mr-3"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                    />
-                  </svg>
-                  <span className="text-sm font-medium text-gray-900">
-                    {fileName.includes("_")
-                      ? fileName.split("_").slice(1).join("_")
-                      : fileName}
-                  </span>
+          <div className="space-y-4">
+            {selectedAttachments.map((fileName, index) => {
+              const fileUrl = `http://localhost:3333/files/${fileName}`;
+              const originalName = fileName.includes("_")
+                ? fileName.split("_").slice(1).join("_")
+                : fileName;
+              const isImage = /\.(jpg|jpeg|png|gif|webp)$/i.test(fileName);
+              
+              return (
+                <div key={index} className="bg-gray-50 rounded-lg border p-4">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center">
+                      <svg
+                        className="w-5 h-5 text-blue-600 mr-3"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                        />
+                      </svg>
+                      <span className="text-sm font-medium text-gray-900">
+                        {originalName}
+                      </span>
+                    </div>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => window.open(fileUrl, "_blank")}
+                        className="px-3 py-1 text-xs bg-blue-100 text-blue-700 rounded hover:bg-blue-200 transition-colors"
+                      >
+                        Ver
+                      </button>
+                      <button
+                        onClick={() => {
+                          const link = document.createElement("a");
+                          link.href = fileUrl;
+                          link.download = originalName;
+                          link.click();
+                        }}
+                        className="px-3 py-1 text-xs bg-green-100 text-green-700 rounded hover:bg-green-200 transition-colors"
+                      >
+                        Download
+                      </button>
+                    </div>
+                  </div>
+                  {isImage && (
+                    <div className="mt-3">
+                      <img
+                        src={fileUrl}
+                        alt={originalName}
+                        className="max-w-full h-auto max-h-64 rounded-lg border"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                        }}
+                      />
+                    </div>
+                  )}
                 </div>
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => {
-                      const fileUrl = `http://localhost:3333/files/${fileName}`;
-                      window.open(fileUrl, "_blank");
-                    }}
-                    className="px-3 py-1 text-xs bg-blue-100 text-blue-700 rounded hover:bg-blue-200 transition-colors"
-                  >
-                    Ver
-                  </button>
-                  <button
-                    onClick={() => {
-                      const fileUrl = `http://localhost:3333/files/${fileName}`;
-                      const originalName = fileName.includes("_")
-                        ? fileName.split("_").slice(1).join("_")
-                        : fileName;
-                      const link = document.createElement("a");
-                      link.href = fileUrl;
-                      link.download = originalName;
-                      link.click();
-                    }}
-                    className="px-3 py-1 text-xs bg-green-100 text-green-700 rounded hover:bg-green-200 transition-colors"
-                  >
-                    Download
-                  </button>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </Modal>
       )}

@@ -1,5 +1,6 @@
 const jsonServer = require('json-server');
 const cors = require('cors');
+const path = require('path');
 const server = jsonServer.create();
 const router = jsonServer.router('db.json');
 const middlewares = jsonServer.defaults();
@@ -8,6 +9,9 @@ const port = process.env.PORT || 3333;
 // Configuração de CORS para permitir acesso de qualquer origem
 server.use(cors());
 server.use(middlewares);
+
+// Servir arquivos estáticos da pasta public/files
+server.use('/files', jsonServer.defaults.static(path.join(__dirname, 'public/files')));
 
 // Adiciona um delay para simular uma API real
 server.use((req, res, next) => {
