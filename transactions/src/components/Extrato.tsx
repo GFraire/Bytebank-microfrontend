@@ -18,6 +18,7 @@ export interface Transaction {
   recipient?: string;
   category?: string;
   attachments?: string[];
+  userId?: string;
 }
 
 export function Extrato() {
@@ -44,6 +45,7 @@ export function Extrato() {
         description: t.description,
         category: t.category,
         attachments: t.attachments || [],
+        userId: (t as any).userId, // Preserva o userId da API
       }));
       
       setGruposTransacoes(transactions);
