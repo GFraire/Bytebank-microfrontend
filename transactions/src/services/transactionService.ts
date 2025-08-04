@@ -8,11 +8,13 @@ export interface Transaction {
   category: string;
   date: string;
   attachments?: string[];
+  userId?: string;
 }
 
 export const transactionService = {
-  async getAll(userId: string): Promise<Transaction[]> {
-    const response = await fetch(`${API_URL}/transactions?userId=${userId}`);
+  async getAll(userId?: string): Promise<Transaction[]> {
+    const url = userId ? `${API_URL}/transactions?userId=${userId}` : `${API_URL}/transactions`;
+    const response = await fetch(url);
     if (!response.ok) throw new Error("Erro ao buscar transações");
     return response.json();
   },
