@@ -37,6 +37,24 @@ function AppTransaction({ user }: AppTransactionProps) {
   const [attachmentsModalOpen, setAttachmentsModalOpen] = useState(false);
   const [selectedAttachments, setSelectedAttachments] = useState<string[]>([]);
 
+  const mapCategoryToPortuguese = (category: string) => {
+    const categoryMap: Record<string, string> = {
+      'bills': 'Contas e Faturas',
+      'services': 'Serviços',
+      'taxes': 'Impostos',
+      'education': 'Educação',
+      'entertainment': 'Entretenimento',
+      'groceries': 'Supermercado',
+      'transportation': 'Transporte',
+      'health': 'Saúde',
+      'clothing': 'Vestuário',
+      'gifts': 'Presentes',
+      'travel': 'Viagens',
+      'other': 'Outros'
+    };
+    return categoryMap[category] || category;
+  };
+
   useEffect(() => {
     fetchTransactions();
   }, []);
@@ -313,7 +331,7 @@ function AppTransaction({ user }: AppTransactionProps) {
                             )}
                         </div>
                         <p className="text-sm text-gray-500">
-                          {transaction.category} •{" "}
+                          {mapCategoryToPortuguese(transaction.category)} •{" "}
                           {formatDate(transaction.date)}
                         </p>
                       </div>
