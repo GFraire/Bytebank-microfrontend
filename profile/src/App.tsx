@@ -107,6 +107,7 @@ function App() {
       }
 
       setSuccess("Senha alterada com sucesso!");
+      setTimeout(() => setSuccess(null), 5000);
       setShowChangePassword(false);
       passwordForm.reset();
     } catch (err) {
@@ -125,12 +126,14 @@ function App() {
     setSuccess(null);
 
     try {
+      const { name, ...updateData } = data;
+
       const updateResponse = await fetch(`${API_URL}/profile/${userId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...profile,
-          ...data,
+          ...updateData,
           id: userId,
           email: profile.email,
         }),
@@ -143,6 +146,7 @@ function App() {
       const updatedProfile = await updateResponse.json();
       setProfile(updatedProfile);
       setSuccess("Informações atualizadas com sucesso!");
+      setTimeout(() => setSuccess(null), 5000); // Mensagem de sucesso desaparece após 5 segundos
       setShowEditInfo(false);
     } catch (err) {
       setError("Erro na atualização de informações. Tente novamente.");
@@ -211,10 +215,8 @@ function App() {
                     type="text"
                     {...infoForm.register("name")}
                     defaultValue={profile.name || ""}
-                    className={`w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
-                      showEditInfo ? "" : "bg-gray-50"
-                    }`}
-                    readOnly={!showEditInfo}
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-gray-200"
+                    readOnly
                   />
                 </div>
                 <div>
@@ -224,7 +226,7 @@ function App() {
                   <input
                     type="email"
                     value={profile.email}
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-gray-200"
                     readOnly
                   />
                 </div>
@@ -271,6 +273,22 @@ function App() {
                   />
                 </div>
               </div>
+              {error && <p className="text-red-500 text-sm mt-4">{error}</p>}
+              {success && (
+                <p
+                  className="text-sm mt-4"
+                  style={{
+                    color: "#003012",
+                    border: "1px solid #024f1e",
+                    padding: "16px",
+                    textAlign: "center",
+                    backgroundColor: "#b2f4ca",
+                    borderRadius: "8px",
+                  }}
+                >
+                  {success}
+                </p>
+              )}
               <div className="mt-6 flex space-x-3">
                 <button
                   type="button"

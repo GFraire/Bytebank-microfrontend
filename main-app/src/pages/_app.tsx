@@ -1,5 +1,7 @@
 import { AppProps } from "next/app";
-import { AuthProvider } from "../contexts/authContext";
+import { AuthProvider, useAuth } from "../contexts/authContext";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 import "../styles/global.css";
 import("transactions/Styles");
@@ -11,9 +13,24 @@ import("profile/Styles");
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <AuthProvider>
-      <Component {...pageProps} />
+      <AuthRedirectWrapper>
+        <Component {...pageProps} />
+      </AuthRedirectWrapper>
     </AuthProvider>
   );
 }
 
 export default MyApp;
+
+function AuthRedirectWrapper({ children }: { children: React.ReactNode }) {
+  const { user } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (user && router.pathname !== "/account") {
+      router.push("/account");
+    }
+  }, [user, router]);
+
+  return <>{children}</>;
+}

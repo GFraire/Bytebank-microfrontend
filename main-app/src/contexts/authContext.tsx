@@ -1,4 +1,10 @@
-import React, { createContext, useContext, ReactNode, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  ReactNode,
+  useState,
+  useEffect,
+} from "react";
 
 export interface IUserData {
   id: string;
@@ -21,9 +27,9 @@ type AuthContextType = {
   logout: () => void;
 };
 
-export const AuthContext = createContext<AuthContextType | undefined>(
-  undefined
-);
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3333";
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null);
@@ -36,6 +42,35 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     handleSetUser(null);
     localStorage.removeItem("userId");
   };
+
+  useEffect(() => {
+    const loadUserFromStorage = async () => {
+      const storedUserId = localStorage.getItem("userId");
+      if (storedUserId) {
+        try {
+          const res = await fetch(`${API_URL}/profile?id=${storedUserId}`);
+          if (!res.ok) throw new Error("Erro ao buscar usuário");
+
+          const userData: IUserData[] = await res.json();
+          const user = userData[0];
+
+          if (!user) throw new Error("Usuário não encontrado");
+
+          handleSetUser({
+            uid: user.id.toString(),
+            email: user.email,
+            displayName: user.name,
+            balance: user.balance,
+          });
+        } catch (err) {
+          console.error("Erro ao restaurar usuário:", err);
+          logout();
+        }
+      }
+    };
+
+    loadUserFromStorage();
+  }, []);
 
   return (
     <AuthContext.Provider value={{ user, setUser: handleSetUser, logout }}>

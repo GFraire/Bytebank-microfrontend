@@ -76,19 +76,34 @@ export default function Account() {
     }
   };
 
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 768);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <div className="flex flex-col md:flex-row h-screen bg-gray-50">
       {/* Header Mobile */}
       <MobileHeader onNavigate={handleNavigation} activeView={activeView} />
 
-      {/* Sidebar Desktop */}
-      <div className="w-64 flex-shrink-0 sm:hidden md:block">
-        <SidebarComponent
-          onNavigate={handleNavigation}
-          activeView={activeView}
-          onLogout={handleLogout}
-        />
-      </div>
+      {/* Sidebar apenas em desktop */}
+      {isDesktop && (
+        <div className="w-64 flex-shrink-0">
+          <SidebarComponent
+            onNavigate={handleNavigation}
+            activeView={activeView}
+            onLogout={handleLogout}
+          />
+        </div>
+      )}
 
       {/* Área de conteúdo principal */}
       <div className="flex-1 flex flex-col overflow-hidden pb-20 md:pb-0">
