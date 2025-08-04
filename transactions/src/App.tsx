@@ -36,6 +36,8 @@ function AppTransaction({ user }: AppTransactionProps) {
   const [dropdownOpen, setDropdownOpen] = useState<number | null>(null);
   const [attachmentsModalOpen, setAttachmentsModalOpen] = useState(false);
   const [selectedAttachments, setSelectedAttachments] = useState<string[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   const mapCategoryToPortuguese = (category: string) => {
     const categoryMap: Record<string, string> = {
@@ -113,6 +115,15 @@ function AppTransaction({ user }: AppTransactionProps) {
 
     return matchesSearch && matchesCategory && matchesPeriod;
   });
+
+  // Reset da página quando filtros mudarem
+  React.useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, categoryFilter, periodFilter]);
+
+  const totalPages = Math.ceil(filteredTransactions.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedTransactions = filteredTransactions.slice(startIndex, startIndex + itemsPerPage);
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("pt-BR", {
@@ -241,7 +252,7 @@ function AppTransaction({ user }: AppTransactionProps) {
                 <p className="text-gray-500">Nenhuma transação encontrada</p>
               </div>
             ) : (
-              filteredTransactions.map((transaction) => (
+              paginatedTransactions.map((transaction) => (
                 <div
                   key={transaction.id}
                   className="p-4 hover:bg-gray-50 transition-colors"
@@ -444,6 +455,34 @@ function AppTransaction({ user }: AppTransactionProps) {
               ))
             )}
           </div>
+          
+          {/* Controles de Paginação */}
+          {totalPages > 1 && (
+            <div className="flex items-center justify-between px-4 py-3 border-t border-gray-200">
+              <div className="text-sm text-gray-700">
+                Mostrando {startIndex + 1} a {Math.min(startIndex + itemsPerPage, filteredTransactions.length)} de {filteredTransactions.length} transações
+              </div>
+              <div className="flex space-x-2">
+                <button
+                  onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                  disabled={currentPage === 1}
+                  className="px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Anterior
+                </button>
+                <span className="px-3 py-1 text-sm text-gray-700">
+                  Página {currentPage} de {totalPages}
+                </span>
+                <button
+                  onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                  disabled={currentPage === totalPages}
+                  className="px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Próxima
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
