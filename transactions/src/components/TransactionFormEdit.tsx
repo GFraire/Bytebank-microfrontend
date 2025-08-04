@@ -14,6 +14,7 @@ import {
   TRANSACTION_CATEGORIES,
   TRANSACTION_TYPES,
 } from "../utils/transactionConstants";
+import { useToast } from "../contexts/ToastContext";
 
 const formSchema = z.object({
   type: z.enum(["deposit", "transfer", "payment", "withdrawal"], {
@@ -50,6 +51,7 @@ export default function TransacaoForm({
   onDelete,
   modo = "editar",
 }: TransacaoFormProps) {
+  const { addToast } = useToast();
   const [categorySuggestions, setCategorySuggestions] = useState<string[]>([]);
   const [attachments, setAttachments] = useState<File[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -186,7 +188,7 @@ export default function TransacaoForm({
       onSave?.({} as Transaction); // Apenas sinaliza que houve mudança
       fecharModal?.();
     } catch (error) {
-      console.error("Erro ao salvar transação:", error);
+      addToast("Erro ao salvar transação", "error");
       setError("root", { message: "Erro ao salvar transação" });
     } finally {
       setIsLoading(false);
@@ -202,7 +204,7 @@ export default function TransacaoForm({
       onDelete?.(transacaoParaEditar.id);
       fecharModal?.();
     } catch (error) {
-      console.error("Erro ao excluir transação:", error);
+      addToast("Erro ao excluir transação", "error");
     } finally {
       setIsLoading(false);
     }
