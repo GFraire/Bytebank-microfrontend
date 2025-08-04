@@ -53,6 +53,30 @@ export default function TransacaoForm({
   const [categorySuggestions, setCategorySuggestions] = useState<string[]>([]);
   const [attachments, setAttachments] = useState<File[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [displayAmount, setDisplayAmount] = useState(
+    transacaoParaEditar?.amount 
+      ? transacaoParaEditar.amount.toLocaleString("pt-BR", {
+          style: "currency",
+          currency: "BRL",
+        })
+      : "R$ 0,00"
+  );
+
+  const formatCurrency = (value: string) => {
+    const numericValue = value.replace(/\D/g, "");
+    const formattedValue = (Number(numericValue) / 100).toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    });
+    return formattedValue;
+  };
+
+  const handleAmountChange = (value: string) => {
+    const formatted = formatCurrency(value);
+    setDisplayAmount(formatted);
+    const numericValue = parseFloat(value.replace(/\D/g, "")) / 100;
+    setValue("amount", numericValue);
+  };
 
   const getSuggestions = (description: string) => {
     const suggestions: Record<string, string[]> = {
@@ -225,13 +249,13 @@ export default function TransacaoForm({
 
             <div className="campo">
               <Label htmlFor="amount">Valor:</Label>
-              <Input
-                type="number"
+              <input
+                type="text"
                 id="amount"
-                placeholder="0,00"
-                step=".01"
-                min="0.01"
-                {...register("amount", { valueAsNumber: true })}
+                placeholder="R$ 0,00"
+                value={displayAmount}
+                onChange={(e) => handleAmountChange(e.target.value)}
+                className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
               {errors.amount && (
                 <p className="text-red-500 text-size-14 mt-1">
