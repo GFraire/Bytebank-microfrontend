@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { ToastProvider, useToast } from "./contexts/ToastContext";
+import Toast from "./components/Toast";
 
 const TRANSACTION_TYPES = [
   { value: "deposit", label: "Depósito" },
@@ -28,7 +30,8 @@ export interface AppTransactionProps {
   user: AuthUser | null;
 }
 
-function AppTransaction({ user }: AppTransactionProps) {
+function AppTransactionContent({ user }: AppTransactionProps) {
+  const { addToast } = useToast();
   const [formData, setFormData] = useState({
     description: "",
     amount: "",
@@ -74,7 +77,7 @@ function AppTransaction({ user }: AppTransactionProps) {
         }),
       });
       if (response.ok) {
-        alert("Transação criada com sucesso!");
+        addToast("Transação criada com sucesso!", "success");
         setFormData({
           description: "",
           amount: "",
@@ -88,9 +91,11 @@ function AppTransaction({ user }: AppTransactionProps) {
             return `${year}-${month}-${day}`;
           })(),
         });
+      } else {
+        addToast("Erro ao criar transação", "error");
       }
     } catch (error) {
-      console.error("Erro:", error);
+      addToast("Erro ao criar transação", "error");
     }
   };
 
@@ -205,6 +210,15 @@ function AppTransaction({ user }: AppTransactionProps) {
         </div>
       </main>
     </div>
+  );
+}
+
+function AppTransaction({ user }: AppTransactionProps) {
+  return (
+    <ToastProvider>
+      <AppTransactionContent user={user} />
+      <Toast />
+    </ToastProvider>
   );
 }
 

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Modal from "./components/ui/Modal";
 import TransacaoForm from "./components/TransactionFormEdit";
+import { ToastProvider, useToast } from "./contexts/ToastContext";
+import Toast from "./components/Toast";
 
 interface Transaction {
   id: number;
@@ -24,7 +26,8 @@ export interface AppTransactionProps {
   user: AuthUser | null;
 }
 
-function AppTransaction({ user }: AppTransactionProps) {
+function AppTransactionContent({ user }: AppTransactionProps) {
+  const { addToast } = useToast();
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -86,7 +89,7 @@ function AppTransaction({ user }: AppTransactionProps) {
         setTransactions(data);
       }
     } catch (error) {
-      console.error("Erro ao buscar transações:", error);
+      addToast("Erro ao carregar transações", "error");
     } finally {
       setLoading(false);
     }
@@ -147,11 +150,13 @@ function AppTransaction({ user }: AppTransactionProps) {
   };
 
   const handleSave = () => {
+    addToast("Transação atualizada com sucesso!", "success");
     fetchTransactions();
     handleCloseModal();
   };
 
   const handleDelete = () => {
+    addToast("Transação excluída com sucesso!", "success");
     fetchTransactions();
     handleCloseModal();
   };
@@ -166,10 +171,13 @@ function AppTransaction({ user }: AppTransactionProps) {
           }
         );
         if (response.ok) {
+          addToast("Transação removida com sucesso!", "success");
           fetchTransactions();
+        } else {
+          addToast("Erro ao remover transação", "error");
         }
       } catch (error) {
-        console.error("Erro ao remover transação:", error);
+        addToast("Erro ao remover transação", "error");
       }
     }
   };
@@ -575,6 +583,15 @@ function AppTransaction({ user }: AppTransactionProps) {
         </Modal>
       )}
     </div>
+  );
+}
+
+function AppTransaction({ user }: AppTransactionProps) {
+  return (
+    <ToastProvider>
+      <AppTransactionContent user={user} />
+      <Toast />
+    </ToastProvider>
   );
 }
 
