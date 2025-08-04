@@ -18,7 +18,7 @@
     "deploy:add-transaction": "cd add-transaction && vercel --prod",
     "deploy:profile": "cd profile && vercel --prod",
     "deploy:api": "cd api && vercel --prod",
-    "deploy:main-app": "cd main-app && cp next.config.prod.js next.config.js && vercel --prod",
+    "deploy:main-app": "cd main-app && && vercel --prod",
     "deploy:all": "pnpm deploy:dashboard && pnpm deploy:sidebar && pnpm deploy:transactions && pnpm deploy:add-transaction && pnpm deploy:profile && pnpm deploy:api && pnpm deploy:main-app"
     
   },

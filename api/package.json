@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "json-server --watch db.json --port 3333 --static ./public"
+    "dev": "json-server --watch db.json --port 3333 --static ./public",
+    "dev-local": "json-server --watch db.json --host 0.0.0.0 --port 3333 --static ./public"
   },
   "dependencies": {
     "cors": "^2.8.5",

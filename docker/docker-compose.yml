@@ -3,10 +3,21 @@ services:
   app:
     container_name: bytebank-app
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ../
+      dockerfile: ./docker/main-app.Dockerfile
     ports:
       - "3000:3000"
     environment:
       - NODE_ENV=production
+    restart: unless-stopped
+  
+  api:
+    container_name: bytebank-api
+    build:
+      context: ../
+      dockerfile: ./docker/api.Dockerfile
+    ports:
+      - "3333:3333"
+    environment:
+      - NODE_ENV=development
     restart: unless-stopped

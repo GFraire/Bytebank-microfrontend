@@ -90,7 +90,7 @@ export default function ModalCreateAccount({
         <Image
           width={192}
           height={261}
-          src="/images/ilustracao-cadastro.svg"
+          src="/icons/ilustracao-cadastro.svg"
           alt="Pessoa com laptop"
           className="mb-6 mx-auto"
         />

@@ -79,7 +79,7 @@ export default function ModalLogin({ isOpen, onClose }: ModalLoginProps) {
         <Image
           width={192}
           height={261}
-          src="/images/ilustracao-login.svg"
+          src="/icons/ilustracao-login.svg"
           alt="Pessoa com celular"
           className="w-48 mb-6 mx-auto"
         />
