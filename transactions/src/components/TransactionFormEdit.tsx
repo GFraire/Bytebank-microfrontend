@@ -147,6 +147,7 @@ export default function TransacaoForm({
         date: data.date,
         recipient: data.recipient,
         attachments: allAttachments,
+        userId: transacaoParaEditar?.userId, // Preserva o userId original
       };
 
       if (modo === "editar" && transacaoParaEditar?.id) {
