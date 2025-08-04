@@ -5,6 +5,24 @@ import { AuthUser } from "../App";
 export default function RecentTransactions({ user }: { user: AuthUser | null }) {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
 
+  const mapCategoryToPortuguese = (category: string) => {
+    const categoryMap: Record<string, string> = {
+      'bills': 'Contas e Faturas',
+      'services': 'Serviços',
+      'taxes': 'Impostos',
+      'education': 'Educação',
+      'entertainment': 'Entretenimento',
+      'groceries': 'Supermercado',
+      'transportation': 'Transporte',
+      'health': 'Saúde',
+      'clothing': 'Vestuário',
+      'gifts': 'Presentes',
+      'travel': 'Viagens',
+      'other': 'Outros'
+    };
+    return categoryMap[category] || category;
+  };
+
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
@@ -116,7 +134,7 @@ export default function RecentTransactions({ user }: { user: AuthUser | null }) 
                     {transaction.description}
                   </p>
                   <p className="text-sm text-gray-500">
-                    {transaction.category} • {formatDate(transaction.date)}
+                    {mapCategoryToPortuguese(transaction.category)} • {formatDate(transaction.date)}
                   </p>
                 </div>
               </div>
