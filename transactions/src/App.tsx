@@ -11,6 +11,7 @@ interface Transaction {
   date: string;
   recipient?: string;
   attachments?: string[];
+  userId?: string;
 }
 
 export interface AuthUser {
@@ -446,6 +447,7 @@ function AppTransaction({ user }: AppTransactionProps) {
               description: editingTransaction.description,
               category: editingTransaction.category,
               recipient: editingTransaction.recipient,
+              userId: (editingTransaction as any).userId, // Preserva o userId
             }}
             onSave={handleSave}
             onDelete={handleDelete}
