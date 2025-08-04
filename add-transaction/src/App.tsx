@@ -8,18 +8,14 @@ const TRANSACTION_TYPES = [
 ];
 
 const TRANSACTION_CATEGORIES = [
-  { value: "bills", label: "Contas e Faturas" },
-  { value: "services", label: "Serviços" },
-  { value: "taxes", label: "Impostos" },
-  { value: "education", label: "Educação" },
-  { value: "entertainment", label: "Entretenimento" },
-  { value: "groceries", label: "Supermercado" },
-  { value: "transportation", label: "Transporte" },
-  { value: "health", label: "Saúde" },
-  { value: "clothing", label: "Vestuário" },
-  { value: "gifts", label: "Presentes" },
-  { value: "travel", label: "Viagens" },
-  { value: "other", label: "Outros" },
+  { value: "Alimentação", label: "Alimentação" },
+  { value: "Transporte", label: "Transporte" },
+  { value: "Moradia", label: "Moradia" },
+  { value: "Lazer", label: "Lazer" },
+  { value: "Saúde", label: "Saúde" },
+  { value: "Educação", label: "Educação" },
+  { value: "Trabalho", label: "Trabalho" },
+  { value: "Outros", label: "Outros" },
 ];
 
 export interface AuthUser {
@@ -47,6 +43,20 @@ function AppTransaction({ user }: AppTransactionProps) {
     })(),
   });
 
+  const formatCurrency = (value: string) => {
+    const numericValue = value.replace(/\D/g, "");
+    const formattedValue = (Number(numericValue) / 100).toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    });
+    return formattedValue;
+  };
+
+  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.replace(/\D/g, "");
+    setFormData({ ...formData, amount: formatCurrency(value) });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -55,7 +65,7 @@ function AppTransaction({ user }: AppTransactionProps) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...formData,
-          amount: parseFloat(formData.amount),
+          amount: parseFloat(formData.amount.replace(/[^\d,]/g, "").replace(",", ".")),
           type:
             formData.type === "deposit" || formData.type === "transfer"
               ? "income"
@@ -111,15 +121,11 @@ function AppTransaction({ user }: AppTransactionProps) {
                 Valor
               </label>
               <input
-                type="number"
-                step="0.01"
-                min="0.01"
+                type="text"
                 value={formData.amount}
-                onChange={(e) =>
-                  setFormData({ ...formData, amount: e.target.value })
-                }
+                onChange={handleAmountChange}
                 className="w-full p-2 border border-gray-300 rounded-md"
-                placeholder="0,00"
+                placeholder="R$ 0,00"
                 required
               />
             </div>
