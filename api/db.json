@@ -42,8 +42,86 @@
       "type": "income",
       "category": "transportation",
       "date": "2025-08-04",
-      "userId": "5",
+      "recipient": "",
+      "attachments": [],
       "id": 6
+    },
+    {
+      "description": "plano",
+      "amount": 450,
+      "type": "income",
+      "category": "Saúde",
+      "date": "2025-08-04",
+      "recipient": "",
+      "attachments": [],
+      "id": 7
+    },
+    {
+      "description": "tax",
+      "amount": 159.9,
+      "type": "expense",
+      "category": "transportation",
+      "date": "2025-08-04",
+      "recipient": "",
+      "attachments": [],
+      "userId": "5",
+      "id": 8
+    },
+    {
+      "description": "teste",
+      "amount": 787,
+      "type": "income",
+      "category": "gifts",
+      "date": "2025-08-04",
+      "userId": "5",
+      "id": 9
+    },
+    {
+      "description": "pagamento",
+      "amount": 1478.97,
+      "type": "expense",
+      "category": "groceries",
+      "date": "2025-08-04",
+      "recipient": "",
+      "attachments": [],
+      "userId": "5",
+      "id": 10
+    },
+    {
+      "description": "saude",
+      "amount": 56.78,
+      "type": "income",
+      "category": "Saúde",
+      "date": "2025-08-04",
+      "userId": "5",
+      "id": 11
+    },
+    {
+      "description": "premio",
+      "amount": 23467.89,
+      "type": "income",
+      "category": "Outros",
+      "date": "2025-08-04",
+      "userId": "5",
+      "id": 12
+    },
+    {
+      "description": "contador",
+      "amount": 450,
+      "type": "income",
+      "category": "Outros",
+      "date": "2025-08-04",
+      "userId": "5",
+      "id": 13
+    },
+    {
+      "description": "imposto",
+      "amount": 56.77,
+      "type": "expense",
+      "category": "Outros",
+      "date": "2025-08-04",
+      "userId": "5",
+      "id": 14
     }
   ],
   "profile": [
