@@ -75,6 +75,30 @@
       "date": "2024-12-20",
       "userId": "2",
       "id": 9
+    },
+    {
+      "description": "imposto",
+      "amount": 4678.8,
+      "type": "income",
+      "category": "Saúde",
+      "date": "2025-08-04",
+      "recipient": "",
+      "attachments": [
+        "1754358515211_Favicon 48px.png"
+      ],
+      "userId": "3",
+      "id": 10
+    },
+    {
+      "description": "teste",
+      "amount": 678,
+      "type": "expense",
+      "category": "Transporte",
+      "date": "2023-08-04",
+      "recipient": "",
+      "attachments": [],
+      "userId": "3",
+      "id": 11
     }
   ],
   "profile": [
@@ -83,6 +107,12 @@
       "email": "joao-a@hotmail.com",
       "password": "123456",
       "id": 2
+    },
+    {
+      "name": "Henrique BM",
+      "email": "henrique.bmoura@yahoo.com.br",
+      "password": "123456",
+      "id": 3
     }
   ],
   "categories": [
