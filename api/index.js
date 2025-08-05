@@ -1,6 +1,5 @@
 const jsonServer = require('json-server');
-const express = require('express'); // necessário para arquivos estáticos
-const path = require('path');
+const cors = require('cors');
 
 const server = jsonServer.create();
 const router = jsonServer.router('db.json');
@@ -8,8 +7,7 @@ const middlewares = jsonServer.defaults();
 const port = process.env.PORT || 3333;
 
 server.use(middlewares);
-
-server.use('/files', express.static(path.join(__dirname, 'public/files')));
+server.use(cors())
 
 // Adiciona um delay
 server.use((req, res, next) => {

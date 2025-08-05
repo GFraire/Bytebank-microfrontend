@@ -1,4 +1,3 @@
-const API_URL = 'http://localhost:3333';
 const UPLOAD_URL = 'http://localhost:3334';
 
 export const fileService = {

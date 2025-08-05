@@ -542,7 +542,7 @@ function AppTransactionContent({ user }: AppTransactionProps) {
         >
           <div className="space-y-4">
             {selectedAttachments.map((fileName, index) => {
-              const fileUrl = `${process.env.REACT_APP_API_URL}/files/${fileName}`;
+              const fileUrl = `${process.env.REACT_APP_UPLOAD_URL}/files/${fileName}`;
               const originalName = fileName.includes("_")
                 ? fileName.split("_").slice(1).join("_")
                 : fileName;

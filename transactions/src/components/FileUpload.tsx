@@ -13,7 +13,7 @@ interface FileUploadProps {
 export default function FileUpload({ 
   onFilesChange,
   existingFiles = [],
-  maxFiles = 5, 
+  maxFiles = 1, 
   acceptedTypes = ['image/*', 'application/pdf'],
   maxSize = 5 
 }: FileUploadProps) {
@@ -83,7 +83,7 @@ export default function FileUpload({
           </button>
         </p>
         <p className="text-sm text-gray-500">
-          Máximo {maxFiles} arquivos, até {maxSize}MB cada
+          Máximo {maxFiles} arquivo(s), até {maxSize}MB cada
         </p>
         <input
           ref={inputRef}

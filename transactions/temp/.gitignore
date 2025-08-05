@@ -1,5 +1,0 @@
-# Ignorar todos os arquivos de upload
-uploads/*
-
-# Manter a estrutura da pasta
-!uploads/.gitkeep

@@ -17,8 +17,8 @@ if (rootEl) {
     <App
       user={{
         uid: "2",
-        displayName: "Mock user",
-        email: "mock.user@gmail.com",
+        displayName: "Gabriel Teste",
+        email: "gabrielfreiresa3@gmail.com",
       }}
     />
   );

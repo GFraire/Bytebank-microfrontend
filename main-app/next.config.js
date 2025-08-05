@@ -15,9 +15,6 @@ const nextConfig = {
           addTransaction: remotes.addTransaction,
           profile: remotes.profile,
         },
-        exposes: {
-          "./AuthContext": "./src/contexts/authContext",
-        },
         filename: 'static/chunks/remoteEntry.js',
         extraOptions: {
           exposePages: true,
