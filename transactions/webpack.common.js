@@ -47,6 +47,7 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
       'process.env.REACT_APP_API_URL': JSON.stringify('http://localhost:3333'),
+      'process.env.REACT_APP_UPLOAD_URL': JSON.stringify('http://localhost:3334'),
     }),
   ],
 };
