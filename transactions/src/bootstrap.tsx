@@ -14,7 +14,7 @@ if (rootEl) {
   const root = createRoot(rootEl);
   root.render(
     <App
-      user={{ uid: "3", displayName: "Mock user", email: "mock.user@gmail.com" }}
+      user={{ uid: "2", displayName: "Mock user", email: "mock.user@gmail.com" }}
     />
   );
 }
