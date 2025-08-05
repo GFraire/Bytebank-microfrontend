@@ -51,7 +51,11 @@ export default function Account() {
     };
 
     window.addEventListener("viewChanged", handler);
-  }, []);
+    
+    return () => {
+      window.removeEventListener("viewChanged", handler);
+    };
+  }, [user, router]);
 
   const handleNavigation = (view: string) => {
     if (
@@ -98,7 +102,7 @@ export default function Account() {
   }, []);
 
   return (
-    <div className="flex flex-col md:flex-row h-screen bg-gray-50">
+    <div className="flex flex-col md:flex-row h-screen bg-gray-50" role="application" aria-label="ByteBank Dashboard">
       <MobileHeader onNavigate={handleNavigation} activeView={activeView} />
 
       {isDesktop && (
@@ -117,7 +121,9 @@ export default function Account() {
           pageType={activeView}
           showUserProfile={true}
         />
-        <div className="flex-1 overflow-auto">{renderContent()}</div>
+        <main className="flex-1 overflow-auto" role="main" aria-label={`Conteúdo da página ${activeView}`}>
+          {renderContent()}
+        </main>
       </div>
 
       <BottomNavigation onNavigate={handleNavigation} activeView={activeView} />

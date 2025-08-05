@@ -47,24 +47,27 @@ export default function BottomNavigation({ onNavigate, activeView }: BottomNavig
   ];
 
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2 shadow-lg">
+    <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2 shadow-lg" role="navigation" aria-label="Navegação principal">
       <div className="flex items-center justify-around">
         {menuItems.map((item) => (
           <button
             key={item.id}
             onClick={() => onNavigate(item.id)}
-            className={`flex flex-col items-center space-y-1 p-2 rounded-lg transition-colors ${
+            className={`flex flex-col items-center space-y-1 p-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 ${
               item.isMain
                 ? "bg-green-600 text-white p-3 rounded-full shadow-lg"
                 : activeView === item.id
                 ? "text-green-600"
                 : "text-gray-500"
             }`}
+            aria-label={`Navegar para ${item.label}`}
+            aria-current={activeView === item.id ? "page" : undefined}
+            type="button"
           >
-            <div className={item.isMain ? "" : "w-6 h-6"}>
+            <div className={item.isMain ? "" : "w-6 h-6"} aria-hidden="true">
               {item.icon}
             </div>
-            <span className={`text-xs font-medium ${item.isMain ? "hidden" : ""}`}>
+            <span className={`text-xs font-medium ${item.isMain ? "sr-only" : ""}`}>
               {item.label}
             </span>
           </button>

@@ -115,52 +115,73 @@ function AppTransactionContent({ user }: AppTransactionProps) {
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
             <h2 className="text-2xl font-bold text-gray-900 mb-6">Nova Transação</h2>
             
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6" role="form" aria-labelledby="form-title">
+              <h2 id="form-title" className="sr-only">Formulário de nova transação</h2>
+              
               {/* Primeira linha - Descrição e Valor */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <fieldset className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <legend className="sr-only">Informações básicas da transação</legend>
+                
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Descrição
+                  <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">
+                    Descrição *
                   </label>
                   <input
                     type="text"
+                    id="description"
+                    name="description"
                     value={formData.description}
                     onChange={(e) =>
                       setFormData({ ...formData, description: e.target.value })
                     }
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent focus:outline-none"
                     placeholder="Ex: Supermercado, Salário..."
+                    aria-describedby="description-help"
                     required
                   />
+                  <div id="description-help" className="sr-only">
+                    Digite uma descrição clara para identificar a transação
+                  </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Valor
+                  <label htmlFor="amount" className="block text-sm font-medium text-gray-700 mb-2">
+                    Valor *
                   </label>
                   <input
                     type="text"
+                    id="amount"
+                    name="amount"
                     value={formData.amount}
                     onChange={handleAmountChange}
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent focus:outline-none"
                     placeholder="R$ 0,00"
+                    aria-describedby="amount-help"
                     required
                   />
+                  <div id="amount-help" className="sr-only">
+                    Digite o valor da transação em reais
+                  </div>
                 </div>
-              </div>
+              </fieldset>
 
               {/* Segunda linha - Tipo e Categoria */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <fieldset className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <legend className="sr-only">Classificação da transação</legend>
+                
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Tipo de Transação
+                  <label htmlFor="type" className="block text-sm font-medium text-gray-700 mb-2">
+                    Tipo de Transação *
                   </label>
                   <select
+                    id="type"
+                    name="type"
                     value={formData.type}
                     onChange={(e) =>
                       setFormData({ ...formData, type: e.target.value })
                     }
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent focus:outline-none"
+                    aria-describedby="type-help"
                   >
                     {TRANSACTION_TYPES.map((type) => (
                       <option key={type.value} value={type.value}>
@@ -168,18 +189,24 @@ function AppTransactionContent({ user }: AppTransactionProps) {
                       </option>
                     ))}
                   </select>
+                  <div id="type-help" className="sr-only">
+                    Selecione o tipo de operação financeira
+                  </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Categoria
+                  <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-2">
+                    Categoria *
                   </label>
                   <select
+                    id="category"
+                    name="category"
                     value={formData.category}
                     onChange={(e) =>
                       setFormData({ ...formData, category: e.target.value })
                     }
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent focus:outline-none"
+                    aria-describedby="category-help"
                     required
                   >
                     <option value="">Selecione uma categoria</option>
@@ -189,35 +216,50 @@ function AppTransactionContent({ user }: AppTransactionProps) {
                       </option>
                     ))}
                   </select>
+                  <div id="category-help" className="sr-only">
+                    Escolha a categoria que melhor descreve esta transação
+                  </div>
                 </div>
-              </div>
+              </fieldset>
 
               {/* Terceira linha - Data */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <fieldset className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <legend className="sr-only">Data da transação</legend>
+                
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Data
+                  <label htmlFor="date" className="block text-sm font-medium text-gray-700 mb-2">
+                    Data *
                   </label>
                   <input
                     type="date"
+                    id="date"
+                    name="date"
                     value={formData.date}
                     onChange={(e) =>
                       setFormData({ ...formData, date: e.target.value })
                     }
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent focus:outline-none"
+                    aria-describedby="date-help"
                     required
                   />
+                  <div id="date-help" className="sr-only">
+                    Selecione a data em que a transação foi realizada
+                  </div>
                 </div>
-              </div>
+              </fieldset>
 
               {/* Botão de ação */}
               <div className="flex justify-end pt-4">
                 <button
                   type="submit"
-                  className="px-8 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 font-semibold transition-colors duration-200 shadow-sm"
+                  className="px-8 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 font-semibold transition-colors duration-200 shadow-sm"
+                  aria-describedby="submit-help"
                 >
                   Adicionar Transação
                 </button>
+                <div id="submit-help" className="sr-only">
+                  Clique para salvar a nova transação no sistema
+                </div>
               </div>
             </form>
           </div>

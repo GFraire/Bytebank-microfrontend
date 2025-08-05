@@ -99,22 +99,22 @@ function AppSidebar({
   };
 
   return (
-    <aside className="bg-white border-r border-gray-200 text-gray-900 w-64 h-screen p-6 shadow-sm flex flex-col">
+    <aside className="bg-white border-r border-gray-200 text-gray-900 w-64 h-screen p-6 shadow-sm flex flex-col" role="navigation" aria-label="Menu principal">
       {/* Logo */}
       <div className="flex items-center space-x-3 px-4 py-3">
         <div className="mb-8">
-          <img src="/logo.png" alt="Logo" />
+          <img src="/logo.png" alt="ByteBank - Logotipo do banco digital" className="h-8 w-auto" />
           <p className="text-gray-600 text-sm">Seu banco digital</p>
         </div>
       </div>
 
       {/* Menu */}
-      <nav className="space-y-2 flex-1 mt-10">
+      <nav className="space-y-2 flex-1 mt-10" role="menu">
         {menuItems.map((item) => (
           <button
             key={item.id}
             onClick={() => handleNavigation(item.id)}
-            className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors text-left"
+            className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors text-left focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
             style={{
               backgroundColor:
                 activeView === item.id ? "#22c55e" : "transparent",
@@ -133,8 +133,12 @@ function AppSidebar({
                 e.currentTarget.style.color = "#374151";
               }
             }}
+            aria-label={`Navegar para ${item.label}`}
+            aria-current={activeView === item.id ? "page" : undefined}
+            role="menuitem"
+            type="button"
           >
-            <div className="w-5 h-5">{item.icon}</div>
+            <div className="w-5 h-5" aria-hidden="true">{item.icon}</div>
             <span>{item.label}</span>
           </button>
         ))}
@@ -144,19 +148,22 @@ function AppSidebar({
       <div className="border-t border-gray-200 pt-4">
         <button
           onClick={onLogout}
-          className="flex items-center space-x-2 text-gray-600 transition-colors"
+          className="flex items-center space-x-2 text-gray-600 transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 rounded-lg p-2"
           onMouseEnter={(e) => {
             e.currentTarget.style.color = "#dc2626";
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.color = "#6b7280";
           }}
+          aria-label="Sair da conta"
+          type="button"
         >
           <svg
             className="w-5 h-5"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
+            aria-hidden="true"
           >
             <path
               strokeLinecap="round"
