@@ -44,11 +44,13 @@ export default function Account() {
       router.push("/");
     }
 
-    const event = new CustomEvent("auth:userChange", {
-      detail: user,
-    });
+    const handler = (event: Event) => {
+      const customEvent = event as CustomEvent;
+      const view = customEvent.detail.view;
+      handleNavigation(view);
+    };
 
-    window.dispatchEvent(event);
+    window.addEventListener("viewChanged", handler);
   }, []);
 
   const handleNavigation = (view: string) => {

@@ -48,10 +48,13 @@ function AppTransactionContent({ user }: AppTransactionProps) {
 
   const formatCurrency = (value: string) => {
     const numericValue = value.replace(/\D/g, "");
-    const formattedValue = (Number(numericValue) / 100).toLocaleString("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-    });
+    const formattedValue = (Number(numericValue) / 100).toLocaleString(
+      "pt-BR",
+      {
+        style: "currency",
+        currency: "BRL",
+      }
+    );
     return formattedValue;
   };
 
@@ -63,19 +66,24 @@ function AppTransactionContent({ user }: AppTransactionProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:3333/transactions", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...formData,
-          amount: parseFloat(formData.amount.replace(/[^\d,]/g, "").replace(",", ".")),
-          type:
-            formData.type === "deposit" || formData.type === "transfer"
-              ? "income"
-              : "expense",
-          userId: user?.uid,
-        }),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/transactions`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            ...formData,
+            amount: parseFloat(
+              formData.amount.replace(/[^\d,]/g, "").replace(",", ".")
+            ),
+            type:
+              formData.type === "deposit" || formData.type === "transfer"
+                ? "income"
+                : "expense",
+            userId: user?.uid,
+          }),
+        }
+      );
       if (response.ok) {
         addToast("Transação criada com sucesso!", "success");
         setFormData({

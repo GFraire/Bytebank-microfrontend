@@ -81,9 +81,8 @@ function AppTransactionContent({ user }: AppTransactionProps) {
 
   const fetchTransactions = async () => {
     try {
-      const response = await fetch(
-        `http://localhost:3333/transactions?userId=${user?.uid}`
-      );
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/transactions?userId=${user?.uid}`);
+      
       if (response.ok) {
         const data = await response.json();
         const sortedData = data.sort(
@@ -174,7 +173,7 @@ function AppTransactionContent({ user }: AppTransactionProps) {
     if (confirm("Tem certeza que deseja remover esta transação?")) {
       try {
         const response = await fetch(
-          `http://localhost:3333/transactions/${id}`,
+          `${process.env.REACT_APP_API_URL}/transactions/${id}`,
           {
             method: "DELETE",
           }
@@ -542,7 +541,7 @@ function AppTransactionContent({ user }: AppTransactionProps) {
         >
           <div className="space-y-4">
             {selectedAttachments.map((fileName, index) => {
-              const fileUrl = `http://localhost:3333/files/${fileName}`;
+              const fileUrl = `${process.env.REACT_APP_API_URL}/files/${fileName}`;
               const originalName = fileName.includes("_")
                 ? fileName.split("_").slice(1).join("_")
                 : fileName;

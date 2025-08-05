@@ -2,7 +2,7 @@ import axios from "axios";
 import { DashboardData, Transaction } from "./types/types";
 import { AuthUser } from "./App";
 
-const API_URL = "http://localhost:3333";
+const API_URL = process.env.REACT_APP_API_URL
 
 const api = axios.create({
   baseURL: API_URL,
