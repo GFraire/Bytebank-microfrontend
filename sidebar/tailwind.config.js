@@ -14,6 +14,7 @@ module.exports = {
         background: "#E4EDE3",
         error: "#BF1313",
         green: "#47A138",
+        "green-btn": "#16A34A", // acessibility improvement
         "green-light": "#E4EDE3",
         white: "#F5F5F5",
         "gray-300": "#CBCBCB",
