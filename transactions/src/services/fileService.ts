@@ -1,27 +1,51 @@
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3333';
+const API_URL = 'http://localhost:3333';
+const UPLOAD_URL = 'http://localhost:3334';
 
 export const fileService = {
   async upload(files: File[]): Promise<string[]> {
-    // Simulação de upload - retorna nomes dos arquivos com timestamp
-    return files.map(file => {
-      const timestamp = Date.now();
-      const extension = file.name.split('.').pop();
-      return `${timestamp}_${file.name}`;
-    });
+    const uploadedFiles: string[] = [];
+    
+    for (const file of files) {
+      const formData = new FormData();
+      formData.append('file', file);
+      
+      try {
+        const response = await fetch(`${UPLOAD_URL}/upload`, {
+          method: 'POST',
+          body: formData,
+        });
+        
+        if (!response.ok) {
+          throw new Error(`Erro no upload: ${response.statusText}`);
+        }
+        
+        const result = await response.json();
+        uploadedFiles.push(result.filename);
+      } catch (error) {
+        console.error('Erro no upload:', error);
+        // Fallback para desenvolvimento local
+        const timestamp = Date.now();
+        uploadedFiles.push(`${timestamp}_${file.name}`);
+      }
+    }
+    
+    return uploadedFiles;
   },
 
   getFileUrl(filename: string): string {
-    // Para arquivos simulados, retorna um placeholder
-    if (filename.includes('_')) {
-      return `data:text/plain;charset=utf-8,Arquivo simulado: ${filename}`;
-    }
-    return `${API_URL}/files/${filename}`;
+    const url = `${UPLOAD_URL}/files/${encodeURIComponent(filename)}`;
+    console.log('FileService URL:', url);
+    return url;
   },
 
   async delete(filename: string): Promise<void> {
-    const response = await fetch(`${API_URL}/files/${filename}`, {
-      method: 'DELETE',
-    });
-    if (!response.ok) throw new Error('Erro ao excluir arquivo');
+    try {
+      const response = await fetch(`${UPLOAD_URL}/files/${filename}`, {
+        method: 'DELETE',
+      });
+      if (!response.ok) throw new Error('Erro ao excluir arquivo');
+    } catch (error) {
+      console.error('Erro ao excluir arquivo:', error);
+    }
   }
 };
