@@ -1,159 +1,88 @@
 {
   "transactions": [
     {
-      "description": "Teste 2",
-      "amount": 100,
+      "description": "Mercado",
+      "amount": 1500,
+      "type": "expense",
+      "category": "Alimentação",
+      "date": "2025-07-01",
+      "userId": "2",
+      "id": 1
+    },
+    {
+      "description": "Pagamento Salário",
+      "amount": 12000,
       "type": "income",
-      "category": "services",
-      "date": "2025-08-03",
-      "userId": "3",
+      "category": "Trabalho",
+      "date": "2025-08-04",
+      "userId": "2",
       "id": 2
     },
     {
-      "description": "Teste 2",
-      "amount": 50,
-      "type": "income",
-      "category": "services",
-      "date": "2025-08-03",
-      "userId": "3",
-      "id": 3
-    },
-    {
-      "description": "Teste 3",
-      "amount": 150,
+      "description": "Shopeeeeee",
+      "amount": 89,
       "type": "expense",
-      "category": "taxes",
-      "date": "2025-08-03",
-      "userId": "3",
+      "category": "Lazer",
+      "date": "2025-05-29",
+      "recipient": "",
+      "attachments": [
+        "1754353933285_Recibo-de-pagamento.pdf"
+      ],
+      "userId": "2",
       "id": 4
     },
     {
-      "description": "Teste 1",
-      "amount": 123,
-      "type": "expense",
-      "category": "services",
-      "date": "2025-07-15",
-      "userId": "4",
+      "description": "Remédio",
+      "amount": 320,
+      "type": "income",
+      "category": "Saúde",
+      "date": "2025-07-22",
+      "userId": "2",
       "id": 5
     },
     {
-      "description": "mercadoi teste",
-      "amount": 190,
+      "description": "Livro Programação",
+      "amount": 99,
       "type": "income",
-      "category": "transportation",
-      "date": "2025-08-04",
-      "recipient": "",
-      "attachments": [],
+      "category": "Educação",
+      "date": "2025-06-12",
+      "userId": "2",
       "id": 6
     },
     {
-      "description": "plano",
-      "amount": 450,
-      "type": "income",
-      "category": "Saúde",
-      "date": "2025-08-04",
-      "recipient": "",
-      "attachments": [],
+      "description": "Aluguel",
+      "amount": 2700,
+      "type": "expense",
+      "category": "Moradia",
+      "date": "2025-08-01",
+      "userId": "2",
       "id": 7
     },
     {
-      "description": "tax",
-      "amount": 159.9,
+      "description": "Combustivel",
+      "amount": 700,
       "type": "expense",
-      "category": "transportation",
-      "date": "2025-08-04",
-      "recipient": "",
-      "attachments": [],
-      "userId": "5",
+      "category": "Transporte",
+      "date": "2025-07-31",
+      "userId": "2",
       "id": 8
     },
     {
-      "description": "teste",
-      "amount": 787,
-      "type": "income",
-      "category": "gifts",
-      "date": "2025-08-04",
-      "userId": "5",
+      "description": "Motor do carro",
+      "amount": 7000,
+      "type": "expense",
+      "category": "Outros",
+      "date": "2024-12-20",
+      "userId": "2",
       "id": 9
-    },
-    {
-      "description": "pagamento",
-      "amount": 1478.97,
-      "type": "expense",
-      "category": "groceries",
-      "date": "2025-08-04",
-      "recipient": "",
-      "attachments": [],
-      "userId": "5",
-      "id": 10
-    },
-    {
-      "description": "saude",
-      "amount": 56.78,
-      "type": "income",
-      "category": "Saúde",
-      "date": "2025-08-04",
-      "userId": "5",
-      "id": 11
-    },
-    {
-      "description": "premio",
-      "amount": 23467.89,
-      "type": "income",
-      "category": "Outros",
-      "date": "2025-08-04",
-      "userId": "5",
-      "id": 12
-    },
-    {
-      "description": "contador",
-      "amount": 450,
-      "type": "income",
-      "category": "Outros",
-      "date": "2025-08-04",
-      "userId": "5",
-      "id": 13
-    },
-    {
-      "description": "imposto",
-      "amount": 56.77,
-      "type": "expense",
-      "category": "Outros",
-      "date": "2025-08-04",
-      "userId": "5",
-      "id": 14
     }
   ],
   "profile": [
     {
-      "name": "SILVIO CELSO DA SILVA",
-      "email": "silvioand1@gmail.com",
+      "name": "João de Abreu",
+      "email": "joao-a@hotmail.com",
       "password": "123456",
-      "balance": 0,
       "id": 2
-    },
-    {
-      "name": "Gabriel F Araujo",
-      "email": "gabrielfreiresa@gmail.com",
-      "password": "123123",
-      "balance": 0,
-      "id": 3
-    },
-    {
-      "name": "Pizza shop",
-      "email": "gabrielfreiresa1@gmail.com",
-      "password": "123123",
-      "balance": 0,
-      "id": 4,
-      "phone": "",
-      "cpf": "123123",
-      "address": ""
-    },
-    {
-      "name": "Henrique Moura",
-      "email": "henrique.bmoura@yahoo.com.br",
-      "password": "123456",
-      "id": 5
     }
   ],
   "categories": [
