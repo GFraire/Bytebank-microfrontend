@@ -257,7 +257,7 @@ export default function TransacaoForm({
                 placeholder="R$ 0,00"
                 value={displayAmount}
                 onChange={(e) => handleAmountChange(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="campo-input"
               />
               {errors.amount && (
                 <p className="text-red-500 text-size-14 mt-1">

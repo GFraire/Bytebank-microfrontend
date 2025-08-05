@@ -53,31 +53,31 @@ export default function Home() {
       <div className="w-full h-full flex flex-col">
         <header className="bg-black">
           <div
-            className={`flex items-center justify-between py-4 px-6 tablet:px-4 mobile:px-4 m-auto ${styles["container-page"]}`}
+            className={`flex items-center justify-between p-6 m-auto ${styles["container-page"]}`}
           >
-            <div className="flex items-center gap-8 tablet:gap-4 mobile:gap-2">
+            <div className="flex items-center gap-10 tablet:gap-2">
               <Image
                 alt="Texto escrito Bytebank"
-                className="block object-cover tablet:hidden"
-                height={28}
+                className="block object-cover mr-5 tablet:hidden"
+                height={32}
                 src="/logo.png"
                 priority
-                width={130}
+                width={146}
               />
               <Image
                 alt=""
-                className="hidden object-cover tablet:block"
-                height={24}
+                className="hidden mr-0 object-cover tablet:block"
+                height={26}
                 src="/logo-mini.png"
                 priority
-                width={24}
+                width={26}
               />
 
-              <span className="text-green text-sm tablet:text-xs font-medium mobile:hidden hover:text-green-400 cursor-pointer transition-colors">
+              <span className="text-green text-subtitle font-semibold mobile:hidden">
                 Sobre
               </span>
 
-              <span className="text-green text-sm tablet:text-xs font-medium mobile:hidden hover:text-green-400 cursor-pointer transition-colors">
+              <span className="text-green text-subtitle font-semibold mobile:hidden">
                 Serviços
               </span>
             </div>
@@ -92,62 +92,59 @@ export default function Home() {
               onClose={() => setShowSignupModal(false)}
             />
 
-            <div className="flex items-center gap-3 tablet:gap-2 mobile:gap-2">
+            <div className="flex items-center gap-6 tablet:gap-3">
               <button
                 onClick={() => setShowSignupModal(true)}
-                className="h-10 px-4 tablet:h-9 tablet:px-3 mobile:h-8 mobile:px-3 rounded-md bg-green border-none text-sm tablet:text-xs mobile:text-xs font-medium text-white whitespace-nowrap hover:bg-green-600 transition-colors"
+                className="h-12 w-[180px] rounded-lg bg-green border-none text-body font-semibold text-white"
               >
-                Abrir conta
+                Abrir minha conta
               </button>
 
               <button
                 onClick={() => setShowLoginModal(true)}
-                className="h-10 px-4 tablet:h-9 tablet:px-3 mobile:h-8 mobile:px-3 rounded-md bg-transparent border border-green text-sm tablet:text-xs mobile:text-xs font-medium text-green whitespace-nowrap hover:bg-green hover:text-white transition-colors"
+                className="h-12 w-[180px] rounded-lg bg-transparent border-solid border-2 border-green text-body font-semibold text-green"
               >
-                Entrar
+                Já tenho conta
               </button>
             </div>
           </div>
         </header>
         <div
-          className={`pb-[150px] tablet:pb-[70px] mobile:pb-[50px] ${styles["gradient-background"]} from-primary to-white`}
+          className={`pb-[150px] tablet:pb-[70px] ${styles["gradient-background"]} from-primary to-white`}
         >
           <main className={`${styles["container-page"]} mx-auto px-6`}>
-            <div className="flex justify-between items-center h-full mt-6 tablet:flex-col tablet:gap-6 tablet:mt-10 mobile:text-center">
-              <p className="max-w-[434px] text-display-xl tablet:text-display-lg mobile:text-display-md font-semibold tablet:max-w-full">
+            <div className="flex justify-between items-center h-full mt-6 tablet:flex-col tablet:gap-4 tablet:mt-10">
+              <p className="max-w-[434px] text-display-xl font-semibold">
                 Experimente mais liberdade no controle da sua vida financeira.
                 Crie sua conta com a gente!
               </p>
               <Image
                 alt="Desenho de uma pessoa segurando dinheiro"
-                className="tablet:w-[520px] tablet:h-[390px] mobile:w-[300px] mobile:h-[200px]"
+                className="tablet:w-[520px] tablet:h-[390px] mobile:h-[200px]"
                 priority
                 src="/banner.png"
                 height={412}
                 width={660}
               />
             </div>
-            <div className="flex flex-col mt-10 tablet:mt-8 mobile:mt-6 gap-10 mobile:gap-8">
-              <h3 className="block text-display-lg tablet:text-display-md mobile:text-display-sm font-bold text-center">
+            <div className="flex flex-col mt-10 gap-10">
+              <h3 className="block text-display-lg font-bold text-center">
                 Vantagens do nosso banco:
               </h3>
 
-              <div className="grid grid-cols-4 gap-6 tablet:grid-cols-2 tablet:gap-4 mobile:grid-cols-1 mobile:gap-6">
+              <div className="grid grid-cols-4 gap-6 tablet:grid-cols-2 mobile:grid-cols-1">
                 {advantageCards.map((card) => {
                   return (
                     <div
                       className="flex items-center flex-col gap-4"
                       key={card.title}
                     >
-                      <div className="bg-green-50 p-4 rounded-xl">
-                        <Image
-                          alt={card.alt}
-                          height={56}
-                          src={`/icons/${card.icon}.svg`}
-                          width={73}
-                          className="opacity-80"
-                        />
-                      </div>
+                      <Image
+                        alt={card.alt}
+                        height={56}
+                        src={`/icons/${card.icon}.svg`}
+                        width={73}
+                      />
                       <span className="text-green text-display-md font-semibold text-center">
                         {card.title}
                       </span>
@@ -162,47 +159,42 @@ export default function Home() {
           </main>
         </div>
         <footer className="bg-black">
-          <div className="flex justify-between max-w-[1200px] mx-auto text-white py-8 px-6 tablet:px-4 mobile:flex-col mobile:items-start mobile:px-6 mobile:gap-5 mobile:py-5">
-            <div className="flex flex-col gap-3 mobile:gap-2">
-              <strong className="text-sm mobile:text-xs font-semibold text-green uppercase tracking-wide">Serviços</strong>
-              <span className="text-xs mobile:text-xs text-gray-400 hover:text-white cursor-pointer transition-colors">Conta corrente</span>
-              <span className="text-xs mobile:text-xs text-gray-400 hover:text-white cursor-pointer transition-colors">Conta PJ</span>
-              <span className="text-xs mobile:text-xs text-gray-400 hover:text-white cursor-pointer transition-colors">Cartão de crédito</span>
+          <div className="flex justify-between max-w-[1200px] mx-auto text-white py-11 px-6 mobile:flex-col mobile:items-start mobile:px-10 mobile:gap-8">
+            <div className="flex flex-col gap-4">
+              <strong>Serviços</strong>
+              <span>Conta corrente</span>
+              <span>Conta PJ</span>
+              <span>Cartão de crédito</span>
             </div>
-            <div className="flex flex-col gap-3 mobile:gap-2">
-              <strong className="text-sm mobile:text-xs font-semibold text-green uppercase tracking-wide">Contato</strong>
-              <span className="text-xs mobile:text-xs text-gray-400">0800 004 250 08</span>
-              <span className="text-xs mobile:text-xs text-gray-400">meajuda@bytebank.com.br</span>
-              <span className="text-xs mobile:text-xs text-gray-400">ouvidoria@bytebank.com.br</span>
+            <div className="flex flex-col gap-4">
+              <strong>Contato</strong>
+              <span>0800 004 250 08</span>
+              <span>meajuda@bytebank.com.br</span>
+              <span>ouvidoria@bytebank.com.br</span>
             </div>
-            <div className="flex flex-col items-center mobile:items-start gap-4 mobile:gap-3">
-              <strong className="text-sm mobile:text-xs font-semibold text-green uppercase tracking-wide">Desenvolvido por Alura</strong>
-              <div className="flex items-center gap-4 mobile:justify-between mobile:w-full">
+            <div className="flex flex-col items-center gap-6">
+              <strong>Desenvolvido por Alura</strong>
+              <Image
+                alt="Texto escrito Bytebank"
+                height={32}
+                src="/logo-white.png"
+                priority
+                width={146}
+              />
+              <div className="flex gap-6">
                 <Image
-                  alt="Texto escrito Bytebank"
-                  height={28}
-                  src="/logo-white.png"
-                  priority
-                  width={128}
-                  className="mobile:h-5 mobile:w-auto"
+                  alt=""
+                  height={30}
+                  src="/icons/instagram.svg"
+                  width={30}
                 />
-                <div className="flex gap-3 mobile:gap-2">
-                  <Image
-                    alt=""
-                    height={20}
-                    src="/icons/instagram.svg"
-                    width={20}
-                    className="mobile:h-4 mobile:w-4 opacity-70 hover:opacity-100 transition-opacity cursor-pointer"
-                  />
-                  <Image
-                    alt=""
-                    height={20}
-                    src="/icons/whatsapp.svg"
-                    width={20}
-                    className="mobile:h-4 mobile:w-4 opacity-70 hover:opacity-100 transition-opacity cursor-pointer"
-                  />
-                  <Image alt="" height={20} src="/icons/youtube.svg" width={20} className="mobile:h-4 mobile:w-4 opacity-70 hover:opacity-100 transition-opacity cursor-pointer" />
-                </div>
+                <Image
+                  alt=""
+                  height={30}
+                  src="/icons/whatsapp.svg"
+                  width={30}
+                />
+                <Image alt="" height={30} src="/icons/youtube.svg" width={30} />
               </div>
             </div>
           </div>
