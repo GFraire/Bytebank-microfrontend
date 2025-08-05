@@ -25,7 +25,8 @@
   },
   "overrides": {
     "webpack": "5.100.1",
-    "@module-federation/nextjs-mf": "6.0.4"
+    "@module-federation/nextjs-mf": "6.0.4",
+    "zod": "4.0.14"
   },
   "devDependencies": {
     "concurrently": "^9.2.0"
