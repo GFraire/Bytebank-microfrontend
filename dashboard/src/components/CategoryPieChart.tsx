@@ -28,6 +28,7 @@ const COLORS = [
 const categoryTranslations: Record<string, string> = {
   bills: "Contas",
   groceries: "Compras",
+  taxes: "Taxas",
   // Adicione mais traduções conforme necessário
   // Exemplo: transport: 'Transporte',
 };
