@@ -58,6 +58,7 @@ function AppSidebar({
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
+          aria-hidden="true"
         >
           <path
             strokeLinecap="round"
@@ -68,6 +69,7 @@ function AppSidebar({
         </svg>
       ),
       label: "Nova Transação",
+      ariaLabel: "Adicionar nova transação financeira",
     },
     {
       id: "profile",
@@ -133,7 +135,7 @@ function AppSidebar({
                 e.currentTarget.style.color = "#374151";
               }
             }}
-            aria-label={`Navegar para ${item.label}`}
+            aria-label={item.ariaLabel || `Navegar para ${item.label}`}
             aria-current={activeView === item.id ? "page" : undefined}
             role="menuitem"
             type="button"

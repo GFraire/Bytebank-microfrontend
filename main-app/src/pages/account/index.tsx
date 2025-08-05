@@ -41,13 +41,19 @@ export default function Account() {
 
   useEffect(() => {
     if (!user) {
-      router.push("/");
+      router.push("/").catch(console.error);
     }
 
     const handler = (event: Event) => {
-      const customEvent = event as CustomEvent;
-      const view = customEvent.detail.view;
-      handleNavigation(view);
+      try {
+        const customEvent = event as CustomEvent;
+        const view = customEvent.detail?.view;
+        if (view) {
+          handleNavigation(view);
+        }
+      } catch (error) {
+        console.error('Error handling view change:', error);
+      }
     };
 
     window.addEventListener("viewChanged", handler);
@@ -69,8 +75,12 @@ export default function Account() {
   };
 
   const handleLogout = () => {
-    logout();
-    router.push("/");
+    try {
+      logout();
+      router.push("/").catch(console.error);
+    } catch (error) {
+      console.error('Error during logout:', error);
+    }
   };
 
   const renderContent = () => {
