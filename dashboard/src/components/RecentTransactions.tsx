@@ -31,7 +31,7 @@ export default function RecentTransactions({
     const fetchTransactions = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3333/transactions?userId=${user?.uid}`
+          `${process.env.REACT_APP_API_URL}/transactions?userId=${user?.uid}`
         );
         if (response.ok) {
           const data = await response.json();
