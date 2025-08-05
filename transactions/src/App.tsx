@@ -205,6 +205,7 @@ function AppTransactionContent({ user }: AppTransactionProps) {
 
   return (
     <div className="bg-gray-50">
+      <Toast />
       <div className="p-4 md:p-6">
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 mb-6">
           <div className="flex flex-col md:flex-row gap-4">
@@ -613,7 +614,6 @@ function AppTransaction({ user }: AppTransactionProps) {
   return (
     <ToastProvider>
       <AppTransactionContent user={user} />
-      <Toast />
     </ToastProvider>
   );
 }

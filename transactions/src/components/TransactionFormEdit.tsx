@@ -181,8 +181,10 @@ export default function TransacaoForm({
           transacaoParaEditar.id,
           transactionData
         );
+        addToast("Transação atualizada com sucesso!", "success");
       } else {
         await transactionService.create(transactionData);
+        addToast("Transação criada com sucesso!", "success");
       }
 
       onSave?.({} as Transaction); // Apenas sinaliza que houve mudança

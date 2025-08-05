@@ -78,7 +78,7 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
         </div>
         {showUserProfile && (
           <div className="text-right" role="complementary" aria-label="Informações do usuário">
-            <p className="text-sm text-gray-600">Bem-vindo de volta!</p>
+            <p className="text-sm text-green-600 font-medium">Bem-vindo de volta!</p>
             <p className="text-lg font-semibold text-gray-900" aria-label={`Usuário logado: ${userName}`}>{userName}</p>
           </div>
         )}

@@ -27,6 +27,9 @@
   .modal {
     @apply fixed inset-0 bg-black/50 z-50;
   }
+  .toast {
+    @apply fixed top-4 right-4 z-[99999];
+  }
   .campo {
     @apply flex flex-col py-2 gap-1 md:gap-2 w-full;
   }

@@ -135,6 +135,7 @@ function AppTransactionContent({ user }: AppTransactionProps) {
 
   return (
     <div className="bg-gray-50">
+      <Toast />
       {/* Content */}
       <main className="p-4 md:p-6">
         <div className="max-w-4xl mx-auto">
@@ -313,7 +314,6 @@ function AppTransaction({ user }: AppTransactionProps) {
   return (
     <ToastProvider>
       <AppTransactionContent user={user} />
-      <Toast />
     </ToastProvider>
   );
 }
