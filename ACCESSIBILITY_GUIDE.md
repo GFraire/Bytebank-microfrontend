@@ -1,6 +1,5 @@
 # Guia de Acessibilidade - ByteBank Microfrontend
 
-## ✅ Correções Implementadas
 
 ### 1. **Estrutura Semântica**
 - Adicionados roles ARIA apropriados (`banner`, `navigation`, `main`, `alert`)
@@ -31,7 +30,6 @@
 - Texto alternativo descritivo em imagens
 - Classes `sr-only` para conteúdo apenas para leitores de tela
 
-## 📋 Componentes Corrigidos
 
 ### Main App (`/main-app/`)
 - ✅ `pages/account/index.tsx` - Estrutura principal com roles e cleanup de eventos
