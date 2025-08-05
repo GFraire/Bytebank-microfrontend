@@ -22,6 +22,7 @@ const nextConfig = {
         extraOptions: {
           exposePages: true,
           automaticAsyncBoundary: true,
+          skipSharingNextInternals: true,
         },
       })
     );
