@@ -9,7 +9,7 @@ export default function MobileHeader({ onNavigate, activeView }: MobileHeaderPro
   const getPageTitle = () => {
     switch (activeView) {
       case 'dashboard':
-        return 'Dashboard';
+        return 'Início';
       case 'transactions':
         return 'Extrato';
       case 'add-transaction':
@@ -22,29 +22,25 @@ export default function MobileHeader({ onNavigate, activeView }: MobileHeaderPro
   };
 
   return (
-    <header className="md:hidden bg-gradient-to-r from-green-600 to-green-700 text-white p-4 shadow-lg" role="banner">
+    <header className="md:hidden bg-gradient-to-r from-green-600 to-green-700 text-white px-3 py-2 shadow-md" role="banner">
       <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-3">
-          <div className="bg-white rounded-lg flex items-center justify-center p-1">
-            <img src="/logo.png" alt="ByteBank - Logotipo do banco digital" className="h-8 w-auto" />
+        <div className="flex items-center space-x-2">
+          <div className="bg-white rounded-md flex items-center justify-center p-0.5">
+            <img src="/logo-mini.png" alt="ByteBank" className="h-5 w-5" />
           </div>
-          <div>
-            <h1 className="text-lg font-bold sr-only">{getPageTitle()}</h1>
-          </div>
+          <h1 className="text-sm font-semibold">{getPageTitle()}</h1>
         </div>
         
         <button 
-          className="p-2 rounded-lg hover:bg-white/10 transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50"
-          aria-label="Menu de opções"
+          className="p-1.5 rounded-md hover:bg-white/10 transition-colors"
+          aria-label="Menu"
           type="button"
         >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-5 5-5-5h5v-5a7.5 7.5 0 01-7.5-7.5H5a2.5 2.5 0 000 5z" />
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
           </svg>
         </button>
       </div>
-
-
     </header>
   );
 }
