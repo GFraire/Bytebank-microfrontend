@@ -219,7 +219,7 @@ export default function TransacaoForm({
       {modo == "criar" && <h2 className="title pb-4">{formTitle}</h2>}
       <form onSubmit={handleSubmit(handleOnSubmit)} className="p-2 flex w-full">
         <div className="flex flex-col w-full justify-between xs:items-start xs:justify-start">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-4 justify-between">
+          <div className="grid grid-cols-2 lg:grid-cols-2 gap-2 lg:gap-4 justify-between">
             <div className="campo">
               <Label htmlFor="type">Tipo de Transação:</Label>
               <Select
