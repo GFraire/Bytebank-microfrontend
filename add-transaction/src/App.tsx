@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 import { ToastProvider, useToast } from "./contexts/ToastContext";
 import Toast from "./components/Toast";
 
@@ -26,25 +29,48 @@ export interface AuthUser {
   displayName: string | null;
 }
 
+const transactionSchema = z.object({
+  description: z.string().min(1, "Descrição é obrigatória"),
+  amount: z.string().min(1, "Valor é obrigatório"),
+  type: z.string().min(1, "Tipo é obrigatório"),
+  category: z.string().min(1, "Categoria é obrigatória"),
+  date: z.string().min(1, "Data é obrigatória"),
+});
+
+type TransactionFormData = z.infer<typeof transactionSchema>;
+
 export interface AppTransactionProps {
   user: AuthUser | null;
 }
 
 function AppTransactionContent({ user }: AppTransactionProps) {
   const { addToast } = useToast();
-  const [formData, setFormData] = useState({
-    description: "",
-    amount: "",
-    type: "deposit",
-    category: "",
-    date: (() => {
-      const today = new Date();
-      const year = today.getFullYear();
-      const month = String(today.getMonth() + 1).padStart(2, "0");
-      const day = String(today.getDate()).padStart(2, "0");
-      return `${year}-${month}-${day}`;
-    })(),
+  
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+    watch,
+    reset,
+  } = useForm<TransactionFormData>({
+    resolver: zodResolver(transactionSchema),
+    defaultValues: {
+      description: "",
+      amount: "",
+      type: "deposit",
+      category: "",
+      date: (() => {
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, "0");
+        const day = String(today.getDate()).padStart(2, "0");
+        return `${year}-${month}-${day}`;
+      })(),
+    },
   });
+
+  const watchedAmount = watch("amount");
 
   const formatCurrency = (value: string) => {
     const numericValue = value.replace(/\D/g, "");
@@ -60,11 +86,11 @@ function AppTransactionContent({ user }: AppTransactionProps) {
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/\D/g, "");
-    setFormData({ ...formData, amount: formatCurrency(value) });
+    const formattedValue = formatCurrency(value);
+    setValue("amount", formattedValue);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit = async (data: TransactionFormData) => {
     try {
       const response = await fetch(
         `${process.env.REACT_APP_API_URL}/transactions`,
@@ -72,12 +98,12 @@ function AppTransactionContent({ user }: AppTransactionProps) {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            ...formData,
+            ...data,
             amount: parseFloat(
-              formData.amount.replace(/[^\d,]/g, "").replace(",", ".")
+              data.amount.replace(/[^\d,]/g, "").replace(",", ".")
             ),
             type:
-              formData.type === "deposit" || formData.type === "transfer"
+              data.type === "deposit" || data.type === "transfer"
                 ? "income"
                 : "expense",
             userId: user?.uid,
@@ -86,7 +112,7 @@ function AppTransactionContent({ user }: AppTransactionProps) {
       );
       if (response.ok) {
         addToast("Transação criada com sucesso!", "success");
-        setFormData({
+        reset({
           description: "",
           amount: "",
           type: "deposit",
@@ -115,7 +141,7 @@ function AppTransactionContent({ user }: AppTransactionProps) {
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
             <h2 className="text-2xl font-bold text-gray-900 mb-6">Nova Transação</h2>
             
-            <form onSubmit={handleSubmit} className="space-y-6" role="form" aria-labelledby="form-title">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6" role="form" aria-labelledby="form-title">
               <h2 id="form-title" className="sr-only">Formulário de nova transação</h2>
               
               {/* Primeira linha - Descrição e Valor */}
@@ -129,16 +155,16 @@ function AppTransactionContent({ user }: AppTransactionProps) {
                   <input
                     type="text"
                     id="description"
-                    name="description"
-                    value={formData.description}
-                    onChange={(e) =>
-                      setFormData({ ...formData, description: e.target.value })
-                    }
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent focus:outline-none"
                     placeholder="Ex: Supermercado, Salário..."
+                    className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent focus:outline-none ${
+                      errors.description ? "border-red-500" : "border-gray-300"
+                    }`}
                     aria-describedby="description-help"
-                    required
+                    {...register("description")}
                   />
+                  {errors.description && (
+                    <p className="text-red-500 text-xs mt-1">{errors.description.message}</p>
+                  )}
                   <div id="description-help" className="sr-only">
                     Digite uma descrição clara para identificar a transação
                   </div>
@@ -151,14 +177,17 @@ function AppTransactionContent({ user }: AppTransactionProps) {
                   <input
                     type="text"
                     id="amount"
-                    name="amount"
-                    value={formData.amount}
-                    onChange={handleAmountChange}
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent focus:outline-none"
                     placeholder="R$ 0,00"
+                    className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent focus:outline-none ${
+                      errors.amount ? "border-red-500" : "border-gray-300"
+                    }`}
                     aria-describedby="amount-help"
-                    required
+                    value={watchedAmount}
+                    onChange={handleAmountChange}
                   />
+                  {errors.amount && (
+                    <p className="text-red-500 text-xs mt-1">{errors.amount.message}</p>
+                  )}
                   <div id="amount-help" className="sr-only">
                     Digite o valor da transação em reais
                   </div>
@@ -175,13 +204,11 @@ function AppTransactionContent({ user }: AppTransactionProps) {
                   </label>
                   <select
                     id="type"
-                    name="type"
-                    value={formData.type}
-                    onChange={(e) =>
-                      setFormData({ ...formData, type: e.target.value })
-                    }
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent focus:outline-none"
+                    className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent focus:outline-none ${
+                      errors.type ? "border-red-500" : "border-gray-300"
+                    }`}
                     aria-describedby="type-help"
+                    {...register("type")}
                   >
                     {TRANSACTION_TYPES.map((type) => (
                       <option key={type.value} value={type.value}>
@@ -189,6 +216,9 @@ function AppTransactionContent({ user }: AppTransactionProps) {
                       </option>
                     ))}
                   </select>
+                  {errors.type && (
+                    <p className="text-red-500 text-xs mt-1">{errors.type.message}</p>
+                  )}
                   <div id="type-help" className="sr-only">
                     Selecione o tipo de operação financeira
                   </div>
@@ -200,14 +230,11 @@ function AppTransactionContent({ user }: AppTransactionProps) {
                   </label>
                   <select
                     id="category"
-                    name="category"
-                    value={formData.category}
-                    onChange={(e) =>
-                      setFormData({ ...formData, category: e.target.value })
-                    }
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent focus:outline-none"
+                    className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent focus:outline-none ${
+                      errors.category ? "border-red-500" : "border-gray-300"
+                    }`}
                     aria-describedby="category-help"
-                    required
+                    {...register("category")}
                   >
                     <option value="">Selecione uma categoria</option>
                     {TRANSACTION_CATEGORIES.map((category) => (
@@ -216,6 +243,9 @@ function AppTransactionContent({ user }: AppTransactionProps) {
                       </option>
                     ))}
                   </select>
+                  {errors.category && (
+                    <p className="text-red-500 text-xs mt-1">{errors.category.message}</p>
+                  )}
                   <div id="category-help" className="sr-only">
                     Escolha a categoria que melhor descreve esta transação
                   </div>
@@ -233,15 +263,15 @@ function AppTransactionContent({ user }: AppTransactionProps) {
                   <input
                     type="date"
                     id="date"
-                    name="date"
-                    value={formData.date}
-                    onChange={(e) =>
-                      setFormData({ ...formData, date: e.target.value })
-                    }
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent focus:outline-none"
+                    className={`w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent focus:outline-none ${
+                      errors.date ? "border-red-500" : "border-gray-300"
+                    }`}
                     aria-describedby="date-help"
-                    required
+                    {...register("date")}
                   />
+                  {errors.date && (
+                    <p className="text-red-500 text-xs mt-1">{errors.date.message}</p>
+                  )}
                   <div id="date-help" className="sr-only">
                     Selecione a data em que a transação foi realizada
                   </div>
