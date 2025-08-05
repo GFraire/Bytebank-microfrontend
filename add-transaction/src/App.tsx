@@ -111,110 +111,126 @@ function AppTransactionContent({ user }: AppTransactionProps) {
     <div className="bg-gray-50">
       {/* Content */}
       <main className="p-4 md:p-6">
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Descrição
-              </label>
-              <input
-                type="text"
-                value={formData.description}
-                onChange={(e) =>
-                  setFormData({ ...formData, description: e.target.value })
-                }
-                className="w-full p-2 border border-gray-300 rounded-md"
-                placeholder="Ex: Supermercado, Salário..."
-                required
-              />
-            </div>
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">Nova Transação</h2>
+            
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Primeira linha - Descrição e Valor */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Descrição
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.description}
+                    onChange={(e) =>
+                      setFormData({ ...formData, description: e.target.value })
+                    }
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    placeholder="Ex: Supermercado, Salário..."
+                    required
+                  />
+                </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Valor
-              </label>
-              <input
-                type="text"
-                value={formData.amount}
-                onChange={handleAmountChange}
-                className="w-full p-2 border border-gray-300 rounded-md"
-                placeholder="R$ 0,00"
-                required
-              />
-            </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Valor
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.amount}
+                    onChange={handleAmountChange}
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    placeholder="R$ 0,00"
+                    required
+                  />
+                </div>
+              </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Tipo de Transação
-              </label>
-              <select
-                value={formData.type}
-                onChange={(e) =>
-                  setFormData({ ...formData, type: e.target.value })
-                }
-                className="w-full p-2 border border-gray-300 rounded-md"
-              >
-                {TRANSACTION_TYPES.map((type) => (
-                  <option key={type.value} value={type.value}>
-                    {type.label}
-                  </option>
-                ))}
-              </select>
-            </div>
+              {/* Segunda linha - Tipo e Categoria */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Tipo de Transação
+                  </label>
+                  <select
+                    value={formData.type}
+                    onChange={(e) =>
+                      setFormData({ ...formData, type: e.target.value })
+                    }
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                  >
+                    {TRANSACTION_TYPES.map((type) => (
+                      <option key={type.value} value={type.value}>
+                        {type.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Categoria
-              </label>
-              <select
-                value={formData.category}
-                onChange={(e) =>
-                  setFormData({ ...formData, category: e.target.value })
-                }
-                className="w-full p-2 border border-gray-300 rounded-md"
-                required
-              >
-                <option value="">Selecione uma categoria</option>
-                {TRANSACTION_CATEGORIES.map((category) => (
-                  <option key={category.value} value={category.value}>
-                    {category.label}
-                  </option>
-                ))}
-              </select>
-            </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Categoria
+                  </label>
+                  <select
+                    value={formData.category}
+                    onChange={(e) =>
+                      setFormData({ ...formData, category: e.target.value })
+                    }
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    required
+                  >
+                    <option value="">Selecione uma categoria</option>
+                    {TRANSACTION_CATEGORIES.map((category) => (
+                      <option key={category.value} value={category.value}>
+                        {category.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Data
-              </label>
-              <input
-                type="date"
-                value={formData.date}
-                onChange={(e) =>
-                  setFormData({ ...formData, date: e.target.value })
-                }
-                className="w-full p-2 border border-gray-300 rounded-md"
-                required
-              />
-            </div>
+              {/* Terceira linha - Data */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Data
+                  </label>
+                  <input
+                    type="date"
+                    value={formData.date}
+                    onChange={(e) =>
+                      setFormData({ ...formData, date: e.target.value })
+                    }
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    required
+                  />
+                </div>
+              </div>
 
-            <button
-              type="submit"
-              className="w-full bg-slate-600 text-white py-2 px-4 rounded-md hover:bg-green-700 font-semibold"
-            >
-              Adicionar Transação
-            </button>
-          </form>
-        </div>
+              {/* Botão de ação */}
+              <div className="flex justify-end pt-4">
+                <button
+                  type="submit"
+                  className="px-8 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 font-semibold transition-colors duration-200 shadow-sm"
+                >
+                  Adicionar Transação
+                </button>
+              </div>
+            </form>
+          </div>
 
-        {/* Dicas */}
-        <div className="mt-6 bg-blue-50 border border-blue-200 rounded-xl p-6">
-          <h3 className="text-lg font-semibold text-blue-900 mb-3">Dicas</h3>
-          <ul className="space-y-2 text-blue-800">
-            <li>• Use descrições claras para facilitar o controle</li>
-            <li>• Categorize corretamente para relatórios precisos</li>
-            <li>• Anexe comprovantes quando possível</li>
-          </ul>
+          {/* Dicas */}
+          <div className="mt-6 bg-blue-50 border border-blue-200 rounded-xl p-6">
+            <h3 className="text-lg font-semibold text-blue-900 mb-3">💡 Dicas</h3>
+            <ul className="space-y-2 text-blue-800">
+              <li>• Use descrições claras para facilitar o controle</li>
+              <li>• Categorize corretamente para relatórios precisos</li>
+              <li>• Anexe comprovantes quando possível</li>
+            </ul>
+          </div>
         </div>
       </main>
     </div>
