@@ -15,7 +15,7 @@ if (rootEl) {
   root.render(
     <App
       user={{
-        uid: "3",
+        uid: "2",
         displayName: "Mock user",
         email: "mock.user@gmail.com",
       }}
