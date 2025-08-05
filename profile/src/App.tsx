@@ -23,7 +23,7 @@ const personalInfoSchema = z.object({
   phone: z.string().optional(),
   cpf: z.string().optional(),
   address: z.string().optional(),
-});
+}) satisfies z.ZodType<any>;
 
 type ChangePasswordFormData = z.infer<typeof changePasswordSchema>;
 type PersonalInfoFormData = z.infer<typeof personalInfoSchema>;
