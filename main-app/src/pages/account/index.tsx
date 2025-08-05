@@ -97,10 +97,8 @@ export default function Account() {
 
   return (
     <div className="flex flex-col md:flex-row h-screen bg-gray-50">
-      {/* Header Mobile */}
       <MobileHeader onNavigate={handleNavigation} activeView={activeView} />
 
-      {/* Sidebar apenas em desktop */}
       {isDesktop && (
         <div className="w-64 flex-shrink-0">
           <SidebarComponent
@@ -111,7 +109,6 @@ export default function Account() {
         </div>
       )}
 
-      {/* Área de conteúdo principal */}
       <div className="flex-1 flex flex-col overflow-hidden pb-20 md:pb-0">
         <DashboardHeader
           userName={user?.displayName || ""}
@@ -121,7 +118,6 @@ export default function Account() {
         <div className="flex-1 overflow-auto">{renderContent()}</div>
       </div>
 
-      {/* Navegação Inferior Mobile */}
       <BottomNavigation onNavigate={handleNavigation} activeView={activeView} />
     </div>
   );

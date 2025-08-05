@@ -44,18 +44,18 @@ function AppTransactionContent({ user }: AppTransactionProps) {
 
   const mapCategoryToPortuguese = (category: string) => {
     const categoryMap: Record<string, string> = {
-      'bills': 'Contas e Faturas',
-      'services': 'Serviços',
-      'taxes': 'Impostos',
-      'education': 'Educação',
-      'entertainment': 'Entretenimento',
-      'groceries': 'Supermercado',
-      'transportation': 'Transporte',
-      'health': 'Saúde',
-      'clothing': 'Vestuário',
-      'gifts': 'Presentes',
-      'travel': 'Viagens',
-      'other': 'Outros'
+      bills: "Contas e Faturas",
+      services: "Serviços",
+      taxes: "Impostos",
+      education: "Educação",
+      entertainment: "Entretenimento",
+      groceries: "Supermercado",
+      transportation: "Transporte",
+      health: "Saúde",
+      clothing: "Vestuário",
+      gifts: "Presentes",
+      travel: "Viagens",
+      other: "Outros",
     };
     return categoryMap[category] || category;
   };
@@ -71,7 +71,6 @@ function AppTransactionContent({ user }: AppTransactionProps) {
         setDropdownOpen(null);
       }
     };
-
     if (dropdownOpen !== null) {
       setTimeout(() => {
         document.addEventListener("click", handleClickOutside);
@@ -82,11 +81,16 @@ function AppTransactionContent({ user }: AppTransactionProps) {
 
   const fetchTransactions = async () => {
     try {
-      const response = await fetch(`http://localhost:3333/transactions?userId=${user?.uid}`);
-      
+      const response = await fetch(
+        `http://localhost:3333/transactions?userId=${user?.uid}`
+      );
       if (response.ok) {
         const data = await response.json();
-        setTransactions(data);
+        const sortedData = data.sort(
+          (a: Transaction, b: Transaction) =>
+            new Date(b.date).getTime() - new Date(a.date).getTime()
+        );
+        setTransactions(sortedData);
       }
     } catch (error) {
       addToast("Erro ao carregar transações", "error");
@@ -103,30 +107,35 @@ function AppTransactionContent({ user }: AppTransactionProps) {
       transaction.amount.toString().includes(searchTerm);
     const matchesCategory =
       categoryFilter === "all" || transaction.type === categoryFilter;
-
-    // Filtro de período
     let matchesPeriod = true;
+
     if (periodFilter !== "all") {
       const transactionDate = new Date(transaction.date);
       const today = new Date();
-      const daysAgo = parseInt(periodFilter);
-      const filterDate = new Date(
-        today.getTime() - daysAgo * 24 * 60 * 60 * 1000
-      );
-      matchesPeriod = transactionDate >= filterDate;
+      if (periodFilter === "this_year") {
+        matchesPeriod = transactionDate.getFullYear() === today.getFullYear();
+      } else {
+        const daysAgo = parseInt(periodFilter);
+        const filterDate = new Date(
+          today.getTime() - daysAgo * 24 * 60 * 60 * 1000
+        );
+        matchesPeriod = transactionDate >= filterDate;
+      }
     }
 
     return matchesSearch && matchesCategory && matchesPeriod;
   });
 
-  // Reset da página quando filtros mudarem
   React.useEffect(() => {
     setCurrentPage(1);
   }, [searchTerm, categoryFilter, periodFilter]);
 
   const totalPages = Math.ceil(filteredTransactions.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedTransactions = filteredTransactions.slice(startIndex, startIndex + itemsPerPage);
+  const paginatedTransactions = filteredTransactions.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("pt-BR", {
@@ -198,7 +207,6 @@ function AppTransactionContent({ user }: AppTransactionProps) {
   return (
     <div className="bg-gray-50">
       <div className="p-4 md:p-6">
-        {/* Filtros */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 mb-6">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1">
@@ -213,7 +221,7 @@ function AppTransactionContent({ user }: AppTransactionProps) {
                 <option value="all">Todos os períodos</option>
                 <option value="30">Últimos 30 dias</option>
                 <option value="90">Últimos 90 dias</option>
-                <option value="365">Este ano</option>
+                <option value="this_year">Este ano</option>
               </select>
             </div>
             <div className="flex-1">
@@ -245,14 +253,12 @@ function AppTransactionContent({ user }: AppTransactionProps) {
           </div>
         </div>
 
-        {/* Lista de Transações */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200">
           <div className="p-4 border-b border-gray-200">
             <h2 className="text-lg font-semibold text-gray-900">
               Transações ({filteredTransactions.length})
             </h2>
           </div>
-
           <div className="divide-y divide-gray-200">
             {filteredTransactions.length === 0 ? (
               <div className="p-8 text-center">
@@ -463,16 +469,21 @@ function AppTransactionContent({ user }: AppTransactionProps) {
               ))
             )}
           </div>
-          
-          {/* Controles de Paginação */}
           {totalPages > 1 && (
             <div className="flex items-center justify-between px-4 py-3 border-t border-gray-200">
               <div className="text-sm text-gray-700">
-                Mostrando {startIndex + 1} a {Math.min(startIndex + itemsPerPage, filteredTransactions.length)} de {filteredTransactions.length} transações
+                Mostrando {startIndex + 1} a{" "}
+                {Math.min(
+                  startIndex + itemsPerPage,
+                  filteredTransactions.length
+                )}{" "}
+                de {filteredTransactions.length} transações
               </div>
               <div className="flex space-x-2">
                 <button
-                  onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.max(prev - 1, 1))
+                  }
                   disabled={currentPage === 1}
                   className="px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
@@ -482,7 +493,9 @@ function AppTransactionContent({ user }: AppTransactionProps) {
                   Página {currentPage} de {totalPages}
                 </span>
                 <button
-                  onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                  }
                   disabled={currentPage === totalPages}
                   className="px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
@@ -507,12 +520,14 @@ function AppTransactionContent({ user }: AppTransactionProps) {
               date: new Date(editingTransaction.date),
               month: new Date(editingTransaction.date).toLocaleDateString(
                 "pt-BR",
-                { month: "long" }
+                {
+                  month: "long",
+                }
               ),
               description: editingTransaction.description,
               category: editingTransaction.category,
               recipient: editingTransaction.recipient,
-              userId: (editingTransaction as any).userId, // Preserva o userId
+              userId: (editingTransaction as any).userId,
             }}
             onSave={handleSave}
             onDelete={handleDelete}
@@ -532,7 +547,6 @@ function AppTransactionContent({ user }: AppTransactionProps) {
                 ? fileName.split("_").slice(1).join("_")
                 : fileName;
               const isImage = /\.(jpg|jpeg|png|gif|webp)$/i.test(fileName);
-              
               return (
                 <div key={index} className="bg-gray-50 rounded-lg border p-4">
                   <div className="flex items-center justify-between mb-3">
@@ -581,7 +595,7 @@ function AppTransactionContent({ user }: AppTransactionProps) {
                         alt={originalName}
                         className="max-w-full h-auto max-h-64 rounded-lg border"
                         onError={(e) => {
-                          e.currentTarget.style.display = 'none';
+                          e.currentTarget.style.display = "none";
                         }}
                       />
                     </div>
