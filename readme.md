@@ -33,6 +33,7 @@ cp main-app/.env.example main-app/.env.local
 
 ```
 Bytebank-microfrontend/
+├── .vscode/                  # Configurações do VS Code
 ├── add-transaction/          # Microfrontend para adicionar transações
 │   ├── public/
 │   │   └── index.html
@@ -67,6 +68,12 @@ Bytebank-microfrontend/
 │   ├── package.json
 │   ├── README.md
 │   └── vercel.json
+├── api-files/                # Arquivos da API
+│   ├── .gitignore
+│   ├── db.json
+│   ├── index.js
+│   ├── package.json
+│   └── vercel.json
 ├── dashboard/                # Microfrontend do dashboard
 │   ├── public/
 │   │   └── index.html
@@ -99,6 +106,7 @@ Bytebank-microfrontend/
 ├── docker/                   # Configurações Docker
 │   ├── .dockerignore
 │   ├── api.Dockerfile
+│   ├── api-files.dockerfile
 │   ├── docker-compose.yml
 │   └── main-app.Dockerfile
 ├── main-app/                 # Aplicação principal (Host)
@@ -252,7 +260,8 @@ Bytebank-microfrontend/
 │   └── webpack.prod.js
 ├── .gitignore
 ├── .npmrc
-├── package.json              # Configuração do monorepo
+├── ACCESSIBILITY_GUIDE.md
+├── package.json
 ├── pnpm-lock.yaml
 ├── pnpm-workspace.yaml
 └── readme.md
