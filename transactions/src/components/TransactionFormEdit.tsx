@@ -14,6 +14,7 @@ import {
   TRANSACTION_CATEGORIES,
   TRANSACTION_TYPES,
 } from "../utils/transactionConstants";
+import { useToast } from "../contexts/ToastContext";
 
 const formSchema = z.object({
   type: z.enum(["deposit", "transfer", "payment", "withdrawal"], {
@@ -50,9 +51,34 @@ export default function TransacaoForm({
   onDelete,
   modo = "editar",
 }: TransacaoFormProps) {
+  const { addToast } = useToast();
   const [categorySuggestions, setCategorySuggestions] = useState<string[]>([]);
   const [attachments, setAttachments] = useState<File[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [displayAmount, setDisplayAmount] = useState(
+    transacaoParaEditar?.amount 
+      ? transacaoParaEditar.amount.toLocaleString("pt-BR", {
+          style: "currency",
+          currency: "BRL",
+        })
+      : "R$ 0,00"
+  );
+
+  const formatCurrency = (value: string) => {
+    const numericValue = value.replace(/\D/g, "");
+    const formattedValue = (Number(numericValue) / 100).toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    });
+    return formattedValue;
+  };
+
+  const handleAmountChange = (value: string) => {
+    const formatted = formatCurrency(value);
+    setDisplayAmount(formatted);
+    const numericValue = parseFloat(value.replace(/\D/g, "")) / 100;
+    setValue("amount", numericValue);
+  };
 
   const getSuggestions = (description: string) => {
     const suggestions: Record<string, string[]> = {
@@ -147,6 +173,7 @@ export default function TransacaoForm({
         date: data.date,
         recipient: data.recipient,
         attachments: allAttachments,
+        userId: transacaoParaEditar?.userId, // Preserva o userId original
       };
 
       if (modo === "editar" && transacaoParaEditar?.id) {
@@ -154,14 +181,16 @@ export default function TransacaoForm({
           transacaoParaEditar.id,
           transactionData
         );
+        addToast("Transação atualizada com sucesso!", "success");
       } else {
         await transactionService.create(transactionData);
+        addToast("Transação criada com sucesso!", "success");
       }
 
       onSave?.({} as Transaction); // Apenas sinaliza que houve mudança
       fecharModal?.();
     } catch (error) {
-      console.error("Erro ao salvar transação:", error);
+      addToast("Erro ao salvar transação", "error");
       setError("root", { message: "Erro ao salvar transação" });
     } finally {
       setIsLoading(false);
@@ -177,7 +206,7 @@ export default function TransacaoForm({
       onDelete?.(transacaoParaEditar.id);
       fecharModal?.();
     } catch (error) {
-      console.error("Erro ao excluir transação:", error);
+      addToast("Erro ao excluir transação", "error");
     } finally {
       setIsLoading(false);
     }
@@ -192,7 +221,7 @@ export default function TransacaoForm({
       {modo == "criar" && <h2 className="title pb-4">{formTitle}</h2>}
       <form onSubmit={handleSubmit(handleOnSubmit)} className="p-2 flex w-full">
         <div className="flex flex-col w-full justify-between xs:items-start xs:justify-start">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-4 justify-between">
+          <div className="grid grid-cols-2 lg:grid-cols-2 gap-2 lg:gap-4 justify-between">
             <div className="campo">
               <Label htmlFor="type">Tipo de Transação:</Label>
               <Select
@@ -224,13 +253,13 @@ export default function TransacaoForm({
 
             <div className="campo">
               <Label htmlFor="amount">Valor:</Label>
-              <Input
-                type="number"
+              <input
+                type="text"
                 id="amount"
-                placeholder="0,00"
-                step=".01"
-                min="0.01"
-                {...register("amount", { valueAsNumber: true })}
+                placeholder="R$ 0,00"
+                value={displayAmount}
+                onChange={(e) => handleAmountChange(e.target.value)}
+                className="campo-input"
               />
               {errors.amount && (
                 <p className="text-red-500 text-size-14 mt-1">

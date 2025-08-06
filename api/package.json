@@ -4,13 +4,11 @@
   "description": "API para o Bytebank",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "json-server --watch db.json --port 3333 --static ./public",
+    "dev": "node index.js",
     "dev-local": "json-server --watch db.json --host 0.0.0.0 --port 3333 --static ./public"
   },
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.18.2",
     "json-server": "^0.17.4"
   }
 }

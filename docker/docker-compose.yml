@@ -1,15 +1,15 @@
 version: '3.8'
 services:
-  app:
-    container_name: bytebank-app
-    build:
-      context: ../
-      dockerfile: ./docker/main-app.Dockerfile
-    ports:
-      - "3000:3000"
-    environment:
-      - NODE_ENV=production
-    restart: unless-stopped
+  # app:
+  #   container_name: bytebank-app
+  #   build:
+  #     context: ../
+  #     dockerfile: ./docker/main-app.Dockerfile
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     - NODE_ENV=production
+  #   restart: unless-stopped
   
   api:
     container_name: bytebank-api
@@ -18,6 +18,17 @@ services:
       dockerfile: ./docker/api.Dockerfile
     ports:
       - "3333:3333"
+    environment:
+      - NODE_ENV=development
+    restart: unless-stopped
+  
+  api-files:
+    container_name: bytebank-api-files
+    build:
+      context: ../
+      dockerfile: ./docker/api-files.Dockerfile
+    ports:
+      - "3334:3334"
     environment:
       - NODE_ENV=development
     restart: unless-stopped

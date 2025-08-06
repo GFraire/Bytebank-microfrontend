@@ -41,15 +41,27 @@ export default function Account() {
 
   useEffect(() => {
     if (!user) {
-      router.push("/");
+      router.push("/").catch(console.error);
     }
 
-    const event = new CustomEvent("auth:userChange", {
-      detail: user,
-    });
+    const handler = (event: Event) => {
+      try {
+        const customEvent = event as CustomEvent;
+        const view = customEvent.detail?.view;
+        if (view) {
+          handleNavigation(view);
+        }
+      } catch (error) {
+        console.error('Error handling view change:', error);
+      }
+    };
 
-    window.dispatchEvent(event);
-  }, []);
+    window.addEventListener("viewChanged", handler);
+    
+    return () => {
+      window.removeEventListener("viewChanged", handler);
+    };
+  }, [user, router]);
 
   const handleNavigation = (view: string) => {
     if (
@@ -63,8 +75,12 @@ export default function Account() {
   };
 
   const handleLogout = () => {
-    logout();
-    router.push("/");
+    try {
+      logout();
+      router.push("/").catch(console.error);
+    } catch (error) {
+      console.error('Error during logout:', error);
+    }
   };
 
   const renderContent = () => {
@@ -96,11 +112,9 @@ export default function Account() {
   }, []);
 
   return (
-    <div className="flex flex-col md:flex-row h-screen bg-gray-50">
-      {/* Header Mobile */}
+    <div className="flex flex-col md:flex-row h-screen bg-gray-50" role="application" aria-label="ByteBank Dashboard">
       <MobileHeader onNavigate={handleNavigation} activeView={activeView} />
 
-      {/* Sidebar apenas em desktop */}
       {isDesktop && (
         <div className="w-64 flex-shrink-0">
           <SidebarComponent
@@ -111,17 +125,17 @@ export default function Account() {
         </div>
       )}
 
-      {/* Área de conteúdo principal */}
       <div className="flex-1 flex flex-col overflow-hidden pb-20 md:pb-0">
         <DashboardHeader
           userName={user?.displayName || ""}
           pageType={activeView}
           showUserProfile={true}
         />
-        <div className="flex-1 overflow-auto">{renderContent()}</div>
+        <main className="flex-1 overflow-auto" role="main" aria-label={`Conteúdo da página ${activeView}`}>
+          {renderContent()}
+        </main>
       </div>
 
-      {/* Navegação Inferior Mobile */}
       <BottomNavigation onNavigate={handleNavigation} activeView={activeView} />
     </div>
   );

@@ -2,14 +2,36 @@ import React, { useEffect, useState } from "react";
 import { Transaction } from "../types/types";
 import { AuthUser } from "../App";
 
-export default function RecentTransactions({ user }: { user: AuthUser | null }) {
+export default function RecentTransactions({
+  user,
+}: {
+  user: AuthUser | null;
+}) {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
+
+  const mapCategoryToPortuguese = (category: string) => {
+    const categoryMap: Record<string, string> = {
+      bills: "Contas e Faturas",
+      services: "Serviços",
+      taxes: "Impostos",
+      education: "Educação",
+      entertainment: "Entretenimento",
+      groceries: "Supermercado",
+      transportation: "Transporte",
+      health: "Saúde",
+      clothing: "Vestuário",
+      gifts: "Presentes",
+      travel: "Viagens",
+      other: "Outros",
+    };
+    return categoryMap[category] || category;
+  };
 
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3333/transactions?userId=${user?.uid}`
+          `${process.env.REACT_APP_API_URL}/transactions?userId=${user?.uid}`
         );
         if (response.ok) {
           const data = await response.json();
@@ -49,13 +71,24 @@ export default function RecentTransactions({ user }: { user: AuthUser | null }) 
     return new Date(dateString).toLocaleDateString("pt-BR");
   };
 
+  function handleSeeAllTransactions() {
+    const event = new CustomEvent("viewChanged", {
+      detail: { view: "transactions" },
+    });
+
+    window.dispatchEvent(event);
+  }
+
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-semibold text-gray-900">
           Últimas Transações
         </h3>
-        <button className="text-green-600 text-sm font-medium hover:text-green-700">
+        <button
+          className="text-green-600 text-sm font-medium hover:text-green-700"
+          onClick={handleSeeAllTransactions}
+        >
           Ver todas
         </button>
       </div>
@@ -116,7 +149,8 @@ export default function RecentTransactions({ user }: { user: AuthUser | null }) 
                     {transaction.description}
                   </p>
                   <p className="text-sm text-gray-500">
-                    {transaction.category} • {formatDate(transaction.date)}
+                    {mapCategoryToPortuguese(transaction.category)} •{" "}
+                    {formatDate(transaction.date)}
                   </p>
                 </div>
               </div>

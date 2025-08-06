@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 
-const API_URL = "http://localhost:3333";
+const API_URL = process.env.REACT_APP_API_URL;
 
 const changePasswordSchema = z
   .object({
@@ -23,7 +23,7 @@ const personalInfoSchema = z.object({
   phone: z.string().optional(),
   cpf: z.string().optional(),
   address: z.string().optional(),
-});
+}) satisfies z.ZodType<any>;
 
 type ChangePasswordFormData = z.infer<typeof changePasswordSchema>;
 type PersonalInfoFormData = z.infer<typeof personalInfoSchema>;
@@ -47,6 +47,30 @@ interface IUserData {
 export interface AppProps {
   user: AuthUser | null;
 }
+
+const formatCPF = (cpf: string) => {
+  const cleaned = cpf.replace(/\D/g, "");
+  const match = cleaned.match(/^(\d{3})(\d{3})(\d{3})(\d{2})$/);
+  if (match) {
+    return `${match[1]}.${match[2]}.${match[3]}-${match[4]}`;
+  }
+  return cpf;
+};
+
+const formatPhone = (phone: string) => {
+  const cleaned = phone.replace(/\D/g, "");
+  if (cleaned.length <= 10) {
+    const match = cleaned.match(/^(\d{2})(\d{4})(\d{4})$/);
+    if (match) {
+      return `(${match[1]}) ${match[2]}-${match[3]}`;
+    }
+  }
+  const match = cleaned.match(/^(\d{2})(\d{5})(\d{4})$/);
+  if (match) {
+    return `(${match[1]}) ${match[2]}-${match[3]}`;
+  }
+  return phone;
+};
 
 function App({ user }: AppProps) {
   const [profile, setProfile] = useState<IUserData | null>(null);
@@ -85,8 +109,8 @@ function App({ user }: AppProps) {
 
         infoForm.reset({
           name: data.name || "",
-          phone: data.phone || "",
-          cpf: data.cpf || "",
+          phone: data.phone ? formatPhone(data.phone) : "",
+          cpf: data.cpf ? formatCPF(data.cpf) : "",
           address: data.address || "",
         });
       })
@@ -260,11 +284,16 @@ function App({ user }: AppProps) {
                   <input
                     type="tel"
                     {...infoForm.register("phone")}
-                    defaultValue={profile?.phone || ""}
+                    onChange={(e) => {
+                      const { value } = e.target;
+                      e.target.value = formatPhone(value);
+                      infoForm.setValue("phone", e.target.value);
+                    }}
                     className={`w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
                       showEditInfo ? "" : "bg-gray-50"
                     }`}
                     readOnly={!showEditInfo}
+                    maxLength={15}
                   />
                 </div>
                 <div>
@@ -274,11 +303,16 @@ function App({ user }: AppProps) {
                   <input
                     type="text"
                     {...infoForm.register("cpf")}
-                    defaultValue={profile?.cpf || ""}
+                     onChange={(e) => {
+                      const { value } = e.target;
+                      e.target.value = formatCPF(value);
+                      infoForm.setValue("cpf", e.target.value);
+                    }}
                     className={`w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent ${
                       showEditInfo ? "" : "bg-gray-50"
                     }`}
                     readOnly={!showEditInfo}
+                    maxLength={14}
                   />
                 </div>
                 <div className="md:col-span-2">

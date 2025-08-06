@@ -12,5 +12,13 @@ export default function Mount(props: AppTransactionProps) {
 
 if (rootEl) {
   const root = createRoot(rootEl);
-  root.render(<App user={null} />);
+  root.render(
+    <App
+      user={{
+        uid: "2",
+        displayName: "Mock user",
+        email: "mock.user@gmail.com",
+      }}
+    />
+  );
 }

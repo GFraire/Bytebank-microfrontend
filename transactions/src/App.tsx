@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Modal from "./components/ui/Modal";
 import TransacaoForm from "./components/TransactionFormEdit";
+import { ToastProvider, useToast } from "./contexts/ToastContext";
+import Toast from "./components/Toast";
 
 interface Transaction {
   id: number;
@@ -11,6 +13,7 @@ interface Transaction {
   date: string;
   recipient?: string;
   attachments?: string[];
+  userId?: string;
 }
 
 export interface AuthUser {
@@ -23,7 +26,8 @@ export interface AppTransactionProps {
   user: AuthUser | null;
 }
 
-function AppTransaction({ user }: AppTransactionProps) {
+function AppTransactionContent({ user }: AppTransactionProps) {
+  const { addToast } = useToast();
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -35,6 +39,26 @@ function AppTransaction({ user }: AppTransactionProps) {
   const [dropdownOpen, setDropdownOpen] = useState<number | null>(null);
   const [attachmentsModalOpen, setAttachmentsModalOpen] = useState(false);
   const [selectedAttachments, setSelectedAttachments] = useState<string[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
+
+  const mapCategoryToPortuguese = (category: string) => {
+    const categoryMap: Record<string, string> = {
+      bills: "Contas e Faturas",
+      services: "Serviços",
+      taxes: "Impostos",
+      education: "Educação",
+      entertainment: "Entretenimento",
+      groceries: "Supermercado",
+      transportation: "Transporte",
+      health: "Saúde",
+      clothing: "Vestuário",
+      gifts: "Presentes",
+      travel: "Viagens",
+      other: "Outros",
+    };
+    return categoryMap[category] || category;
+  };
 
   useEffect(() => {
     fetchTransactions();
@@ -47,7 +71,6 @@ function AppTransaction({ user }: AppTransactionProps) {
         setDropdownOpen(null);
       }
     };
-
     if (dropdownOpen !== null) {
       setTimeout(() => {
         document.addEventListener("click", handleClickOutside);
@@ -58,14 +81,18 @@ function AppTransaction({ user }: AppTransactionProps) {
 
   const fetchTransactions = async () => {
     try {
-      const response = await fetch(`http://localhost:3333/transactions?userId=${user?.uid}`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/transactions?userId=${user?.uid}`);
       
       if (response.ok) {
         const data = await response.json();
-        setTransactions(data);
+        const sortedData = data.sort(
+          (a: Transaction, b: Transaction) =>
+            new Date(b.date).getTime() - new Date(a.date).getTime()
+        );
+        setTransactions(sortedData);
       }
     } catch (error) {
-      console.error("Erro ao buscar transações:", error);
+      addToast("Erro ao carregar transações", "error");
     } finally {
       setLoading(false);
     }
@@ -79,21 +106,35 @@ function AppTransaction({ user }: AppTransactionProps) {
       transaction.amount.toString().includes(searchTerm);
     const matchesCategory =
       categoryFilter === "all" || transaction.type === categoryFilter;
-
-    // Filtro de período
     let matchesPeriod = true;
+
     if (periodFilter !== "all") {
       const transactionDate = new Date(transaction.date);
       const today = new Date();
-      const daysAgo = parseInt(periodFilter);
-      const filterDate = new Date(
-        today.getTime() - daysAgo * 24 * 60 * 60 * 1000
-      );
-      matchesPeriod = transactionDate >= filterDate;
+      if (periodFilter === "this_year") {
+        matchesPeriod = transactionDate.getFullYear() === today.getFullYear();
+      } else {
+        const daysAgo = parseInt(periodFilter);
+        const filterDate = new Date(
+          today.getTime() - daysAgo * 24 * 60 * 60 * 1000
+        );
+        matchesPeriod = transactionDate >= filterDate;
+      }
     }
 
     return matchesSearch && matchesCategory && matchesPeriod;
   });
+
+  React.useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, categoryFilter, periodFilter]);
+
+  const totalPages = Math.ceil(filteredTransactions.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedTransactions = filteredTransactions.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("pt-BR", {
@@ -117,11 +158,13 @@ function AppTransaction({ user }: AppTransactionProps) {
   };
 
   const handleSave = () => {
+    addToast("Transação atualizada com sucesso!", "success");
     fetchTransactions();
     handleCloseModal();
   };
 
   const handleDelete = () => {
+    addToast("Transação excluída com sucesso!", "success");
     fetchTransactions();
     handleCloseModal();
   };
@@ -130,16 +173,19 @@ function AppTransaction({ user }: AppTransactionProps) {
     if (confirm("Tem certeza que deseja remover esta transação?")) {
       try {
         const response = await fetch(
-          `http://localhost:3333/transactions/${id}`,
+          `${process.env.REACT_APP_API_URL}/transactions/${id}`,
           {
             method: "DELETE",
           }
         );
         if (response.ok) {
+          addToast("Transação removida com sucesso!", "success");
           fetchTransactions();
+        } else {
+          addToast("Erro ao remover transação", "error");
         }
       } catch (error) {
-        console.error("Erro ao remover transação:", error);
+        addToast("Erro ao remover transação", "error");
       }
     }
   };
@@ -159,8 +205,8 @@ function AppTransaction({ user }: AppTransactionProps) {
 
   return (
     <div className="bg-gray-50">
+      <Toast />
       <div className="p-4 md:p-6">
-        {/* Filtros */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 mb-6">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1">
@@ -175,7 +221,7 @@ function AppTransaction({ user }: AppTransactionProps) {
                 <option value="all">Todos os períodos</option>
                 <option value="30">Últimos 30 dias</option>
                 <option value="90">Últimos 90 dias</option>
-                <option value="365">Este ano</option>
+                <option value="this_year">Este ano</option>
               </select>
             </div>
             <div className="flex-1">
@@ -207,14 +253,12 @@ function AppTransaction({ user }: AppTransactionProps) {
           </div>
         </div>
 
-        {/* Lista de Transações */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200">
           <div className="p-4 border-b border-gray-200">
             <h2 className="text-lg font-semibold text-gray-900">
               Transações ({filteredTransactions.length})
             </h2>
           </div>
-
           <div className="divide-y divide-gray-200">
             {filteredTransactions.length === 0 ? (
               <div className="p-8 text-center">
@@ -222,7 +266,7 @@ function AppTransaction({ user }: AppTransactionProps) {
                 <p className="text-gray-500">Nenhuma transação encontrada</p>
               </div>
             ) : (
-              filteredTransactions.map((transaction) => (
+              paginatedTransactions.map((transaction) => (
                 <div
                   key={transaction.id}
                   className="p-4 hover:bg-gray-50 transition-colors"
@@ -312,7 +356,7 @@ function AppTransaction({ user }: AppTransactionProps) {
                             )}
                         </div>
                         <p className="text-sm text-gray-500">
-                          {transaction.category} •{" "}
+                          {mapCategoryToPortuguese(transaction.category)} •{" "}
                           {formatDate(transaction.date)}
                         </p>
                       </div>
@@ -425,6 +469,41 @@ function AppTransaction({ user }: AppTransactionProps) {
               ))
             )}
           </div>
+          {totalPages > 1 && (
+            <div className="flex items-center justify-between px-4 py-3 border-t border-gray-200">
+              <div className="text-sm text-gray-700">
+                Mostrando {startIndex + 1} a{" "}
+                {Math.min(
+                  startIndex + itemsPerPage,
+                  filteredTransactions.length
+                )}{" "}
+                de {filteredTransactions.length} transações
+              </div>
+              <div className="flex space-x-2">
+                <button
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.max(prev - 1, 1))
+                  }
+                  disabled={currentPage === 1}
+                  className="px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Anterior
+                </button>
+                <span className="px-3 py-1 text-sm text-gray-700">
+                  Página {currentPage} de {totalPages}
+                </span>
+                <button
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                  }
+                  disabled={currentPage === totalPages}
+                  className="px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Próxima
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
@@ -441,11 +520,14 @@ function AppTransaction({ user }: AppTransactionProps) {
               date: new Date(editingTransaction.date),
               month: new Date(editingTransaction.date).toLocaleDateString(
                 "pt-BR",
-                { month: "long" }
+                {
+                  month: "long",
+                }
               ),
               description: editingTransaction.description,
               category: editingTransaction.category,
               recipient: editingTransaction.recipient,
+              userId: (editingTransaction as any).userId,
             }}
             onSave={handleSave}
             onDelete={handleDelete}
@@ -458,64 +540,81 @@ function AppTransaction({ user }: AppTransactionProps) {
           onClose={() => setAttachmentsModalOpen(false)}
           title="Arquivos Anexados"
         >
-          <div className="space-y-3">
-            {selectedAttachments.map((fileName, index) => (
-              <div
-                key={index}
-                className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border"
-              >
-                <div className="flex items-center">
-                  <svg
-                    className="w-5 h-5 text-blue-600 mr-3"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                    />
-                  </svg>
-                  <span className="text-sm font-medium text-gray-900">
-                    {fileName.includes("_")
-                      ? fileName.split("_").slice(1).join("_")
-                      : fileName}
-                  </span>
+          <div className="space-y-4">
+            {selectedAttachments.map((fileName, index) => {
+              const fileUrl = `${process.env.REACT_APP_UPLOAD_URL}/files/${fileName}`;
+              const originalName = fileName.includes("_")
+                ? fileName.split("_").slice(1).join("_")
+                : fileName;
+              const isImage = /\.(jpg|jpeg|png|gif|webp)$/i.test(fileName);
+              return (
+                <div key={index} className="bg-gray-50 rounded-lg border p-4">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center">
+                      <svg
+                        className="w-5 h-5 text-blue-600 mr-3"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                        />
+                      </svg>
+                      <span className="text-sm font-medium text-gray-900">
+                        {originalName}
+                      </span>
+                    </div>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => window.open(fileUrl, "_blank")}
+                        className="px-3 py-1 text-xs bg-blue-100 text-blue-700 rounded hover:bg-blue-200 transition-colors"
+                      >
+                        Ver
+                      </button>
+                      <button
+                        onClick={() => {
+                          const link = document.createElement("a");
+                          link.href = fileUrl;
+                          link.download = originalName;
+                          link.click();
+                        }}
+                        className="px-3 py-1 text-xs bg-green-100 text-green-700 rounded hover:bg-green-200 transition-colors"
+                      >
+                        Download
+                      </button>
+                    </div>
+                  </div>
+                  {isImage && (
+                    <div className="mt-3">
+                      <img
+                        src={fileUrl}
+                        alt={originalName}
+                        className="max-w-full h-auto max-h-64 rounded-lg border"
+                        onError={(e) => {
+                          e.currentTarget.style.display = "none";
+                        }}
+                      />
+                    </div>
+                  )}
                 </div>
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => {
-                      const fileUrl = `http://localhost:3333/files/${fileName}`;
-                      window.open(fileUrl, "_blank");
-                    }}
-                    className="px-3 py-1 text-xs bg-blue-100 text-blue-700 rounded hover:bg-blue-200 transition-colors"
-                  >
-                    Ver
-                  </button>
-                  <button
-                    onClick={() => {
-                      const fileUrl = `http://localhost:3333/files/${fileName}`;
-                      const originalName = fileName.includes("_")
-                        ? fileName.split("_").slice(1).join("_")
-                        : fileName;
-                      const link = document.createElement("a");
-                      link.href = fileUrl;
-                      link.download = originalName;
-                      link.click();
-                    }}
-                    className="px-3 py-1 text-xs bg-green-100 text-green-700 rounded hover:bg-green-200 transition-colors"
-                  >
-                    Download
-                  </button>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </Modal>
       )}
     </div>
+  );
+}
+
+function AppTransaction({ user }: AppTransactionProps) {
+  return (
+    <ToastProvider>
+      <AppTransactionContent user={user} />
+    </ToastProvider>
   );
 }
 

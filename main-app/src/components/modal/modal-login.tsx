@@ -69,29 +69,30 @@ export default function ModalLogin({ isOpen, onClose }: ModalLoginProps) {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-[#f8f8f8] w-[600px] h-screen pl-20 pr-20 pt-6 relative flex flex-col">
+      <div className="bg-[#f8f8f8] w-[500px] max-h-[90vh] rounded-2xl shadow-2xl relative flex flex-col overflow-hidden">
         <button
           onClick={onClose}
-          className="absolute top-2 right-2 text-gray-600 text-xl"
+          className="absolute top-4 right-4 text-gray-600 hover:text-gray-800 text-2xl font-light z-10 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-200 transition-colors"
         >
           ×
         </button>
-        <Image
-          width={192}
-          height={261}
-          src="/icons/ilustracao-login.svg"
-          alt="Pessoa com celular"
-          className="w-48 mb-6 mx-auto"
-        />
-        <h2 className="text-black text-xl font-bold mb-6 text-center">Login</h2>
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="w-full space-y-4 text-left flex-grow overflow-y-auto"
-        >
+        <div className="px-12 py-8 flex flex-col h-full">
+          <Image
+            width={160}
+            height={220}
+            src="/icons/ilustracao-login.svg"
+            alt="Pessoa com celular"
+            className="w-40 mb-8 mx-auto"
+          />
+          <h2 className="text-black text-2xl font-bold mb-8 text-center">Login</h2>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="w-full space-y-6 text-left flex-grow"
+          >
           <div>
             <label
               htmlFor="email"
-              className="block text-black text-sm font-medium"
+              className="block text-black text-sm font-medium mb-2"
             >
               Email
             </label>
@@ -99,19 +100,19 @@ export default function ModalLogin({ isOpen, onClose }: ModalLoginProps) {
               id="email"
               type="email"
               placeholder="Digite seu email"
-              className={`w-full p-1.5 h-10 rounded-md border ${
+              className={`w-full p-3 h-12 rounded-lg border ${
                 errors.email ? "border-red-500" : "border-gray-300"
-              } bg-white text-black placeholder-gray-500 focus:border-blue-500 focus:outline-none`}
+              } bg-white text-black placeholder-gray-500 focus:ring-2 focus:ring-[#47a138] focus:border-transparent focus:outline-none transition-all`}
               {...register("email")}
             />
             {errors.email && (
-              <p className="text-red-500 text-xs">{errors.email.message}</p>
+              <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
             )}
           </div>
           <div>
             <label
               htmlFor="password"
-              className="block text-black text-sm font-medium"
+              className="block text-black text-sm font-medium mb-2"
             >
               Senha
             </label>
@@ -119,33 +120,34 @@ export default function ModalLogin({ isOpen, onClose }: ModalLoginProps) {
               id="password"
               type="password"
               placeholder="Digite sua senha"
-              className={`w-full p-1.5 h-10 rounded-md border ${
+              className={`w-full p-3 h-12 rounded-lg border ${
                 errors.password ? "border-red-500" : "border-gray-300"
-              } bg-white text-black placeholder-gray-500 focus:border-blue-500 focus:outline-none`}
+              } bg-white text-black placeholder-gray-500 focus:ring-2 focus:ring-[#47a138] focus:border-transparent focus:outline-none transition-all`}
               {...register("password")}
             />
             {errors.password && (
-              <p className="text-red-500 text-xs">{errors.password.message}</p>
+              <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>
             )}
           </div>
-          <div className="text-left -mt-2">
+          <div className="text-left mb-6">
             <a
               href="/forgot-password"
-              className="text-[#47a138] text-sm underline hover:text-[#3b8a2f]"
+              className="text-[#47a138] text-sm underline hover:text-[#3b8a2f] transition-colors"
             >
               Esqueci a senha
             </a>
-            {error && <p className="text-red-500 text-base mt-2">{error}</p>}
+            {error && <p className="text-red-500 text-sm mt-3">{error}</p>}
           </div>
-          <div className="flex justify-center mt-4">
+          <div className="flex justify-center pb-4">
             <button
               type="submit"
-              className="w-32 bg-[#47a138] text-white py-2 px-4 rounded-md font-bold hover:bg-[#3b8a2f] focus:outline-none focus:ring-2 focus:ring-[#47a138]"
+              className="w-full bg-[#47a138] text-white py-3 px-6 rounded-lg font-semibold hover:bg-[#3b8a2f] focus:outline-none focus:ring-2 focus:ring-[#47a138] focus:ring-opacity-50 transition-colors shadow-sm"
             >
               Acessar
             </button>
           </div>
         </form>
+        </div>
       </div>
     </div>
   );

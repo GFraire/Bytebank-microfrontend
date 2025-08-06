@@ -1,11 +1,11 @@
 const isProd = process.env.NODE_ENV === 'production';
 
 const domains = {
-  dashboard: isProd ? 'https://dashboard-g9.vercel.app' : 'http://localhost:3001',
-  sidebar: isProd ? 'https://sidebar-g9.vercel.app' : 'http://localhost:3002',
-  transactions: isProd ? 'https://transactions-g9.vercel.app' : 'http://localhost:3003',
-  addTransaction: isProd ? 'https://add-transaction-g9.vercel.app' : 'http://localhost:3004',
-  profile: isProd ? 'https://profile-g9.vercel.app' : 'http://localhost:3005',
+  dashboard: isProd ? 'https://dashboard-bytebank-freire.vercel.app' : 'http://localhost:3001',
+  sidebar: isProd ? 'https://sidebar-bytebank-freire.vercel.app' : 'http://localhost:3002',
+  transactions: isProd ? 'https://transactions-bytebank-freire.vercel.app' : 'http://localhost:3003',
+  addTransaction: isProd ? 'https://add-transaction-bytebank-freire.vercel.app' : 'http://localhost:3004',
+  profile: isProd ? 'https://profile-bytebank-freire.vercel.app' : 'http://localhost:3005',
 };
 
 module.exports = {

@@ -65,21 +65,21 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
   const config = getPageConfig();
 
   return (
-    <header className="bg-white shadow-sm border-b border-gray-200 px-6 py-4">
+    <header className="bg-white shadow-sm border-b border-gray-200 px-6 py-4" role="banner">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
-          <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+          <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center" aria-hidden="true">
             {config.icon}
           </div>
           <div>
-            <h1 className="text-xl font-bold text-gray-900">{config.title}</h1>
-            <p className="text-sm text-gray-600">{config.subtitle}</p>
+            <h1 className="text-xl font-bold text-gray-900" id="page-title">{config.title}</h1>
+            <p className="text-sm text-gray-600" aria-describedby="page-title">{config.subtitle}</p>
           </div>
         </div>
         {showUserProfile && (
-          <div className="text-right">
-            <p className="text-sm text-gray-600">Bem-vindo de volta!</p>
-            <p className="text-lg font-semibold text-gray-900">{userName}</p>
+          <div className="text-right" role="complementary" aria-label="Informações do usuário">
+            <p className="text-sm text-green-600 font-medium">Bem-vindo de volta!</p>
+            <p className="text-lg font-semibold text-gray-900" aria-label={`Usuário logado: ${userName}`}>{userName}</p>
           </div>
         )}
       </div>

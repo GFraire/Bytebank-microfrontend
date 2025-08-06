@@ -36,7 +36,7 @@ function AppDashboard({ user }: AppDashboardProps) {
         setDashboardData(dashData);
         setAllTransactions(transactions);
       } catch (error) {
-        console.error("Erro ao carregar dados:", error);
+        // Erro silencioso para não quebrar a UI
       } finally {
         setLoading(false);
       }
