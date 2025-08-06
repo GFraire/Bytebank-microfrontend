@@ -33,7 +33,6 @@ cp main-app/.env.example main-app/.env.local
 
 ```
 Bytebank-microfrontend/
-├── .vscode/                  # Configurações do VS Code
 ├── add-transaction/          # Microfrontend para adicionar transações
 │   ├── public/
 │   │   └── index.html
@@ -61,7 +60,6 @@ Bytebank-microfrontend/
 │   ├── webpack.dev.js
 │   └── webpack.prod.js
 ├── api/                      # Backend API
-│   ├── public/
 │   ├── .gitignore
 │   ├── db.json
 │   ├── index.js
@@ -70,6 +68,9 @@ Bytebank-microfrontend/
 │   └── vercel.json
 ├── api-files/                # Arquivos da API
 │   ├── .gitignore
+│   ├── temp/
+│   │   └── uploads/
+│   │       └── .gitkeep
 │   ├── db.json
 │   ├── index.js
 │   ├── package.json
@@ -113,8 +114,8 @@ Bytebank-microfrontend/
 │   ├── public/
 │   │   ├── icons/
 │   │   │   ├── devices.svg
-│   │   │   ├── Ilustracao-cadastro.svg
-│   │   │   ├── Ilustracao-login.svg
+│   │   │   ├── ilustracao-cadastro.svg
+│   │   │   ├── ilustracao-login.svg
 │   │   │   ├── instagram.svg
 │   │   │   ├── present.svg
 │   │   │   ├── star.svg
@@ -130,10 +131,10 @@ Bytebank-microfrontend/
 │   ├── src/
 │   │   ├── components/
 │   │   │   ├── modal/
-│   │   │   ├── BottomNavigation.tsx
-│   │   │   ├── DashboardHeader.tsx
-│   │   │   ├── MobileHeader.tsx
-│   │   │   └── ModuleFederationErrorBoundary.tsx
+│   │   │   │   ├── BottomNavigation.tsx
+│   │   │   │   ├── DashboardHeader.tsx
+│   │   │   │   ├── MobileHeader.tsx
+│   │   │   │   └── ModuleFederationErrorBoundary.tsx
 │   │   ├── contexts/
 │   │   │   └── authContext.tsx
 │   │   ├── pages/
@@ -241,11 +242,6 @@ Bytebank-microfrontend/
 │   │   ├── App.tsx
 │   │   ├── bootstrap.tsx
 │   │   └── index.ts
-│   ├── temp/
-│   │   ├── uploads/
-│   │   │   ├── .gitkeep
-│   │   │   └── 1754411013014_BG.png
-│   │   └── .gitignore
 │   ├── .gitignore
 │   ├── babel.config.json
 │   ├── package.json
@@ -253,7 +249,6 @@ Bytebank-microfrontend/
 │   ├── README.md
 │   ├── tailwind.config.js
 │   ├── tsconfig.json
-│   ├── upload-server.js
 │   ├── vercel.json
 │   ├── webpack.common.js
 │   ├── webpack.dev.js
@@ -297,4 +292,12 @@ pnpm dev:profile           # Roda o perfil do usuário
 pnpm dev:sidebar           # Roda a sidebar
 pnpm dev:transactions      # Roda o app de transações
 pnpm dev:main-app          # Roda o app principal (host)
+```
+
+#### 🐳 Rodar todos os apps com Docker
+Para subir a api usando Docker, execute os comandos abaixo:
+
+```bash
+cd docker
+docker compose up
 ```
